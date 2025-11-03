@@ -9,8 +9,9 @@ import { useAuthStore } from '../../store/authStore';
 import Container from '../ui/Container';
 import ThemeToggle from '../ui/ThemeToggle';
 import Button from '../ui/Button';
-import logoSvgBlue from '../../assets/DS logo ( Blue ) SVG.svg';
-import logoSvgWhite from '../../assets/DS logo ( White ) SVG.svg';
+
+const logoSvgBlue = "https://duotechsolutions.in/DS%20logo%20(%20Blue%20)%20SVG-D-GAioW7.svg";
+const logoSvgWhite = "https://duotechsolutions.in/DS%20logo%20(%20White%20)%20SVG-CENA7_kp.svg";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
