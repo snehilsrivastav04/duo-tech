@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - DuoTechno</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --secondary: #0891b2;
+            --accent: #06b6d4;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --background: #ffffff;
+            --background-dark: #0f172a;
+            --background-alt: #f9fafb;
+            --border: #e5e7eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        .dark-mode {
+            --text: #f3f4f6;
+            --text-light: #d1d5db;
+            --background: #0f172a;
+            --background-alt: #1e293b;
+            --border: #374151;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .breadcrumb {
+            background-color: var(--background-alt);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .breadcrumb .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .breadcrumb-links a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .breadcrumb-links a:hover {
+            text-decoration: underline;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            padding: 5px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text);
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        .toc-sidebar {
+            position: sticky;
+            top: 20px;
+            margin-bottom: 2rem;
+            background-color: var(--background-alt);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .toc-sidebar h3 {
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .toc-links {
+            list-style: none;
+        }
+
+        .toc-links li {
+            margin-bottom: 0.7rem;
+        }
+
+        .toc-links a {
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .toc-links a:hover {
+            color: var(--primary);
+        }
+
+        .toc-links a i {
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+
+        .terms-content {
+            background-color: var(--background);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .intro {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .intro p {
+            margin-bottom: 1rem;
+        }
+
+        .effective-date {
+            background-color: var(--background-alt);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .terms-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .terms-section h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .terms-section h2 i {
+            color: var(--secondary);
+        }
+
+        .clause {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+            border-left: 3px solid var(--border);
+        }
+
+        .clause-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .clause-content {
+            color: var(--text-light);
+        }
+
+        .clause-list {
+            list-style-type: none;
+            margin-top: 0.5rem;
+        }
+
+        .clause-list li {
+            margin-bottom: 0.5rem;
+            display: flex;
+            gap: 8px;
+        }
+
+        .clause-list li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .highlight {
+            background-color: rgba(239, 68, 68, 0.1);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+            color: var(--error);
+        }
+
+        .contact-box {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .contact-box h3 {
+            margin-bottom: 1rem;
+        }
+
+        .contact-box p {
+            margin-bottom: 1.5rem;
+            opacity: 0.9;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        footer {
+            background-color: var(--background-alt);
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        footer p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        @media (min-width: 768px) {
+            .terms-container {
+                display: grid;
+                grid-template-columns: 250px 1fr;
+                gap: 2rem;
+            }
+            
+            .toc-sidebar {
+                height: fit-content;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .terms-container {
+                display: block;
+            }
+            
+            .toc-sidebar {
+                margin-bottom: 2rem;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1><i class="fas fa-file-contract"></i> Terms & Conditions</h1>
+            <p>SMS & Voice Services Agreement</p>
+        </div>
+    </header>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-links">
+                <a href="#">Home</a> > <a href="#">Legal</a> > Terms & Conditions
+            </div>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i> Dark Mode
+            </button>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="terms-container">
+            <aside class="toc-sidebar">
+                <h3>Contents</h3>
+                <ul class="toc-links">
+                    <li><a href="#intro"><i class="fas fa-chevron-right"></i> Introduction</a></li>
+                    <li><a href="#charges"><i class="fas fa-chevron-right"></i> Call & SMS Charges</a></li>
+                    <li><a href="#payments"><i class="fas fa-chevron-right"></i> Payments</a></li>
+                    <li><a href="#kyc"><i class="fas fa-chevron-right"></i> Account Setup & KYC</a></li>
+                    <li><a href="#service-hours"><i class="fas fa-chevron-right"></i> Service Hours</a></li>
+                    <li><a href="#compliance"><i class="fas fa-chevron-right"></i> DND Compliance</a></li>
+                    <li><a href="#data"><i class="fas fa-chevron-right"></i> Data & Privacy</a></li>
+                    <li><a href="#prohibited"><i class="fas fa-chevron-right"></i> Prohibited Activities</a></li>
+                    <li><a href="#quality"><i class="fas fa-chevron-right"></i> Service Quality</a></li>
+                    <li><a href="#suspension"><i class="fas fa-chevron-right"></i> Account Suspension</a></li>
+                    <li><a href="#refunds"><i class="fas fa-chevron-right"></i> Refund Policy</a></li>
+                    <li><a href="#liability"><i class="fas fa-chevron-right"></i> Liability</a></li>
+                    <li><a href="#modifications"><i class="fas fa-chevron-right"></i> Modifications</a></li>
+                    <li><a href="#termination"><i class="fas fa-chevron-right"></i> Termination</a></li>
+                    <li><a href="#jurisdiction"><i class="fas fa-chevron-right"></i> Governing Law</a></li>
+                </ul>
+            </aside>
+
+            <article class="terms-content">
+                <section class="intro" id="intro">
+                    <h2><i class="fas fa-info-circle"></i> Introduction</h2>
+                    <p>These <strong>Terms & Conditions ("T&C")</strong> govern the use of services provided by <span class="highlight">DuoTechno</span> ("Service Provider") to any client ("Client"). By purchasing or using our services, the Client agrees to abide by these T&C.</p>
+                    
+                    <div class="effective-date">
+                        <p><i class="fas fa-calendar-alt"></i> <strong>Effective Date:</strong> January 1, 2023</p>
+                        <p><i class="fas fa-sync-alt"></i> <strong>Last Updated:</strong> October 15, 2023</p>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="charges">
+                    <h2><i class="fas fa-phone"></i> Call & SMS Charges</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">1.1 Billing Criteria</div>
+                        <div class="clause-content">You will be charged <span class="highlight">only for successfully answered calls</span> and successfully delivered SMS messages.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">1.2 Non-Chargeable Events</div>
+                        <div class="clause-content">Missed calls, unanswered calls, or failed SMS deliveries due to telecom/operator/network errors are <span class="highlight">not chargeable</span> and corresponding credits will be refunded automatically.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">1.3 Dispute Resolution</div>
+                        <div class="clause-content">In case of disputes regarding delivery reports, <span class="highlight">telecom operator records will be treated as final</span>.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="payments">
+                    <h2><i class="fas fa-credit-card"></i> Payments</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">2.1 Payment Terms</div>
+                        <div class="clause-content">All payments are <span class="highlight">100% advance</span> before service activation.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">2.2 Setup Charges</div>
+                        <div class="clause-content">Any <span class="highlight">setup charges, integration charges, or one-time fees</span> are payable upfront and are <span class="highlight">non-refundable</span>.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">2.3 Taxes</div>
+                        <div class="clause-content">GST and applicable government taxes shall be levied as per prevailing laws.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">2.4 Payment Methods</div>
+                        <div class="clause-content">Payments must be made through approved channels only (<span class="highlight">Bank Transfer, UPI, NEFT, IMPS, Online Payment Gateway</span>).</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="kyc">
+                    <h2><i class="fas fa-user-check"></i> Account Setup & Documentation (KYC)</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">3.1 Required Documents</div>
+                        <div class="clause-content">To activate services, the Client must submit the following:</div>
+                        <ul class="clause-list">
+                            <li><strong>KYC ID Proof</strong> -- Aadhaar / PAN / Passport / Driving License</li>
+                            <li><strong>Business Proof</strong> -- GST Certificate / MSME Certificate / Company Incorporation Certificate</li>
+                            <li><strong>Address Proof</strong> -- Latest electricity bill / rent agreement (not older than 3 months)</li>
+                            <li><strong>Consent Declaration</strong> -- A signed declaration confirming that the contact list is authorized for communication.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">3.2 Document Verification</div>
+                        <div class="clause-content">The Service Provider reserves the right to <span class="highlight">verify and reject incomplete/invalid KYC documents</span>.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">3.3 Service Activation</div>
+                        <div class="clause-content">Service activation will occur within <span class="highlight">1 working day</span> after payment and successful document verification. Transactional/OTP messages are permitted 24x7, subject to TRAI operator policies.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="service-hours">
+                    <h2><i class="fas fa-clock"></i> Service Hours & Usage</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">4.1 Permitted Hours</div>
+                        <div class="clause-content">Voice and SMS campaigns can be executed only during <span class="highlight">TRAI-permitted hours (9:00 AM -- 9:00 PM IST)</span>.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">4.2 Restrictions</div>
+                        <div class="clause-content">Any attempt to bypass these restrictions may result in <span class="highlight">immediate suspension without refund</span>.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">4.3 Client Responsibility</div>
+                        <div class="clause-content">The Client is responsible for scheduling campaigns in compliance with TRAI regulations.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="compliance">
+                    <h2><i class="fas fa-gavel"></i> Government Rules & DND Compliance</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">5.1 Regulatory Compliance</div>
+                        <div class="clause-content">You must strictly comply with <span class="highlight">TRAI guidelines</span>, telecom operator rules, and DND restrictions.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">5.2 DND Restrictions</div>
+                        <div class="clause-content">Promotional messages or calls <span class="highlight">must not be sent to DND numbers</span> unless you have <span class="highlight">written customer consent</span>.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">5.3 Consent Records</div>
+                        <div class="clause-content">You shall maintain <span class="highlight">records of customer consent</span> for verification if required by TRAI/Telecom Operators.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">5.4 Penalties</div>
+                        <div class="clause-content">Any <span class="highlight">penalties or fines imposed by TRAI, operators, or authorities</span> due to misuse, spam, or non-compliance will be your sole responsibility.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">5.5 Liability</div>
+                        <div class="clause-content">The Service Provider shall not be liable for suspension or blacklisting of numbers caused by your activities.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="data">
+                    <h2><i class="fas fa-database"></i> Data, Privacy & Security</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">6.1 Data Responsibility</div>
+                        <div class="clause-content">The Client is solely responsible for the <span class="highlight">accuracy, legality, and authorization</span> of contact lists.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">6.2 Call Recording</div>
+                        <div class="clause-content">If calls are recorded, the Client must <span class="highlight">inform the recipient at the beginning of the call</span> as per law.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">6.3 Data Usage</div>
+                        <div class="clause-content">The Service Provider will <span class="highlight">not sell or misuse Client data</span>, except for providing services or when legally required.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">6.4 Content Restrictions</div>
+                        <div class="clause-content">The Client must ensure that no <span class="highlight">malware, phishing links, or fraudulent content</span> is transmitted using our services.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="prohibited">
+                    <h2><i class="fas fa-ban"></i> Fair Use & Prohibited Activities</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">7.1 Prohibited Uses</div>
+                        <div class="clause-content">Services must <span class="highlight">not be used for spam, phishing, scams, fake job offers, loan frauds, illegal promotions, or objectionable content</span>.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">7.2 Misuse Consequences</div>
+                        <div class="clause-content">If misuse is detected, the Service Provider reserves the right to <span class="highlight">immediately suspend or terminate the account without refund</span>.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">7.3 Political Campaigns</div>
+                        <div class="clause-content">Bulk SMS and Voice services must not be used for <span class="highlight">political campaigns</span> without proper authorization from the Election Commission of India.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="quality">
+                    <h2><i class="fas fa-chart-line"></i> Service Quality & Limitations</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">8.1 Service Dependencies</div>
+                        <div class="clause-content">Call and SMS delivery depends on <span class="highlight">telecom operator networks</span> and is not guaranteed in case of network congestion, downtime, or operator restrictions.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">8.2 Limitations of Liability</div>
+                        <div class="clause-content">The Service Provider shall not be liable for:</div>
+                        <ul class="clause-list">
+                            <li>Call drops, delays, or poor audio caused by network issues</li>
+                            <li>SMS delivery delays caused by operator/DLT filtering</li>
+                            <li>Any <span class="highlight">force majeure events</span> such as natural disasters, cyberattacks, or government restrictions.</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="suspension">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Complaints, Blacklisting & Account Suspension</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">9.1 Complaint Handling</div>
+                        <div class="clause-content">If the Service Provider receives complaints against the Client (spam/fraud/unwanted calls), services may be <span class="highlight">paused or terminated</span> without refund.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">9.2 Blacklisting</div>
+                        <div class="clause-content">If the Client's Sender ID, Header, or Phone Numbers are <span class="highlight">blacklisted by TRAI/operators</span>, the Service Provider may suspend services.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">9.3 Reinstatement</div>
+                        <div class="clause-content">Reinstatement of services, if possible, may require <span class="highlight">additional compliance checks and charges</span>.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="refunds">
+                    <h2><i class="fas fa-money-bill-wave"></i> Refund & Cancellation Policy</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">10.1 Refund Policy</div>
+                        <div class="clause-content">Once SMS/Call credits are added or services are activated, <span class="highlight">no refunds will be provided</span>.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">10.2 Credit Validity</div>
+                        <div class="clause-content">Unused credits may be carried forward if the account remains active.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">10.3 Non-Refundable Charges</div>
+                        <div class="clause-content">Setup, integration, and verification charges are <span class="highlight">non-refundable under all circumstances</span>.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="liability">
+                    <h2><i class="fas fa-balance-scale"></i> Liability & Indemnity</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">11.1 Client Responsibilities</div>
+                        <div class="clause-content">The Client is responsible for <span class="highlight">all legal, regulatory, and compliance obligations</span> when using the services.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">11.2 Service Provider Limitations</div>
+                        <div class="clause-content">The Service Provider is <span class="highlight">not liable for losses</span> caused by misuse, TRAI penalties, downtime, or telecom failures.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">11.3 Indemnification</div>
+                        <div class="clause-content">The Client agrees to <span class="highlight">indemnify the Service Provider</span> against all claims, penalties, damages, and expenses arising out of misuse or non-compliance by the Client.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="modifications">
+                    <h2><i class="fas fa-edit"></i> Modifications & Updates</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">12.1 Terms Modification</div>
+                        <div class="clause-content">The Service Provider may modify <span class="highlight">pricing, features, or terms</span> with <span class="highlight">7 days' prior notice</span>.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">12.2 Acceptance of Changes</div>
+                        <div class="clause-content">Continued use of the services after changes constitutes <span class="highlight">acceptance of updated terms</span>.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="termination">
+                    <h2><i class="fas fa-times-circle"></i> Account Termination</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">13.1 Grounds for Termination</div>
+                        <div class="clause-content">The Service Provider may terminate the account if the Client:</div>
+                        <ul class="clause-list">
+                            <li>Engages in fraud, spam, or illegal activity</li>
+                            <li>Violates TRAI/DND guidelines</li>
+                            <li>Sending bulk spam messages or calls</li>
+                            <li>Fails to provide valid KYC documentation</li>
+                            <li>Defaults on payment obligations</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">13.2 Termination Process</div>
+                        <div class="clause-content">Termination may be <span class="highlight">immediate and without refund</span>.</div>
+                    </div>
+                </section>
+
+                <section class="terms-section" id="jurisdiction">
+                    <h2><i class="fas fa-landmark"></i> Governing Law & Jurisdiction</h2>
+                    
+                    <div class="clause">
+                        <div class="clause-title">14.1 Governing Law</div>
+                        <div class="clause-content">These T&C are governed by the laws of India.</div>
+                    </div>
+                    
+                    <div class="clause">
+                        <div class="clause-title">14.2 Jurisdiction</div>
+                        <div class="clause-content">Any disputes shall be subject to the jurisdiction of <span class="highlight">courts in New Delhi</span>.</div>
+                    </div>
+                </section>
+
+                <div class="contact-box">
+                    <h3><i class="fas fa-question-circle"></i> Questions About Our Terms?</h3>
+                    <p>If you have any questions about these Terms & Conditions, please contact our legal team.</p>
+                    <a href="#" class="btn"><i class="fas fa-envelope"></i> Contact Legal Team</a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 DuoTechno. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dark mode toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                themeIcon.className = 'fas fa-sun';
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Light Mode';
+            } else {
+                themeIcon.className = 'fas fa-moon';
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Dark Mode';
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

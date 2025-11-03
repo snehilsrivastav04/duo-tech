@@ -1,0 +1,78 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#edf2ff',
+          100: '#dbe4ff',
+          200: '#bac8ff',
+          300: '#91a7ff',
+          400: '#748ffc',
+          500: '#5c6bc0', // Main primary color
+          600: '#4556b3',
+          700: '#3949ab',
+          800: '#303f9f',
+          900: '#283593',
+          950: '#1a237e',
+        },
+        secondary: {
+          50: '#e3f8f6',
+          100: '#c7f1ed',
+          200: '#a1e8e2',
+          300: '#6dded3',
+          400: '#3dcfc0',
+          500: '#0abf9e', // Main secondary color (green)
+          600: '#00a392',
+          700: '#008077',
+          800: '#00665f',
+          900: '#00544e',
+          950: '#003733',
+        },
+        accent: {
+          50: '#fff8ed',
+          100: '#fff0d7',
+          200: '#fedaad',
+          300: '#fdc078',
+          400: '#fb9d43',
+          500: '#fa8021', // Main accent color (orange)
+          600: '#e95d0f',
+          700: '#c14210',
+          800: '#9a3516',
+          900: '#7d2e18',
+          950: '#461508',
+        },
+        dark: {
+          100: '#d5d5d5',
+          200: '#aaaaaa',
+          300: '#808080',
+          400: '#555555',
+          500: '#2b2b2b',
+          600: '#222222',
+          700: '#1a1a1a',
+          800: '#121212',
+          900: '#0a0a0a',
+        }
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['Roboto Mono', 'monospace'],
+      },
+      animation: {
+        'spin-slow': 'spin 8s linear infinite',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '72': '18rem',
+        '84': '21rem',
+        '96': '24rem',
+      },
+      borderRadius: {
+        '4xl': '2rem',
+      },
+    },
+  },
+  plugins: [],
+};
