@@ -1,14 +1,25 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, MessageSquare, MessageCircle, Phone, MessageSquareMore, Mail, Megaphone, Code as CodeIcon, Palette } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import * as LucideIcons from 'lucide-react';
 import { services } from '../../data/services';
 import Container from '../ui/Container';
 import SectionTitle from '../ui/SectionTitle';
 
 // Get the first 4 services for the overview
 const overviewServices = services.slice(0, 4);
+
+const iconMap: { [key: string]: React.ElementType } = {
+  'message-square': MessageSquare,
+  'message-circle': MessageCircle,
+  'phone': Phone,
+  'message-square-more': MessageSquareMore,
+  'mail': Mail,
+  'megaphone': Megaphone,
+  'code': CodeIcon,
+  'code-json': CodeIcon, // Map 'code-json' to the same icon
+  'palette': Palette,
+};
 
 const ServiceOverview: React.FC = () => {
   // Animation variants
@@ -44,8 +55,7 @@ const ServiceOverview: React.FC = () => {
           viewport={{ once: true }}
         >
           {overviewServices.map((service) => {
-            // Dynamically get the icon from Lucide
-            const IconComponent = (LucideIcons as any)[service.icon.charAt(0).toUpperCase() + service.icon.slice(1)];
+            const IconComponent = iconMap[service.icon];
             
             return (
               <motion.div 

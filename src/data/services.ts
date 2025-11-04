@@ -54,7 +54,7 @@ export const services: Service[] = [
     id: '8',
     title: 'API Integrations',
     description: 'Seamlessly integrate SMS and WhatsApp APIs into your existing systems for automated communication workflows.',
-    icon: 'code-json',
+    icon: 'code',
     category: 'development'
   },
   {

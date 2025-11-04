@@ -1,9 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import * as LucideIcons from 'lucide-react';
+import { ArrowRight, MessageSquare, MessageCircle, Phone, MessageSquareMore, Mail, Megaphone, Code as CodeIcon, Palette } from 'lucide-react';
 import { Service } from '../../utils/types';
 import Card from '../ui/Card';
-import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface ServiceCardProps {
@@ -11,9 +10,20 @@ interface ServiceCardProps {
   index?: number;
 }
 
+const iconMap: { [key: string]: React.ElementType } = {
+  'message-square': MessageSquare,
+  'message-circle': MessageCircle,
+  'phone': Phone,
+  'message-square-more': MessageSquareMore,
+  'mail': Mail,
+  'megaphone': Megaphone,
+  'code': CodeIcon,
+  'code-json': CodeIcon, // Map 'code-json' to the same icon
+  'palette': Palette,
+};
+
 const ServiceCard: React.FC<ServiceCardProps> = ({ service, index = 0 }) => {
-  // Dynamically get the icon from Lucide
-  const IconComponent = (LucideIcons as any)[service.icon.charAt(0).toUpperCase() + service.icon.slice(1)];
+  const IconComponent = iconMap[service.icon];
 
   return (
     <motion.div
