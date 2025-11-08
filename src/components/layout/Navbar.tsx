@@ -1,46 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
   Menu, X, User, ChevronDown, Home, Users, Phone,
   Rocket, Megaphone, Code, Box, Award, Smartphone,
   Briefcase, MessageSquare, Mail, Search
 } from 'lucide-react';
-import { useAuthStore } from '../../store/authStore';
-import Container from '../ui/Container';
-import ThemeToggle from '../ui/ThemeToggle';
-import Button from '../ui/Button';
 
-const logoSvgBlue = "https://duotechsolutions.in/DS%20logo%20(%20Blue%20)%20SVG-D-GAioW7.svg";
-const logoSvgWhite = "https://duotechsolutions.in/DS%20logo%20(%20White%20)%20SVG-CENA7_kp.svg";
-
-const Navbar: React.FC = () => {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { isAuthenticated, user, logout } = useAuthStore();
-  const megaMenuRef = useRef<HTMLDivElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-
-  const toggleMenu = () => setIsOpen(!isOpen);
-  const closeMenu = () => {
-    setIsOpen(false);
-    setOpenDropdown(null);
-  };
-
-  const toggleDropdown = (dropdown: string) => {
-    setOpenDropdown(openDropdown === dropdown ? null : dropdown);
-  };
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const megaMenuRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 20);
     };
 
-    const handleClickOutside = (e: MouseEvent) => {
-      // Only handle click outside for desktop mega menu
-      if (window.innerWidth >= 1024 && megaMenuRef.current && !megaMenuRef.current.contains(e.target as Node)) {
+    const handleClickOutside = (e) => {
+      if (window.innerWidth >= 1024 && megaMenuRef.current && !megaMenuRef.current.contains(e.target)) {
         setOpenDropdown(null);
       }
     };
@@ -54,72 +33,25 @@ const Navbar: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    closeMenu();
-  }, [location]);
-
-  // Add touch event handler for mobile
-  useEffect(() => {
-    const handleTouchStart = (e: TouchEvent) => {
-      // Only close if we're on mobile and touching outside the navbar and mobile menu
-      const target = e.target as Node;
-      const navbar = document.querySelector('header');
-      
-      if (
-        navbar && 
-        !navbar.contains(target) && 
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(target) &&
-        (isOpen || openDropdown) &&
-        window.innerWidth < 1024 // Only on mobile/tablet
-      ) {
-        closeMenu();
-      }
-    };
-
-    // Handle scroll events for auto-closing (less aggressive)
-    const handleScrollClose = () => {
-      // Only close on significant scroll and only on mobile
-      if ((isOpen || openDropdown) && window.innerWidth < 1024) {
-        const scrollY = window.scrollY;
-        if (scrollY > 100) { // Only close after scrolling down significantly
-          closeMenu();
-        }
-      }
-    };
-
-    // Add event listeners
-    document.addEventListener('touchstart', handleTouchStart, { passive: true });
-    window.addEventListener('scroll', handleScrollClose, { passive: true });
-
-    return () => {
-      document.removeEventListener('touchstart', handleTouchStart);
-      window.removeEventListener('scroll', handleScrollClose);
-    };
-  }, [isOpen, openDropdown]);
-
-  // Services data
-  type ServicesDataKey = 'Services' | 'Digital Marketing' | 'Development' | 'Products';
-  
   const servicesData = {
     'Services': [
       { 
         category: 'Messaging Services',
         items: [
-          { name: 'Bulk SMS Services', path: '/services/bulk-sms', icon: <Smartphone size={16} /> },
-          { name: 'Promotional SMS', path: '/services/promotional-sms', icon: <Megaphone size={16} /> },
-          { name: 'Transactional SMS', path: '/services/transactional-sms', icon: <Briefcase size={16} /> },
-          { name: 'WhatsApp Bulk Services', path: '/services/whatsapp-bulk', icon: <MessageSquare size={16} /> },
+          { name: 'Bulk SMS Services', href: '/services/bulk-sms', icon: <Smartphone className="w-4 h-4" /> },
+          { name: 'Promotional SMS', href: '/services/bulk-sms', icon: <Megaphone className="w-4 h-4" /> },
+          { name: 'Transactional SMS', href: '/services/transactional-sms', icon: <Briefcase className="w-4 h-4" /> },
+          { name: 'WhatsApp Bulk Services', href: '/services/whatsapp-bulk', icon: <MessageSquare className="w-4 h-4" /> },
         ]
       },
       {
         category: 'Voice Solutions',
         items: [
-          { name: 'IVR Solutions', path: '/services/ivr', icon: <Phone size={16} /> },
-          { name: 'Voice OBD Services', path: '/services/VoiceOBDPage', icon: <Phone size={16} /> },
-          { name: 'Virtual Numbers', path: '/services/virtual-number', icon: <Smartphone size={16} /> },
-          { name: 'Toll Free Numbers', path: '/services/toll-free-number', icon: <Phone size={16} /> },
-          { name: 'Hosted Call Center', path: '/services/hosted-call-center', icon: <Phone size={16} /> },
+          { name: 'IVR Solutions', href: '/services/ivr', icon: <Phone className="w-4 h-4" /> },
+          { name: 'Voice OBD Services', href: '/services/VoiceOBDPage', icon: <Phone className="w-4 h-4" /> },
+          { name: 'Virtual Numbers', href: '/services/virtual-number', icon: <Smartphone className="w-4 h-4" /> },
+          { name: 'Toll Free Numbers', href: '/services/toll-free-number', icon: <Phone className="w-4 h-4" /> },
+          { name: 'Hosted Call Center', href: '/services/hosted-call-center', icon: <Phone className="w-4 h-4" /> },
         ]
       }
     ],
@@ -127,9 +59,9 @@ const Navbar: React.FC = () => {
       {
         category: 'Online Marketing',
         items: [
-          { name: 'Email Marketing', path: '/digital/email-marketing', icon: <Mail size={16} /> },
-          { name: 'Social Media Marketing', path: '/digital/social-media', icon: <Megaphone size={16} /> },
-          { name: 'SEO Services', path: '/digital/seo', icon: <Search size={16} /> },
+          { name: 'Email Marketing', href: '/digital/email-marketing', icon: <Mail className="w-4 h-4" /> },
+          { name: 'Social Media Marketing', href: '/digital/social-media', icon: <Megaphone className="w-4 h-4" /> },
+          { name: 'SEO Services', href: '/digital/seo', icon: <Search className="w-4 h-4" /> },
         ]
       }
     ],
@@ -137,9 +69,9 @@ const Navbar: React.FC = () => {
       {
         category: 'Web & Mobile',
         items: [
-          { name: 'Web Development', path: '/development/web', icon: <Code size={16} /> },
-          { name: 'Android App Development', path: '/development/android', icon: <Smartphone size={16} /> },
-          { name: 'iOS App Development', path: '/development/ios', icon: <Smartphone size={16} /> },
+          { name: 'Web Development', href: '/development/web', icon: <Code className="w-4 h-4" /> },
+          { name: 'Android App Development', href: '/development/android', icon: <Smartphone className="w-4 h-4" /> },
+          { name: 'iOS App Development', href: '/development/android', icon: <Smartphone className="w-4 h-4" /> },
         ]
       }
     ],
@@ -147,380 +79,287 @@ const Navbar: React.FC = () => {
       {
         category: 'Business Solutions',
         items: [
-          { name: 'WhatsApp API Solutions', path: '/products/whatsapp-api', icon: <MessageSquare size={16} /> },
-          { name: 'SMS Gateway', path: '/products/sms-gateway', icon: <Smartphone size={16} /> },
-          { name: 'CRM Solutions', path: '/products/crm', icon: <Briefcase size={16} /> },
-          { name: 'Source Codes', path: '/products/source-codes', icon: <Code size={16} /> },
+          { name: 'WhatsApp API Solutions', href: '/products/whatsapp-api', icon: <MessageSquare className="w-4 h-4" /> },
+          { name: 'SMS Gateway', href: '/products/sms-gateway', icon: <Smartphone className="w-4 h-4" /> },
+          { name: 'CRM Solutions', href: '/products/crm', icon: <Briefcase className="w-4 h-4" /> },
+          { name: 'Source Codes', href: '/products/source-codes', icon: <Code className="w-4 h-4" /> },
         ]
       }
     ]
   };
 
   const navLinks = [
-    { 
-      name: 'Home', 
-      path: '/', 
-      icon: <Home size={16} />,
-      megaMenu: false
-    },
-    { 
-      name: 'Services', 
-      path: '/services',
-      icon: <Rocket size={16} />,
-      megaMenu: true
-    },
-    { 
-      name: 'Digital Marketing', 
-      path: '/digital-marketing',
-      icon: <Megaphone size={16} />,
-      megaMenu: true
-    },
-    { 
-      name: 'Development', 
-      path: '/development',
-      icon: <Code size={16} />,
-      megaMenu: true
-    },
-    { 
-      name: 'Products', 
-      path: '/products',
-      icon: <Box size={16} />,
-      megaMenu: true
-    },
-    { 
-      name: 'About', 
-      path: '/about', 
-      icon: <Users size={16} />,
-      megaMenu: false
-    },
-    { 
-      name: 'Contact', 
-      path: '/contact', 
-      icon: <Phone size={16} />,
-      megaMenu: false
-    },
+    { name: 'Home', href: '/', icon: <Home className="w-4 h-4" />, megaMenu: false },
+    { name: 'Services', icon: <Rocket className="w-4 h-4" />, megaMenu: true },
+    { name: 'Digital Marketing', href: '/digital/digital-marketing', icon: <Megaphone className="w-4 h-4" />, megaMenu: false },
+    { name: 'Development', icon: <Code className="w-4 h-4" />, megaMenu: true },
+    { name: 'Products', icon: <Box className="w-4 h-4" />, megaMenu: true },
+    { name: 'About', href: '/about', icon: <Users className="w-4 h-4" />, megaMenu: false },
+    { name: 'Contact', href: '/contact', icon: <Phone className="w-4 h-4" />, megaMenu: false },
   ];
 
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
-  };
-
-  const getDashboardLink = () => {
-    if (!isAuthenticated) return '/login';
-    return user?.role === 'admin' ? '/admin' : '/client';
-  };
-
-  // Update the navClasses to include transition
-  const navClasses = `fixed w-full top-0 z-50 transition-all duration-300 ease-in-out ${
-    scrolled
-      ? 'bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 shadow-md translate-y-0'
-      : 'bg-blue-900 dark:bg-gray-900'
-  }`;
-
-  // Update mobile menu classes to include animation
-  const mobileMenuClasses = `lg:hidden bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 
-    transition-all duration-300 ease-in-out ${isOpen ? 'opacity-100 translate-y-0 block' : 'opacity-0 -translate-y-2 hidden'}`;
-
-  // Update mega menu classes to include animation
-  const megaMenuClasses = `absolute left-0 right-0 top-full mt-1 w-full bg-white dark:bg-gray-800 
-    border border-gray-200 dark:border-gray-700 shadow-lg rounded-b-md
-    transition-all duration-200 ease-in-out
-    ${openDropdown ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'}`;
-
   return (
-    <header className={navClasses}>
-      <Container>
-        <nav className="flex items-center justify-between py-3">
-          {/* Logo */}
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
-              <img
-                src={scrolled ? (document.documentElement.classList.contains('dark') ? logoSvgWhite : logoSvgBlue) : logoSvgWhite}
-                alt="DuoTechno Logo"
-                className="h-10 w-auto"
-              />
-              <span className={`text-xl font-bold ${scrolled ? 'text-gray-800 dark:text-white' : 'text-white'}`}>
-                
-              </span>
+    <>
+      <motion.header 
+        className={`fixed w-full top-0 z-50 transition-all duration-500 ${
+          scrolled 
+            ? 'bg-white/95 backdrop-blur-sm shadow-sm' 
+            : 'bg-white'
+        }`}
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        {/* Top border accent */}
+        <div className="h-0.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent" />
+        
+        <div className="container mx-auto px-6">
+          <nav className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3">
+              <motion.div 
+                className="flex items-center"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
+              >
+                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-light text-xl">D</span>
+                </div>
+                <span className="text-xl font-light text-gray-900 tracking-tight">
+                  DuoTechno
+                </span>
+              </motion.div>
             </Link>
-          </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex lg:items-center lg:space-x-1">
-            {navLinks.map((link) => (
-              <div key={link.path} className="relative group">
-                {link.megaMenu ? (
-                  <>
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link, index) => (
+                <div key={index} className="relative">
+                  {link.megaMenu ? (
                     <button
-                      className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                        scrolled
-                          ? 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
-                          : 'text-white hover:text-blue-200'
-                      } ${
-                        location.pathname.startsWith(link.path) || openDropdown === link.name
-                          ? 'text-blue-600 dark:text-blue-400'
-                          : ''
+                      className={`flex items-center gap-2 px-6 py-3 text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors duration-300 ${
+                        openDropdown === link.name ? 'text-blue-600' : ''
                       }`}
-                      onClick={() => toggleDropdown(link.name)}
+                      onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
+                      onMouseEnter={() => setOpenDropdown(link.name)}
                     >
-                      <span className="mr-1">{link.icon}</span>
-                      {link.name}
-                      <ChevronDown className="ml-1 h-4 w-4" />
+                      {link.icon}
+                      <span className="tracking-wide">{link.name}</span>
+                      <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${
+                        openDropdown === link.name ? 'rotate-180' : ''
+                      }`} />
                     </button>
-                  </>
-                ) : (
-                  <Link
-                    to={link.path}
-                    className={`flex items-center px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                      scrolled
-                        ? 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
-                        : 'text-white hover:text-blue-200'
-                    } ${
-                      location.pathname === link.path
-                        ? 'text-blue-600 dark:text-blue-400'
-                        : ''
-                    }`}
-                  >
-                    <span className="mr-1">{link.icon}</span>
-                    {link.name}
-                  </Link>
-                )}
-              </div>
-            ))}
-          </div>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="flex items-center gap-2 px-6 py-3 text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors duration-300"
+                    >
+                      {link.icon}
+                      <span className="tracking-wide">{link.name}</span>
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
 
-          {/* Mega Menu Dropdown */}
-          {openDropdown && servicesData[openDropdown as ServicesDataKey] && (
-            <div
+            {/* Right side actions */}
+            <div className="hidden lg:flex items-center gap-4">
+              <Link to="/login" className="px-6 py-2.5 text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors duration-300 tracking-wide">
+                Sign In
+              </Link>
+              <Link to="/contact" className="px-8 py-2.5 bg-blue-600 text-white text-sm font-normal rounded-lg hover:bg-blue-700 transition-all duration-300 tracking-wide shadow-sm hover:shadow-md">
+                Get Started
+              </Link>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              className="lg:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors duration-300"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </nav>
+        </div>
+
+        {/* Mega Menu */}
+        <AnimatePresence>
+          {openDropdown && servicesData[openDropdown] && (
+            <motion.div
               ref={megaMenuRef}
-              className={megaMenuClasses}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="absolute left-0 right-0 top-full bg-white border-t border-gray-100 shadow-xl"
               onMouseLeave={() => setOpenDropdown(null)}
             >
-              <div className="p-6 grid grid-cols-2 gap-8 max-w-6xl mx-auto">
-                {servicesData[openDropdown as ServicesDataKey].map((category, categoryIndex) => (
-                  <div key={categoryIndex} className="group">
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-4 flex items-center">
-                      <span className="bg-blue-500 p-1 rounded-md mr-2">
-                        <Award size={14} className="text-white" />
-                      </span>
-                      {category.category}
-                    </h3>
-                    <div className="space-y-3">
-                      {category.items.map((item) => (
-                        <div
-                          key={item.path}
-                          className="flex items-start p-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                        >
-                          <div className="flex-shrink-0 mt-1 bg-blue-100 dark:bg-blue-900 p-2 rounded-md text-blue-600 dark:text-blue-400">
-                            {item.icon}
-                          </div>
-                          <div className="ml-3">
-                            <Link
-                              to={item.path}
-                              className="block text-sm font-medium text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
-                              onClick={closeMenu}
-                            >
-                              {item.name}
-                            </Link>
-                          </div>
+              <div className="container mx-auto px-6 py-12">
+                <div className="grid grid-cols-2 gap-16 max-w-6xl mx-auto">
+                  {servicesData[openDropdown].map((category, idx) => (
+                    <div key={idx}>
+                      {/* Category Header */}
+                      <div className="mb-8">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-8 h-px bg-blue-600" />
+                          <h3 className="text-xs tracking-[0.15em] text-blue-600 font-normal uppercase">
+                            {category.category}
+                          </h3>
                         </div>
-                      ))}
+                      </div>
+
+                      {/* Category Items */}
+                      <div className="space-y-2">
+                        {category.items.map((item, itemIdx) => (
+                          <Link
+                            key={itemIdx}
+                            to={item.href}
+                            className="group w-full flex items-center gap-4 p-4 rounded-lg hover:bg-gray-50 transition-all duration-300"
+                          >
+                            <motion.div
+                                whileHover={{ x: 4 }}
+                                transition={{ duration: 0.2 }}
+                                className="w-full flex items-center gap-4"
+                            >
+                                <div className="flex-shrink-0 w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                                    {item.icon}
+                                </div>
+                                <div className="flex-grow text-left">
+                                    <div className="text-base font-normal text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                                        {item.name}
+                                    </div>
+                                </div>
+                            </motion.div>
+                          </Link>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                ))}
-                
+                  ))}
+                </div>
+
                 {/* CTA Section */}
-                <div className="col-span-2 bg-gray-50 dark:bg-gray-700 p-4 rounded-md border border-gray-200 dark:border-gray-600 mt-4">
-                  <div className="flex items-center justify-between">
+                <div className="max-w-6xl mx-auto mt-12 pt-12 border-t border-gray-100">
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-2xl p-8 flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                      <h3 className="text-xl font-normal text-gray-900 mb-2">
                         Need help choosing?
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
-                        Our experts are ready to help you.
+                      <p className="text-gray-600 font-light">
+                        Our experts are ready to help you find the perfect solution.
                       </p>
                     </div>
-                    <Button 
-                      variant="primary" 
-                      onClick={() => {
-                        navigate('/contact');
-                        closeMenu();
-                      }}
-                    >
+                    <Link to="/contact" className="px-8 py-3 bg-blue-600 text-white text-sm font-normal rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-600/20">
                       Contact Sales
-                    </Button>
+                    </Link>
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           )}
+        </AnimatePresence>
+      </motion.header>
 
-          {/* Right side controls */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <ThemeToggle />
-            
-            {isAuthenticated ? (
-              <div className="flex items-center space-x-3">
-                <Link to={getDashboardLink()}>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    icon={<User size={16} />}
-                  >
-                    Dashboard
-                  </Button>
-                </Link>
-                <Button 
-                  variant="ghost" 
-                  size="sm"
-                  onClick={handleLogout}
-                >
-                  Logout
-                </Button>
-              </div>
-            ) : (
-              <Link to="/login">
-                <Button 
-                  variant="primary" 
-                  size="sm"
-                  icon={<User size={16} />}
-                >
-                  Sign In
-                </Button>
-              </Link>
-            )}
-          </div>
-
-          {/* Mobile Navigation Toggle */}
-          <div className="flex items-center space-x-3 lg:hidden">
-            <ThemeToggle />
-            <button
-              className={`p-2 rounded-md ${
-                scrolled
-                  ? 'text-gray-700 dark:text-gray-300'
-                  : 'text-white'
-              }`}
-              onClick={toggleMenu}
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </nav>
-      </Container>
-
-      {/* Mobile Navigation Menu */}
-      <div ref={mobileMenuRef} className={mobileMenuClasses}>
+      {/* Mobile Menu */}
+      <AnimatePresence>
         {isOpen && (
-          <Container>
-            <div className="py-4">
+          <motion.div
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 lg:hidden bg-white"
+          >
+            <div className="h-full overflow-y-auto pt-24 pb-6 px-6">
               <div className="space-y-2">
-                {navLinks.map((link) => (
-                  <div key={link.path} className="relative">
+                {navLinks.map((link, index) => (
+                  <div key={index}>
                     {link.megaMenu ? (
-                      <>
+                      <div>
                         <button
-                          onClick={() => toggleDropdown(link.name)}
-                          className={`flex justify-between items-center w-full py-3 px-4 text-base font-medium rounded-md ${
+                          onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
+                          className={`w-full flex items-center justify-between p-4 rounded-lg text-left transition-all duration-300 ${
                             openDropdown === link.name
-                              ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
-                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+                              ? 'bg-blue-50 text-blue-600'
+                              : 'text-gray-700 hover:bg-gray-50'
                           }`}
                         >
-                          <span className="flex items-center">
-                            <span className="mr-2">{link.icon}</span>
-                            {link.name}
-                          </span>
-                          <ChevronDown className={`h-5 w-5 transition-transform ${
+                          <div className="flex items-center gap-3">
+                            {link.icon}
+                            <span className="font-normal">{link.name}</span>
+                          </div>
+                          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${
                             openDropdown === link.name ? 'rotate-180' : ''
                           }`} />
                         </button>
-                        {openDropdown === link.name && servicesData[link.name as ServicesDataKey] && (
-                          <div className="pl-6 mt-1">
-                            {servicesData[link.name as ServicesDataKey].map((category, categoryIndex) => (
-                              <div key={categoryIndex} className="my-3">
-                                <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-                                  {category.category}
-                                </h4>
-                                <div className="space-y-2">
-                                  {category.items.map((item) => (
-                                    <Link
-                                      key={item.path}
-                                      to={item.path}
-                                      className="flex items-center py-2 px-4 text-sm rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
-                                      onClick={closeMenu}
-                                    >
-                                      <span className="mr-3">{item.icon}</span>
-                                      {item.name}
-                                    </Link>
-                                  ))}
-                                </div>
+
+                        <AnimatePresence>
+                          {openDropdown === link.name && servicesData[link.name] && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pl-6 pr-4 py-4 space-y-6">
+                                {servicesData[link.name].map((category, catIdx) => (
+                                  <div key={catIdx}>
+                                    <div className="text-xs tracking-[0.15em] text-blue-600 font-normal uppercase mb-3">
+                                      {category.category}
+                                    </div>
+                                    <div className="space-y-2">
+                                      {category.items.map((item, itemIdx) => (
+                                        <Link
+                                          key={itemIdx}
+                                          to={item.href}
+                                          onClick={() => setIsOpen(false)} 
+                                          className="w-full flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-300"
+                                        >
+                                          <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600">
+                                            {item.icon}
+                                          </div>
+                                          <span className="text-sm font-normal">{item.name}</span>
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ))}
                               </div>
-                            ))}
-                          </div>
-                        )}
-                      </>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
                     ) : (
                       <Link
-                        to={link.path}
-                        className={`flex items-center py-3 px-4 text-base font-medium rounded-md ${
-                          location.pathname === link.path
-                            ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400'
-                            : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
-                        }`}
-                        onClick={closeMenu}
+                        to={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="w-full flex items-center gap-3 p-4 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-300"
                       >
-                        <span className="mr-2">{link.icon}</span>
-                        {link.name}
+                        {link.icon}
+                        <span className="font-normal">{link.name}</span>
                       </Link>
                     )}
                   </div>
                 ))}
-                
-                <div className="pt-4 px-4 space-y-3 border-t border-gray-200 dark:border-gray-700 mt-4">
-                  {isAuthenticated ? (
-                    <>
-                      <Link to={getDashboardLink()}>
-                        <Button 
-                          variant="primary" 
-                          className="w-full"
-                          icon={<User size={16} />}
-                          onClick={closeMenu}
-                        >
-                          Dashboard
-                        </Button>
-                      </Link>
-                      <Button 
-                        variant="outline" 
-                        className="w-full"
-                        onClick={() => {
-                          handleLogout();
-                          closeMenu();
-                        }}
-                      >
-                        Logout
-                      </Button>
-                    </>
-                  ) : (
-                    <Link to="/login">
-                      <Button 
-                        variant="primary" 
-                        className="w-full"
-                        icon={<User size={16} />}
-                        onClick={closeMenu}
-                      >
-                        Sign In
-                      </Button>
-                    </Link>
-                  )}
-                </div>
+              </div>
+
+              {/* Mobile Actions */}
+              <div className="mt-8 pt-8 border-t border-gray-100 space-y-3">
+                <Link to="/login" onClick={() => setIsOpen(false)} className="w-full text-center px-6 py-3 text-sm font-normal text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-300">
+                  Sign In
+                </Link>
+                <Link to="/contact" onClick={() => setIsOpen(false)} className="w-full text-center px-6 py-3 bg-blue-600 text-white text-sm font-normal rounded-lg hover:bg-blue-700 transition-all duration-300">
+                  Get Started
+                </Link>
               </div>
             </div>
-          </Container>
+          </motion.div>
         )}
-      </div>
-    </header>
+      </AnimatePresence>
+
+      {/* Spacer for fixed header - REMOVED because MainLayout will handle spacing */}
+      {/* <div className="h-20" /> */}
+    </>
   );
 };
 

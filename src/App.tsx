@@ -22,6 +22,7 @@ import SocialMediaPage from './pages/social-media';
 import SeoPage from './pages/seo';
 import GraphicsDesignPage from './pages/graphic-design';
 import PPCPage from './pages/ppc';
+import DigitalMarketingPage from './pages/DigitalMarketingPage';
 
 import WebDevHomePage from './pages/web';
 import AndroidDevelopmentPage from './pages/android';
@@ -93,6 +94,7 @@ function App() {
         <Route path="/digital/seo" element={<SeoPage />} />
         <Route path="/digital/graphic-design" element={<GraphicsDesignPage />} />
         <Route path="/digital/ppc" element={<PPCPage />} />
+        <Route path="/digital/digital-marketing" element={<DigitalMarketingPage />} />
 
 
         <Route path="/development/web" element={<WebDevHomePage />} />

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Target, Handshake, Brain, Rocket, Clock, Users, Shield, 
-  MessageCircle, ArrowRight, Sparkles, Heart, X
-} from 'lucide-react';
 import MainLayout from '../components/layout/MainLayout';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
+import { 
+  Target, Handshake, Brain, Rocket, Clock, Users, Shield, 
+  MessageCircle, ArrowRight, Heart, X
+} from 'lucide-react';
 
 // Define types for our data structures
 interface Value {
@@ -15,7 +15,6 @@ interface Value {
   title: string;
   description: string;
   fullText: string;
-  gradient: string;
 }
 
 interface Milestone {
@@ -31,16 +30,8 @@ interface Stat {
   suffix: string;
   label: string;
   icon: React.ReactNode;
-  color: keyof typeof colorMap;
   detail: string;
 }
-
-const colorMap = {
-  blue: 'from-blue-500 to-cyan-500',
-  violet: 'from-violet-500 to-purple-500',
-  emerald: 'from-emerald-500 to-teal-500',
-  orange: 'from-orange-500 to-red-500'
-} as const;
 
 const AboutPage = () => {
   const [selectedValue, setSelectedValue] = useState(0);
@@ -51,35 +42,31 @@ const AboutPage = () => {
   const values: Value[] = [
     {
       id: 0,
-      icon: <Target className="w-12 h-12" />,
+      icon: <Target className="w-8 h-8" />,
       title: "Purpose-Driven",
       description: "Building meaningful solutions that create real impact",
-      fullText: "Every feature, every line of code, every design decision is made with clear intention. We build technology that serves humanity, not the other way around. Our purpose is to create tools that genuinely improve how people communicate and connect.",
-      gradient: "from-blue-500 via-blue-600 to-indigo-600"
+      fullText: "Every feature, every line of code, every design decision is made with clear intention. We build technology that serves humanity, not the other way around. Our purpose is to create tools that genuinely improve how people communicate and connect."
     },
     {
       id: 1,
-      icon: <Handshake className="w-12 h-12" />,
+      icon: <Handshake className="w-8 h-8" />,
       title: "Partnership Mindset",
       description: "Your success fuels our growth and innovation",
-      fullText: "We don't just deliver projects—we build lasting partnerships. When you win, we win. This mindset drives us to go beyond expectations, to truly understand your challenges, and to celebrate your victories as our own.",
-      gradient: "from-violet-500 via-purple-600 to-fuchsia-600"
+      fullText: "We don't just deliver projects—we build lasting partnerships. When you win, we win. This mindset drives us to go beyond expectations, to truly understand your challenges, and to celebrate your victories as our own."
     },
     {
       id: 2,
-      icon: <Brain className="w-12 h-12" />,
+      icon: <Brain className="w-8 h-8" />,
       title: "Continuous Evolution",
       description: "Learning, adapting, and staying ahead of the curve",
-      fullText: "The digital world never stands still, and neither do we. We invest heavily in learning, experimentation, and staying at the forefront of technology. Our team thrives on curiosity and the pursuit of mastery.",
-      gradient: "from-emerald-500 via-teal-600 to-cyan-600"
+      fullText: "The digital world never stands still, and neither do we. We invest heavily in learning, experimentation, and staying at the forefront of technology. Our team thrives on curiosity and the pursuit of mastery."
     },
     {
       id: 3,
-      icon: <Rocket className="w-12 h-12" />,
+      icon: <Rocket className="w-8 h-8" />,
       title: "Bold Innovation",
       description: "Challenging conventions to discover better ways",
-      fullText: "We take calculated risks to push boundaries and explore what's possible. Innovation isn't just about adopting the latest tech—it's about fundamentally rethinking how we solve problems and create value for our partners.",
-      gradient: "from-orange-500 via-red-600 to-pink-600"
+      fullText: "We take calculated risks to push boundaries and explore what's possible. Innovation isn't just about adopting the latest tech—it's about fundamentally rethinking how we solve problems and create value for our partners."
     }
   ];
 
@@ -115,7 +102,7 @@ const AboutPage = () => {
     { 
       year: '2023', 
       title: 'Innovation Lab', 
-      description: 'Investing in tomorrow\'s technologies', // Fixed apostrophe issue
+      description: 'Investing in tomorrow\'s technologies',
       detail: 'Launched our dedicated R&D division to explore AI, machine learning, blockchain, and next-generation communication technologies. This investment ensures we stay ahead of industry trends.',
       impact: 'Filed 12 technology patents'
     },
@@ -133,277 +120,224 @@ const AboutPage = () => {
       value: '15', 
       suffix: 'Years',
       label: 'Of Excellence', 
-      icon: <Clock className="w-6 h-6" />,
-      color: 'blue',
+      icon: <Clock className="w-5 h-5" />,
       detail: 'Consistently delivering innovation since 2010'
     },
     { 
       value: '500', 
       suffix: '+',
       label: 'Global Partners', 
-      icon: <Users className="w-6 h-6" />,
-      color: 'violet',
+      icon: <Users className="w-5 h-5" />,
       detail: 'Trusted by enterprises across 40+ countries'
     },
     { 
       value: '99.9', 
       suffix: '%',
       label: 'Uptime SLA', 
-      icon: <Shield className="w-6 h-6" />,
-      color: 'emerald',
+      icon: <Shield className="w-5 h-5" />,
       detail: 'Industry-leading reliability guarantee'
     },
     { 
       value: '24', 
       suffix: '/7',
       label: 'Support', 
-      icon: <MessageCircle className="w-6 h-6" />,
-      color: 'orange',
+      icon: <MessageCircle className="w-5 h-5" />,
       detail: 'Always here when you need us'
     }
   ];
 
   return (
     <MainLayout>
-      {/* Hero Section - Immersive */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900">
-        {/* Animated Background */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500 rounded-full blur-[120px] animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-violet-500 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
-
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:64px_64px]" />
-        
-        <Container className="relative z-10 text-center py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="inline-flex items-center mb-8 px-6 py-3 bg-white/10 backdrop-blur-xl rounded-full text-white text-sm border border-white/20 shadow-2xl"
-            >
-              <Sparkles className="w-4 h-4 mr-2 text-blue-300" />
-              <span className="font-light tracking-wide">WELCOME TO OUR UNIVERSE</span>
-            </motion.div>
-            
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-100 to-violet-200 mb-8 leading-[0.9] tracking-tighter">
-              Building the<br />
-              <span className="bg-gradient-to-r from-blue-400 via-violet-400 to-purple-400 bg-clip-text">future of</span><br />
-              connection
-            </h1>
-            
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto mb-12 font-light leading-relaxed"
-            >
-              For over 15 years, we've crafted communication solutions that feel human, 
-              intuitive, and powerful. Technology that brings people closer together.
-            </motion.p>
-            
+      <div className="bg-white text-slate-900">
+        {/* Hero Section */}
+        <section className="min-h-screen flex items-center justify-center bg-white border-b border-slate-100">
+          <div className="max-w-6xl mx-auto px-6 py-32 text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex flex-wrap justify-center gap-4 mb-16"
+              transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <Button
-                variant="primary"
-                size="lg"
-                className="bg-white hover:bg-blue-50 text-blue-950 border-0 font-medium shadow-2xl shadow-blue-500/50"
-                icon={<Heart className="w-5 h-5" />}
-              >
-                Our Story
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="text-white border-white/30 hover:bg-white/10 backdrop-blur-sm font-light"
-                icon={<ArrowRight className="w-5 h-5" />}
-              >
-                Meet the Team
-              </Button>
-            </motion.div>
-
-            <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-              className="text-blue-300"
-            >
-              <div className="w-px h-20 mx-auto bg-gradient-to-b from-blue-400 via-violet-400 to-transparent" />
-            </motion.div>
-          </motion.div>
-        </Container>
-      </section>
-
-      {/* Stats Section - Dynamic Cards */}
-      <section className="py-24 bg-white dark:bg-slate-950 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 to-white dark:from-blue-950/20 dark:to-slate-950" />
-        
-        <Container className="relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {stats.map((stat, i) => (
               <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                onMouseEnter={() => setHoveredStat(i)}
-                onMouseLeave={() => setHoveredStat(null)}
-                className="relative group"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="inline-block mb-8 px-4 py-1.5 border border-slate-200 rounded-full text-slate-600 text-sm font-light tracking-wide"
               >
-                <div className={`p-8 rounded-3xl bg-gradient-to-br ${colorMap[stat.color]} transition-all duration-500 ${
-                  hoveredStat === i ? 'shadow-2xl scale-105' : 'shadow-lg'
-                }`}>
-                  <div className="flex justify-between items-start mb-6">
-                    <div className="text-white/80">
-                      {stat.icon}
-                    </div>
-                    <motion.div
-                      animate={{ rotate: hoveredStat === i ? 360 : 0 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <Sparkles className="w-5 h-5 text-white/60" />
-                    </motion.div>
-                  </div>
-                  
-                  <div className="text-5xl font-bold text-white mb-2">
-                    {stat.value}<span className="text-3xl font-light">{stat.suffix}</span>
-                  </div>
-                  
-                  <div className="text-sm text-white/90 font-medium mb-3">
-                    {stat.label}
-                  </div>
-                  
-                  <div className={`text-xs text-white/70 font-light transition-all duration-300 ${
-                    hoveredStat === i ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                  }`}>
-                    {stat.detail}
-                  </div>
-                </div>
+                WELCOME
               </motion.div>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Values Section - Tabs with Gradient Cards */}
-      <section className="py-32 bg-gradient-to-b from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16 text-center"
-          >
-            <div className="inline-flex items-center mb-6 px-4 py-2 bg-blue-100 dark:bg-blue-950/50 rounded-full text-blue-600 dark:text-blue-400 text-sm font-medium">
-              <Heart className="w-4 h-4 mr-2" />
-              CORE VALUES
-            </div>
-            <h2 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight">
-              What Drives Us
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-light">
-              The principles that guide every decision we make
-            </p>
-          </motion.div>
-
-          {/* Value Tabs */}
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {values.map((value, index) => (
-              <motion.button
-                key={value.id}
-                onClick={() => setSelectedValue(index)}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                  selectedValue === index
-                    ? 'bg-gradient-to-r ' + value.gradient + ' text-white shadow-lg'
-                    : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600'
-                }`}
+              
+              <h1 className="text-6xl md:text-7xl lg:text-8xl font-light text-slate-900 mb-8 leading-tight tracking-tight">
+                Building the<br />
+                <span className="font-normal text-blue-900">future of</span><br />
+                connection
+              </h1>
+              
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.4 }}
+                className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-12 font-light leading-relaxed"
               >
-                {value.title}
-              </motion.button>
-            ))}
+                For over 15 years, we've crafted communication solutions that feel human, 
+                intuitive, and powerful. Technology that brings people closer together.
+              </motion.p>
+              
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="flex flex-wrap justify-center gap-4"
+              >
+                <button className="px-8 py-3 bg-blue-900 hover:bg-blue-800 text-white font-light rounded transition-colors duration-300">
+                  Our Story
+                </button>
+                <button className="px-8 py-3 border border-slate-300 hover:border-blue-900 text-slate-700 hover:text-blue-900 font-light rounded transition-all duration-300">
+                  Meet the Team
+                </button>
+              </motion.div>
+            </motion.div>
           </div>
+        </section>
 
-          {/* Value Content */}
-          <AnimatePresence mode="wait">
+        {/* Stats Section */}
+        <section className="py-24 bg-slate-50">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {stats.map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                  onMouseEnter={() => setHoveredStat(i)}
+                  onMouseLeave={() => setHoveredStat(null)}
+                  className="group"
+                >
+                  <div className="p-8 bg-white border border-slate-200 hover:border-blue-900 rounded transition-all duration-300">
+                    <div className="flex justify-between items-start mb-6">
+                      <div className="text-slate-400 group-hover:text-blue-900 transition-colors duration-300">
+                        {stat.icon}
+                      </div>
+                    </div>
+                    
+                    <div className="text-4xl font-light text-slate-900 mb-2">
+                      {stat.value}<span className="text-2xl text-slate-600">{stat.suffix}</span>
+                    </div>
+                    
+                    <div className="text-sm text-slate-600 font-light mb-3">
+                      {stat.label}
+                    </div>
+                    
+                    <div className={`text-xs text-slate-500 font-light transition-all duration-300 ${
+                      hoveredStat === i ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
+                    }`}>
+                      {stat.detail}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Values Section */}
+        <section className="py-32 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
             <motion.div
-              key={selectedValue}
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
-              className="max-w-5xl mx-auto"
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-16 text-center"
             >
-              <div className={`relative p-12 rounded-3xl bg-gradient-to-br ${values[selectedValue].gradient} overflow-hidden shadow-2xl`}>
-                {/* Decorative Elements */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-                <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/10 rounded-full blur-3xl" />
-                
-                <div className="relative z-10">
-                  <div className="flex items-center gap-4 mb-8 text-white">
-                    <div className="p-4 bg-white/20 rounded-2xl backdrop-blur-sm">
-                      {values[selectedValue].icon}
+              <div className="inline-block mb-6 px-4 py-1.5 border border-slate-200 rounded-full text-slate-600 text-sm font-light tracking-wide">
+                CORE VALUES
+              </div>
+              <h2 className="text-5xl md:text-6xl font-light text-slate-900 mb-6 tracking-tight">
+                What Drives Us
+              </h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+                The principles that guide every decision we make
+              </p>
+            </motion.div>
+
+            {/* Value Tabs */}
+            <div className="flex flex-wrap justify-center gap-3 mb-12">
+              {values.map((value, index) => (
+                <motion.button
+                  key={value.id}
+                  onClick={() => setSelectedValue(index)}
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className={`px-6 py-2.5 rounded-full font-light transition-all duration-300 ${
+                    selectedValue === index
+                      ? 'bg-blue-900 text-white'
+                      : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'
+                  }`}
+                >
+                  {value.title}
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Value Content */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedValue}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4 }}
+                className="max-w-4xl mx-auto"
+              >
+                <div className="p-12 bg-slate-50 border border-slate-200 rounded">
+                  <div className="flex items-start gap-6 mb-8">
+                    <div className="p-4 bg-white border border-slate-200 rounded">
+                      <div className="text-blue-900">
+                        {values[selectedValue].icon}
+                      </div>
                     </div>
                     <div>
-                      <h3 className="text-4xl font-bold mb-2">
+                      <h3 className="text-3xl font-light text-slate-900 mb-2">
                         {values[selectedValue].title}
                       </h3>
-                      <p className="text-white/90 text-lg font-light">
+                      <p className="text-slate-600 font-light">
                         {values[selectedValue].description}
                       </p>
                     </div>
                   </div>
                   
-                  <p className="text-xl text-white/95 font-light leading-relaxed">
+                  <p className="text-lg text-slate-700 font-light leading-relaxed">
                     {values[selectedValue].fullText}
                   </p>
                 </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </section>
+
+        {/* Journey Timeline */}
+        <section className="py-32 bg-slate-50 border-t border-slate-200">
+          <div className="max-w-6xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-20 text-center"
+            >
+              <div className="inline-block mb-6 px-4 py-1.5 border border-slate-200 rounded-full text-slate-600 text-sm font-light tracking-wide">
+                OUR JOURNEY
               </div>
+              <h2 className="text-5xl md:text-6xl font-light text-slate-900 mb-6 tracking-tight">
+                15 Years of Impact
+              </h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+                Key moments that shaped who we are today
+              </p>
             </motion.div>
-          </AnimatePresence>
-        </Container>
-      </section>
 
-      {/* Journey Timeline */}
-      <section className="py-32 bg-slate-900 dark:bg-black text-white relative overflow-hidden">
-        {/* Background Effect */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]" />
-        
-        <Container className="relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-20 text-center"
-          >
-            <div className="inline-flex items-center mb-6 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-blue-400 text-sm font-medium">
-              <Rocket className="w-4 h-4 mr-2" />
-              OUR JOURNEY
-            </div>
-            <h2 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-              15 Years of Impact
-            </h2>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto font-light">
-              Key moments that shaped who we are today
-            </p>
-          </motion.div>
-
-          <div className="max-w-6xl mx-auto">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {milestones.map((milestone, index) => (
                 <motion.button
@@ -412,231 +346,189 @@ const AboutPage = () => {
                     setSelectedMilestone(milestone);
                     setIsPanelOpen(true);
                   }}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  className="group relative p-8 bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-2xl text-left hover:border-blue-500 hover:bg-slate-800/80 transition-all duration-300 overflow-hidden"
+                  className="group p-8 bg-white border border-slate-200 hover:border-blue-900 rounded text-left transition-all duration-300"
                 >
-                  {/* Hover Gradient */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600/0 via-violet-600/0 to-purple-600/0 group-hover:from-blue-600/20 group-hover:via-violet-600/20 group-hover:to-purple-600/20 transition-all duration-500" />
-                  
-                  <div className="relative z-10">
-                    <div className="text-5xl font-bold text-blue-400 mb-4 group-hover:text-blue-300 transition-colors">
-                      {milestone.year}
-                    </div>
-                    <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-blue-100 transition-colors">
-                      {milestone.title}
-                    </h3>
-                    <p className="text-slate-400 font-light mb-4 leading-relaxed">
-                      {milestone.description}
-                    </p>
-                    <div className="flex items-center text-blue-400 text-sm font-medium">
-                      <span>Learn more</span>
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform" />
-                    </div>
+                  <div className="text-4xl font-light text-blue-900 mb-4">
+                    {milestone.year}
+                  </div>
+                  <h3 className="text-xl font-normal text-slate-900 mb-3">
+                    {milestone.title}
+                  </h3>
+                  <p className="text-slate-600 font-light mb-4 leading-relaxed">
+                    {milestone.description}
+                  </p>
+                  <div className="flex items-center text-blue-900 text-sm font-light">
+                    <span>Learn more</span>
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
                   </div>
                 </motion.button>
               ))}
             </div>
           </div>
-        </Container>
-      </section>
+        </section>
 
-      {/* Team Section - Feature Card */}
-      <section className="py-32 bg-gradient-to-b from-white to-blue-50 dark:from-slate-950 dark:to-blue-950/20">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16 text-center"
-          >
-            <div className="inline-flex items-center mb-6 px-4 py-2 bg-blue-100 dark:bg-blue-950/50 rounded-full text-blue-600 dark:text-blue-400 text-sm font-medium">
-              <Users className="w-4 h-4 mr-2" />
-              LEADERSHIP
-            </div>
-            <h2 className="text-5xl md:text-7xl font-bold text-slate-900 dark:text-white mb-6 tracking-tight">
-              Meet Our Founder
-            </h2>
-            <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto font-light">
-              The visionary behind DuoTech Solutions
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="max-w-5xl mx-auto"
-          >
-            <div className="relative p-12 md:p-16 bg-gradient-to-br from-slate-900 to-blue-900 dark:from-slate-950 dark:to-blue-950 rounded-3xl overflow-hidden shadow-2xl">
-              {/* Decorative Background */}
-              <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-violet-500/20 rounded-full blur-3xl" />
-              
-              <div className="relative z-10 flex flex-col md:flex-row gap-12 items-center">
-                <div className="flex-shrink-0">
-                  <div className="relative w-48 h-48 md:w-56 md:h-56">
-                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-violet-500 rounded-full blur-xl opacity-50" />
-                    <img 
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" 
-                      alt="Satyam Sharma" 
-                      className="relative w-full h-full object-cover rounded-full border-4 border-white/20"
-                    />
-                  </div>
-                </div>
-                
-                <div className="flex-1 text-white">
-                  <h3 className="text-4xl font-bold mb-2">
-                    Satyam Sharma
-                  </h3>
-                  <p className="text-blue-300 text-lg mb-6 font-light">
-                    Founder & Chief Executive Officer
-                  </p>
-                  <p className="text-white/90 text-lg mb-6 font-light leading-relaxed">
-                    With over 15 years of pioneering experience in digital communication, 
-                    Satyam founded DuoTech in 2010 with a singular mission: to make enterprise-grade 
-                    communication tools accessible to everyone. His vision has transformed how 
-                    thousands of businesses connect with their customers.
-                  </p>
-                  <div className="flex flex-wrap gap-6 text-sm text-white/80">
-                    <div className="flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-blue-400" />
-                      <span>Tech Visionary</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Heart className="w-4 h-4 text-violet-400" />
-                      <span>People Champion</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Rocket className="w-4 h-4 text-purple-400" />
-                      <span>Innovation Driver</span>
-                    </div>
-                  </div>
-                </div>
+        {/* Team Section */}
+        <section className="py-32 bg-white">
+          <div className="max-w-6xl mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-16 text-center"
+            >
+              <div className="inline-block mb-6 px-4 py-1.5 border border-slate-200 rounded-full text-slate-600 text-sm font-light tracking-wide">
+                LEADERSHIP
               </div>
-            </div>
-          </motion.div>
-        </Container>
-      </section>
+              <h2 className="text-5xl md:text-6xl font-light text-slate-900 mb-6 tracking-tight">
+                Meet Our Founder
+              </h2>
+              <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+                The visionary behind DuoTech Solutions
+              </p>
+            </motion.div>
 
-      {/* CTA Section - Bold */}
-      <section className="py-32 bg-gradient-to-br from-blue-600 via-violet-600 to-purple-600 dark:from-blue-900 dark:via-violet-900 dark:to-purple-900 relative overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-white/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/3 w-80 h-80 bg-white/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
-        
-        <Container className="relative z-10">
-          <div className="max-w-4xl mx-auto text-center text-white">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto"
             >
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
-                className="inline-flex items-center mb-8 px-6 py-3 bg-white/20 backdrop-blur-xl rounded-full text-sm font-medium border border-white/30"
-              >
-                <Sparkles className="w-4 h-4 mr-2" />
-                LET'S CREATE MAGIC TOGETHER
-              </motion.div>
-              
-              <h2 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-                Ready to Transform<br />Your Communication?
-              </h2>
-              
-              <p className="text-xl text-white/90 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
-                Join hundreds of innovative companies who trust DuoTech to power 
-                their most critical communications. Your success story starts here.
-              </p>
-              
-              <div className="flex flex-wrap justify-center gap-4">
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="bg-white hover:bg-gray-100 text-blue-600 border-0 font-semibold shadow-2xl text-lg px-8 py-4"
-                  icon={<MessageCircle className="w-5 h-5" />}
-                >
-                  Schedule a Demo
-                </Button>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="text-white border-white/40 hover:bg-white/10 backdrop-blur-sm font-medium text-lg px-8 py-4"
-                  icon={<ArrowRight className="w-5 h-5" />}
-                >
-                  View Case Studies
-                </Button>
+              <div className="p-12 bg-slate-50 border border-slate-200 rounded">
+                <div className="flex flex-col md:flex-row gap-12 items-center">
+                  <div className="flex-shrink-0">
+                    <div className="w-48 h-48 md:w-56 md:h-56">
+                      <img 
+                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" 
+                        alt="Satyam Sharma" 
+                        className="w-full h-full object-cover rounded border border-slate-200"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex-1">
+                    <h3 className="text-3xl font-light text-slate-900 mb-2">
+                      Satyam Sharma
+                    </h3>
+                    <p className="text-blue-900 mb-6 font-light">
+                      Founder & Chief Executive Officer
+                    </p>
+                    <p className="text-slate-700 font-light leading-relaxed mb-6">
+                      With over 15 years of pioneering experience in digital communication, 
+                      Satyam founded DuoTech in 2010 with a singular mission: to make enterprise-grade 
+                      communication tools accessible to everyone. His vision has transformed how 
+                      thousands of businesses connect with their customers.
+                    </p>
+                    <div className="flex flex-wrap gap-6 text-sm text-slate-600 font-light">
+                      <div>Tech Visionary</div>
+                      <div>People Champion</div>
+                      <div>Innovation Driver</div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
-        </Container>
-      </section>
+        </section>
 
-      {/* Milestone Detail Panel */}
-      <AnimatePresence>
-        {isPanelOpen && selectedMilestone && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsPanelOpen(false)}
-              className="fixed inset-0 bg-black/80 backdrop-blur-md z-40"
-            />
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className="fixed right-0 top-0 bottom-0 w-full md:w-[600px] bg-slate-900 dark:bg-black border-l border-slate-700 dark:border-slate-800 shadow-2xl z-50 overflow-y-auto"
-            >
-              <div className="p-8 md:p-12">
-                <button
-                  onClick={() => setIsPanelOpen(false)}
-                  className="mb-8 p-3 hover:bg-slate-800 rounded-xl transition-colors group"
-                >
-                  <X className="w-6 h-6 text-slate-400 group-hover:text-white" />
-                </button>
-                
-                <div className="text-6xl font-bold bg-gradient-to-r from-blue-400 to-violet-400 bg-clip-text text-transparent mb-8">
-                  {selectedMilestone.year}
+        {/* CTA Section */}
+        <section className="py-32 bg-blue-900 border-t border-blue-800">
+          <div className="max-w-6xl mx-auto px-6">
+            <div className="max-w-3xl mx-auto text-center text-white">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                <div className="inline-block mb-8 px-4 py-1.5 border border-blue-700 rounded-full text-sm font-light tracking-wide">
+                  LET'S WORK TOGETHER
                 </div>
                 
-                <h3 className="text-4xl font-bold text-white mb-4">
-                  {selectedMilestone.title}
-                </h3>
+                <h2 className="text-5xl md:text-6xl font-light mb-8 leading-tight">
+                  Ready to Transform<br />Your Communication?
+                </h2>
                 
-                <p className="text-xl text-slate-300 font-light leading-relaxed mb-8">
-                  {selectedMilestone.description}
+                <p className="text-lg text-blue-100 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                  Join hundreds of innovative companies who trust DuoTech to power 
+                  their most critical communications. Your success story starts here.
                 </p>
                 
-                <div className="p-8 bg-gradient-to-br from-blue-600/20 to-violet-600/20 rounded-2xl border border-blue-500/30 mb-8 backdrop-blur-sm">
-                  <p className="text-slate-200 font-light leading-relaxed text-lg">
-                    {selectedMilestone.detail}
-                  </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <button className="px-8 py-3 bg-white hover:bg-blue-50 text-blue-900 font-light rounded transition-colors duration-300">
+                    Schedule a Demo
+                  </button>
+                  <button className="px-8 py-3 border border-blue-700 hover:border-blue-600 text-white font-light rounded transition-colors duration-300">
+                    View Case Studies
+                  </button>
                 </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
-                <div className="flex items-center gap-3 p-6 bg-slate-800/50 rounded-xl border border-slate-700">
-                  <div className="p-3 bg-gradient-to-br from-blue-500 to-violet-500 rounded-lg">
-                    <Sparkles className="w-6 h-6 text-white" />
+        {/* Milestone Detail Panel */}
+        <AnimatePresence>
+          {isPanelOpen && selectedMilestone && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsPanelOpen(false)}
+                className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40"
+              />
+              <motion.div
+                initial={{ x: '100%' }}
+                animate={{ x: 0 }}
+                exit={{ x: '100%' }}
+                transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+                className="fixed right-0 top-0 bottom-0 w-full md:w-[600px] bg-white border-l border-slate-200 shadow-2xl z-50 overflow-y-auto"
+              >
+                <div className="p-12">
+                  <button
+                    onClick={() => setIsPanelOpen(false)}
+                    className="mb-8 p-2 hover:bg-slate-50 rounded transition-colors"
+                  >
+                    <X className="w-6 h-6 text-slate-400" />
+                  </button>
+                  
+                  <div className="text-5xl font-light text-blue-900 mb-8">
+                    {selectedMilestone.year}
                   </div>
-                  <div>
-                    <div className="text-sm text-slate-400 mb-1">Impact</div>
-                    <div className="text-lg font-semibold text-white">{selectedMilestone.impact}</div>
+                  
+                  <h3 className="text-3xl font-light text-slate-900 mb-4">
+                    {selectedMilestone.title}
+                  </h3>
+                  
+                  <p className="text-lg text-slate-600 font-light leading-relaxed mb-8">
+                    {selectedMilestone.description}
+                  </p>
+                  
+                  <div className="p-8 bg-slate-50 border border-slate-200 rounded mb-8">
+                    <p className="text-slate-700 font-light leading-relaxed">
+                      {selectedMilestone.detail}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-4 p-6 bg-slate-50 border border-slate-200 rounded">
+                    <div className="p-3 bg-blue-900 rounded">
+                      <Heart className="w-5 h-5 text-white" />
+                    </div>
+                    <div>
+                      <div className="text-sm text-slate-500 font-light mb-1">Impact</div>
+                      <div className="text-slate-900 font-light">{selectedMilestone.impact}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+      </div>
     </MainLayout>
   );
 };
