@@ -1,647 +1,442 @@
-import React, { useState } from 'react';
-import { ParallaxProvider } from 'react-scroll-parallax';
+import { useState } from 'react';
 import { 
-  Phone, Volume2, Languages, BarChart2, 
-  Zap, Shield, GitBranch, Server, 
-  Check, ChevronRight, ChevronLeft, 
-  Play, Mail, MessageSquare, ArrowRight,
-  Circle, CircleDot, Mic, Calendar, Star, ChevronDown, Users, PieChart, Download
+  Phone, Users, Heart, Globe, 
+  MessageCircle, Headphones, Target, ShieldCheck,
+  CheckCircle, ArrowRight, ArrowLeft,
+  Play, Clock, Shield, TrendingUp,
+  GraduationCap, Truck, Building, Radio
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import MainLayout from '../components/layout/MainLayout';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 
-// Data for the page
-const voiceOBDData = {
+// Minimal data structure
+const content = {
   hero: {
-    title: "Reach Thousands Instantly with Voice OBD",
-    description: "Automate your customer communication with our powerful voice broadcasting platform. Deliver personalized messages at scale with 99.9% reliability.",
-    ctaButtons: [
-      { text: "Request Demo", variant: "primary" },
-      { text: "Contact Us", variant: "secondary" }
+    title: "Voice That Connects",
+    subtitle: "Where technology meets human connection",
+    description: "Transform automated calls into meaningful conversations that feel personal at scale.",
+    stats: [
+      { value: "2.4M", label: "Daily connections" },
+      { value: "98%", label: "Satisfaction rate" },
+      { value: "45+", label: "Countries served" }
     ]
   },
   features: [
     {
-      icon: <Volume2 className="w-8 h-8" />,
-      title: "High-Volume Calls",
-      description: "Handle thousands of simultaneous calls with our robust infrastructure",
+      icon: <MessageCircle className="w-6 h-6" />,
+      title: "Natural Conversations",
+      description: "AI that understands context and responds with authenticity"
     },
     {
-      icon: <Languages className="w-8 h-8" />,
-      title: "Multilingual Support",
-      description: "Reach customers in their preferred language with automated translation",
+      icon: <Headphones className="w-6 h-6" />,
+      title: "Crystal Clear Audio",
+      description: "Professional-grade voice quality in every interaction"
     },
     {
-      icon: <BarChart2 className="w-8 h-8" />,
-      title: "Real-Time Reports",
-      description: "Monitor campaign performance with live analytics dashboard",
+      icon: <Target className="w-6 h-6" />,
+      title: "Smart Timing",
+      description: "Reach your audience when they're most receptive"
     },
     {
-      icon: <Phone className="w-8 h-8" />,
-      title: "IVR Integration",
-      description: "Custom interactive voice response menus for professional customer experience",
-    },
-    {
-      icon: <Zap className="w-8 h-8" />,
-      title: "Instant Delivery",
-      description: "Messages delivered in seconds with 99.9% reliability",
-    },
-    {
-      icon: <Shield className="w-8 h-8" />,
+      icon: <ShieldCheck className="w-6 h-6" />,
       title: "Enterprise Security",
-      description: "End-to-end encryption and compliance with global standards",
+      description: "Bank-level encryption for all communications"
     }
   ],
-  useCases: {
-    healthcare: {
-      title: "Healthcare",
-      description: "Automated appointment reminders, prescription notifications, and health awareness campaigns delivered directly to patients via voice calls.",
-      image: "/images/healthcare-voice.jpg",
-      features: [
-        "HIPAA-compliant messaging",
-        "Multi-language support",
-        "Automated follow-ups",
-        "Integration with EHR systems"
-      ],
-      benefits: [
-        "Reduce no-show rates by up to 40%",
-        "Improve patient engagement",
-        "Automate routine communications"
-      ]
+  useCases: [
+    {
+      icon: <Heart className="w-7 h-7" />,
+      category: "Healthcare",
+      title: "Patient Care",
+      description: "Automated appointment reminders and follow-ups that show genuine care",
+      features: ["HIPAA compliant", "Multilingual support", "Smart scheduling"]
     },
-    education: {
-      title: "Education",
-      description: "School notifications, exam alerts, and parent-teacher communication through automated voice broadcasts.",
-      image: "/images/education-voice.jpg",
-      features: [
-        "Bulk messaging to parents",
-        "Multi-language options",
-        "Attendance alerts",
-        "Emergency notifications"
-      ],
-      benefits: [
-        "Increase parent engagement",
-        "Ensure critical messages are received",
-        "Reduce administrative workload"
-      ]
+    {
+      icon: <GraduationCap className="w-7 h-7" />,
+      category: "Education",
+      title: "Family Engagement",
+      description: "Keep parents informed with personalized updates and announcements",
+      features: ["Event notifications", "Progress reports", "Emergency alerts"]
     },
-    retail: {
-      title: "Retail",
-      description: "Promotional campaigns, order confirmations, and delivery updates via voice calls to enhance customer engagement.",
-      image: "/images/retail-voice.jpg",
-      features: [
-        "Personalized offers",
-        "Order status updates",
-        "Feedback collection",
-        "Loyalty program alerts"
-      ],
-      benefits: [
-        "Boost sales with targeted promotions",
-        "Improve customer satisfaction",
-        "Reduce call center volume"
-      ]
+    {
+      icon: <Building className="w-7 h-7" />,
+      category: "Business",
+      title: "Customer Relations",
+      description: "Build stronger relationships through thoughtful communication",
+      features: ["Order updates", "Service reminders", "Promotional offers"]
     },
-    logistics: {
-      title: "Logistics",
-      description: "Delivery notifications, OTP verification, and customer support through automated voice solutions.",
-      image: "/images/logistics-voice.jpg",
-      features: [
-        "Real-time delivery updates",
-        "OTP verification calls",
-        "Customer feedback surveys",
-        "Driver coordination"
-      ],
-      benefits: [
-        "Reduce failed delivery attempts",
-        "Improve customer experience",
-        "Streamline operations"
-      ]
+    {
+      icon: <Truck className="w-7 h-7" />,
+      category: "Logistics",
+      title: "Delivery Updates",
+      description: "Real-time tracking notifications that customers appreciate",
+      features: ["Live tracking", "ETA updates", "Delivery confirmation"]
     }
-  },
-  howItWorks: [
+  ],
+  process: [
     {
-      step: 1,
-      title: "Upload Your Contacts",
-      description: "Import your contact list or connect to your CRM",
-      icon: <Users className="w-6 h-6" />
+      number: "01",
+      title: "Upload Contacts",
+      description: "Import your contact list securely"
     },
     {
-      step: 2,
-      title: "Record Your Message",
-      description: "Upload audio files or use our text-to-speech service",
-      icon: <Mic className="w-6 h-6" />
+      number: "02",
+      title: "Create Message",
+      description: "Design your voice message template"
     },
     {
-      step: 3,
-      title: "Schedule Your Campaign",
-      description: "Set date/time or trigger based on events",
-      icon: <Calendar className="w-6 h-6" />
+      number: "03",
+      title: "Schedule Campaign",
+      description: "Choose optimal delivery times"
     },
     {
-      step: 4,
-      title: "Launch & Monitor",
-      description: "Track performance in real-time with our dashboard",
-      icon: <BarChart2 className="w-6 h-6" />
+      number: "04",
+      title: "Track Results",
+      description: "Monitor engagement and responses"
     }
   ],
   testimonials: [
     {
-      name: "Dr. Sarah Johnson",
-      role: "Hospital Administrator",
-      quote: "Our patient no-show rate dropped by 40% after implementing voice OBD reminders. The system pays for itself.",
-      rating: 5,
-      image: "/images/testimonial-1.jpg"
+      quote: "Our patient engagement increased by 62% within the first month. The platform is intuitive and incredibly effective.",
+      author: "Maria Rodriguez",
+      role: "Clinic Manager",
+      company: "Community Health Partners"
     },
     {
-      name: "Raj Patel",
-      role: "E-commerce Owner",
-      quote: "Order confirmation calls have significantly improved our customer satisfaction scores. Highly recommended!.",
-      rating: 5,
-      image: "/images/testimonial-2.jpg"
+      quote: "The personal touch in delivery notifications has transformed customer satisfaction. Highly recommended.",
+      author: "David Chen",
+      role: "Operations Director",
+      company: "FreshMarket Grocers"
     },
     {
-      name: "Maria Gonzalez",
+      quote: "Parents feel genuinely connected to their child's education. This tool has been invaluable.",
+      author: "Sarah Johnson",
       role: "School Principal",
-      quote: "Parent engagement has never been higher since we started using voice broadcasts for important announcements.",
-      rating: 4,
-      image: "/images/testimonial-3.jpg"
-    }
-  ],
-  faqs: [
-    {
-      question: "How quickly can I start a voice OBD campaign?",
-      answer: "You can launch your first campaign within minutes of signing up. Our intuitive interface guides you through the simple setup process."
-    },
-    {
-      question: "What languages are supported?",
-      answer: "We support over 50 languages with natural-sounding text-to-speech voices, or you can upload your own recordings in any language."
-    },
-    {
-      question: "Can I target specific demographics?",
-      answer: "Yes, our segmentation tools allow you to target contacts by location, language, age group, and other custom parameters."
-    },
-    {
-      question: "How are calls billed?",
-      answer: "We offer both pay-as-you-go pricing and volume discounts. You only pay for completed calls to valid numbers."
-    }
-  ],
-  stats: [
-    {
-      value: "99.9%",
-      label: "Uptime",
-      description: "Guaranteed reliability for your business",
-      icon: <Server className="w-8 h-8" />
-    },
-    {
-      value: "10M+",
-      label: "Calls Daily",
-      description: "Processed across our global network",
-      icon: <Phone className="w-8 h-8" />
-    },
-    {
-      value: "50+",
-      label: "Languages",
-      description: "Supported for voice broadcasts",
-      icon: <Languages className="w-8 h-8" />
-    },
-    {
-      value: "24/7",
-      label: "Support",
-      description: "Expert help whenever you need it",
-      icon: <Users className="w-8 h-8" />
+      company: "Maplewood Elementary"
     }
   ]
 };
 
-// Components
-const FeatureCard = ({ feature, index }: { feature: typeof voiceOBDData.features[0]; index: number }) => {
+// Clean, minimal components
+const FeatureCard = ({ feature, index }: { feature: typeof content.features[0]; index: number }) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 15 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
-      whileHover={{ y: -5 }}
-      className="bg-white dark:bg-gray-800 rounded-lg p-8 transition-all duration-300 border border-gray-200 dark:border-gray-700"
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, delay: index * 0.08 }}
+      className="group"
     >
-      <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-6 text-blue-600 dark:text-blue-400">
-        {feature.icon}
+      <div className="p-8 border-l-2 border-gray-200 hover:border-blue-600 transition-colors duration-300">
+        <div className="mb-4 text-blue-600 transition-colors">
+          {feature.icon}
+        </div>
+        <h3 className="text-lg font-normal text-gray-900 mb-2">
+          {feature.title}
+        </h3>
+        <p className="text-gray-600 font-light text-sm leading-relaxed">
+          {feature.description}
+        </p>
       </div>
-      <h3 className="text-xl font-sans font-regular text-gray-900 dark:text-white mb-3">
-        {feature.title}
-      </h3>
-      <p className="text-gray-500 dark:text-gray-400 font-light">
-        {feature.description}
-      </p>
     </motion.div>
   );
 };
 
-const UseCaseCard = ({ useCase, isActive }: { useCase: any; isActive: boolean }) => {
+const UseCaseCard = ({ useCase, index }: { useCase: typeof content.useCases[0]; index: number }) => {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="bg-white dark:bg-gray-800 rounded-lg p-8 border border-gray-200 dark:border-gray-700"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      <h3 className="text-2xl font-sans font-regular text-gray-900 dark:text-white mb-4">
-        {useCase.title}
-      </h3>
-      <p className="text-gray-500 dark:text-gray-400 mb-6 font-light">
-        {useCase.description}
-      </p>
-      <ul className="space-y-3">
-        {useCase.features.map((feature: string, i: number) => (
-          <li key={i} className="flex items-start">
-            <Check className="w-5 h-5 text-blue-600 mt-0.5 mr-2 flex-shrink-0" />
-            <span className="text-gray-700 dark:text-gray-300 font-light">{feature}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="bg-white p-8 border border-gray-200 hover:border-blue-600 hover:shadow-lg transition-all duration-300">
+        <div className="flex items-start justify-between mb-6">
+          <div className="w-12 h-12 bg-blue-50 text-blue-600 flex items-center justify-center">
+            {useCase.icon}
+          </div>
+          <span className="text-xs text-gray-500 uppercase tracking-wider">
+            {useCase.category}
+          </span>
+        </div>
+
+        <h3 className="text-xl font-light text-gray-900 mb-3">
+          {useCase.title}
+        </h3>
+        <p className="text-gray-600 font-light text-sm mb-6 leading-relaxed">
+          {useCase.description}
+        </p>
+
+        <div className="space-y-2 pt-6 border-t border-gray-100">
+          {useCase.features.map((feature, i) => (
+            <div key={i} className="flex items-center text-gray-700">
+              <div className="w-1 h-1 bg-blue-600 rounded-full mr-3" />
+              <span className="text-sm font-light">{feature}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </motion.div>
   );
 };
 
-const TestimonialCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+const ProcessStep = ({ step, index, isLast }: { step: typeof content.process[0]; index: number; isLast: boolean }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="relative"
+    >
+      <div className="flex items-start gap-6">
+        <div className="flex-shrink-0">
+          <div className="w-16 h-16 border-2 border-blue-600 flex items-center justify-center">
+            <span className="text-sm font-light text-blue-600">{step.number}</span>
+          </div>
+          {!isLast && (
+            <div className="w-0.5 h-24 bg-blue-600/20 ml-8 mt-4" />
+          )}
+        </div>
+        <div className="pt-3">
+          <h3 className="text-lg font-normal text-gray-900 mb-2">
+            {step.title}
+          </h3>
+          <p className="text-gray-600 font-light text-sm">
+            {step.description}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
 
-  const nextTestimonial = () => {
-    setCurrentIndex((prev) => (prev === voiceOBDData.testimonials.length - 1 ? 0 : prev + 1));
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prev) => (prev === 0 ? voiceOBDData.testimonials.length - 1 : prev - 1));
-  };
+const TestimonialSlider = () => {
+  const [current, setCurrent] = useState(0);
 
   return (
-    <div className="relative max-w-4xl mx-auto">
+    <div className="max-w-4xl mx-auto">
       <AnimatePresence mode="wait">
         <motion.div
-          key={currentIndex}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-white dark:bg-gray-800 p-12 rounded-lg border border-gray-200 dark:border-gray-700"
+          key={current}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.4 }}
+          className="text-center"
         >
-          <div className="flex mb-4">
-            {[...Array(voiceOBDData.testimonials[currentIndex].rating)].map((_, i) => (
-              <Star key={i} className="w-5 h-5 text-blue-600 fill-current" />
-            ))}
-          </div>
-          <p className="text-xl font-light text-gray-700 dark:text-gray-300 mb-6">
-            "{voiceOBDData.testimonials[currentIndex].quote}"
+          <p className="text-2xl font-light text-gray-900 mb-8 leading-relaxed">
+            "{content.testimonials[current].quote}"
           </p>
-          <div className="flex items-center">
-            <img 
-              src={voiceOBDData.testimonials[currentIndex].image} 
-              alt={voiceOBDData.testimonials[currentIndex].name} 
-              className="w-12 h-12 rounded-full object-cover mr-4 border-2 border-blue-600"
-            />
-            <div>
-              <p className="font-regular text-gray-900 dark:text-white">
-                {voiceOBDData.testimonials[currentIndex].name}
-              </p>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                {voiceOBDData.testimonials[currentIndex].role}
-              </p>
-            </div>
+          <div className="border-t border-blue-600/20 pt-6">
+            <p className="text-base font-normal text-gray-900">
+              {content.testimonials[current].author}
+            </p>
+            <p className="text-sm text-gray-600 font-light">
+              {content.testimonials[current].role}, {content.testimonials[current].company}
+            </p>
           </div>
         </motion.div>
       </AnimatePresence>
 
-      <div className="flex justify-center mt-8 space-x-4">
+      <div className="flex items-center justify-center gap-8 mt-12">
         <button
-          onClick={prevTestimonial}
-          className="p-3 rounded-full bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-600 transition-colors border border-gray-200 dark:border-gray-700"
+          onClick={() => setCurrent((prev) => (prev === 0 ? content.testimonials.length - 1 : prev - 1))}
+          className="p-2 border border-gray-300 hover:border-blue-600 text-gray-600 hover:text-blue-600 transition-colors"
           aria-label="Previous testimonial"
         >
-          <ChevronLeft className="w-5 h-5" />
+          <ArrowLeft className="w-4 h-4" />
         </button>
+        
+        <div className="flex gap-2">
+          {content.testimonials.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrent(index)}
+              className={`w-2 h-2 transition-colors ${
+                current === index ? 'bg-blue-600' : 'bg-gray-300'
+              }`}
+              aria-label={`Go to testimonial ${index + 1}`}
+            />
+          ))}
+        </div>
+
         <button
-          onClick={nextTestimonial}
-          className="p-3 rounded-full bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-blue-600 transition-colors border border-gray-200 dark:border-gray-700"
+          onClick={() => setCurrent((prev) => (prev === content.testimonials.length - 1 ? 0 : prev + 1))}
+          className="p-2 border border-gray-300 hover:border-blue-600 text-gray-600 hover:text-blue-600 transition-colors"
           aria-label="Next testimonial"
         >
-          <ChevronRight className="w-5 h-5" />
+          <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>
   );
 };
 
-const FAQItem = ({ faq, index, expanded, setExpanded }: { 
-  faq: typeof voiceOBDData.faqs[0]; 
-  index: number; 
-  expanded: number | null; 
-  setExpanded: (index: number | null) => void 
-}) => {
-  const isOpen = expanded === index;
-
-  return (
-    <motion.div 
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      className="mb-4 last:mb-0 border-b border-gray-200 dark:border-gray-700"
-    >
-      <button
-        onClick={() => setExpanded(isOpen ? null : index)}
-        className="w-full flex justify-between items-center p-6 text-left"
-        aria-expanded={isOpen}
-      >
-        <h3 className="text-lg font-regular text-gray-900 dark:text-white">
-          {faq.question}
-        </h3>
-        <motion.div
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3 }}
-          className="ml-4 flex-shrink-0 text-blue-600"
-        >
-          <ChevronDown className="w-5 h-5" />
-        </motion.div>
-      </button>
-      <motion.div
-        initial={false}
-        animate={{
-          height: isOpen ? 'auto' : 0,
-          opacity: isOpen ? 1 : 0,
-          marginTop: isOpen ? '1rem' : 0
-        }}
-        transition={{ duration: 0.3 }}
-        className="overflow-hidden"
-      >
-        <div className="px-6 pb-6 font-light text-gray-600 dark:text-gray-300">
-          {faq.answer}
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-};
-
-const StatCard = ({ stat, index }: { stat: typeof voiceOBDData.stats[0]; index: number }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      className="bg-white dark:bg-gray-800 p-8 rounded-lg border border-gray-200 dark:border-gray-700"
-    >
-      <div className="flex items-center mb-4">
-        <div className="p-3 bg-blue-100 dark:bg-blue-900 rounded-lg mr-4 text-blue-600 dark:text-blue-400">
-          {stat.icon}
-        </div>
-        <p className="text-4xl font-regular text-gray-900 dark:text-white">
-          {stat.value}
-        </p>
-      </div>
-      <p className="text-lg font-regular text-gray-900 dark:text-white mb-1">{stat.label}</p>
-      <p className="text-sm font-light text-gray-500 dark:text-gray-400">{stat.description}</p>
-    </motion.div>
-  );
-};
-
-// Main Page Component
+// Main Page
 const VoiceOBDPage = () => {
-  const [activeTab, setActiveTab] = useState('healthcare');
-  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
-
   return (
     <MainLayout>
-      {/* Hero Section */}
-      <section className="bg-blue-900 text-white">
+      {/* Hero */}
+      <section className="bg-gradient-to-br from-blue-50 to-blue-100/50 relative overflow-hidden">
+        {/* Accent line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-blue-600 to-transparent" />
+        
         <Container>
-          <div className="py-32 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <h1 className="text-6xl font-sans font-regular mb-6">
-                {voiceOBDData.hero.title}
-              </h1>
-              <p className="text-xl font-light text-blue-200 mb-12 max-w-2xl mx-auto">
-                {voiceOBDData.hero.description}
-              </p>
-              <div className="flex justify-center gap-4">
-                <Button variant="primary" size="lg" className="bg-white text-blue-900 hover:bg-gray-100">
-                  Request Demo
-                </Button>
-                <Button variant="secondary" size="lg" className="text-white border-white hover:bg-white/10">
-                  Contact Us
-                </Button>
-              </div>
-            </motion.div>
+          <div className="min-h-screen flex items-center justify-center py-20">
+            <div className="max-w-4xl mx-auto text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <h1 className="text-5xl lg:text-7xl font-light mb-6 tracking-tight text-gray-900">
+                  {content.hero.title}
+                </h1>
+                <p className="text-xl lg:text-2xl font-light text-gray-600 mb-8">
+                  {content.hero.subtitle}
+                </p>
+                <p className="text-lg text-gray-600 font-light mb-12 max-w-2xl mx-auto leading-relaxed">
+                  {content.hero.description}
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
+                  <Button variant="primary" size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+                    <Phone className="w-4 h-4 mr-2" />
+                    Get Started
+                  </Button>
+                  <Button variant="secondary" size="lg" className="text-blue-600 border-blue-600 hover:bg-blue-50">
+                    <Play className="w-4 h-4 mr-2" />
+                    Watch Demo
+                  </Button>
+                </div>
+
+                <div className="grid grid-cols-3 gap-8 pt-12 border-t border-blue-600/20">
+                  {content.hero.stats.map((stat, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                      className="text-center"
+                    >
+                      <div className="text-3xl font-light mb-2 text-blue-600">{stat.value}</div>
+                      <div className="text-sm text-gray-600 font-light">{stat.label}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* Features Section */}
-      <section className="py-24 bg-white dark:bg-gray-900">
+      {/* Features */}
+      <section className="py-32 bg-white">
         <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-sans font-regular text-gray-900 dark:text-white mb-6">
-              Successful Campaigns Start Here
+          <div className="max-w-3xl mb-20">
+            <h2 className="text-4xl lg:text-5xl font-light text-gray-900 mb-6 tracking-tight">
+              Built for performance
             </h2>
-            <p className="text-xl font-light text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-              Our platform provides all the tools to create, manage, and optimize your voice broadcasts.
+            <p className="text-xl text-gray-600 font-light leading-relaxed">
+              Enterprise-grade features designed to scale with your needs.
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {voiceOBDData.features.map((feature, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0">
+            {content.features.map((feature, index) => (
               <FeatureCard key={index} feature={feature} index={index} />
             ))}
           </div>
         </Container>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-800">
+      {/* Use Cases */}
+      <section className="py-32 bg-gradient-to-br from-blue-50 to-blue-100/50">
         <Container>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {voiceOBDData.stats.map((stat, index) => (
-              <StatCard key={index} stat={stat} index={index} />
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Use Cases Section */}
-      <section className="py-24 bg-white dark:bg-gray-900">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-sans font-regular text-gray-900 dark:text-white mb-6">
-              Industry Solutions
+          <div className="max-w-3xl mb-20">
+            <h2 className="text-4xl lg:text-5xl font-light text-gray-900 mb-6 tracking-tight">
+              Industry solutions
             </h2>
-            <p className="text-xl font-light text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-              Tailored voice OBD solutions for your specific needs.
+            <p className="text-xl text-gray-600 font-light leading-relaxed">
+              Tailored communication strategies for every sector.
             </p>
-          </motion.div>
-
-          <div className="flex justify-center gap-2 mb-12 border-b border-gray-200 dark:border-gray-700">
-            {Object.keys(voiceOBDData.useCases).map((key) => (
-              <motion.button
-                key={key}
-                onClick={() => setActiveTab(key)}
-                className={`px-6 py-3 font-regular transition-colors relative ${
-                  activeTab === key
-                    ? 'text-blue-600'
-                    : 'text-gray-500 hover:text-gray-900 dark:hover:text-white'
-                }`}
-              >
-                {voiceOBDData.useCases[key].title}
-                {activeTab === key && (
-                  <motion.div
-                    layoutId="underline"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600"
-                  />
-                )}
-              </motion.button>
-            ))}
           </div>
 
-          <UseCaseCard useCase={voiceOBDData.useCases[activeTab]} isActive={true} />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {content.useCases.map((useCase, index) => (
+              <UseCaseCard key={index} useCase={useCase} index={index} />
+            ))}
+          </div>
         </Container>
       </section>
 
-      {/* How It Works Section */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-800">
+      {/* Process */}
+      <section className="py-32 bg-white">
         <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-sans font-regular text-gray-900 dark:text-white mb-6">
-              How It Works
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <div className="lg:sticky lg:top-32">
+              <h2 className="text-4xl lg:text-5xl font-light text-gray-900 mb-6 tracking-tight">
+                Simple process
+              </h2>
+              <p className="text-xl text-gray-600 font-light leading-relaxed">
+                From setup to results in four straightforward steps.
+              </p>
+            </div>
+
+            <div className="space-y-0">
+              {content.process.map((step, index) => (
+                <ProcessStep 
+                  key={index} 
+                  step={step} 
+                  index={index} 
+                  isLast={index === content.process.length - 1}
+                />
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Testimonials */}
+      <section className="py-32 bg-gradient-to-br from-blue-50 to-blue-100/50">
+        <Container>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl lg:text-5xl font-light text-gray-900 mb-6 tracking-tight">
+              Trusted by leaders
             </h2>
-            <p className="text-xl font-light text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-              Get started with voice OBD in just 4 simple steps.
+            <p className="text-xl text-gray-600 font-light">
+              Organizations worldwide rely on our platform.
             </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {voiceOBDData.howItWorks.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center text-blue-600 dark:text-blue-400 font-bold text-2xl mb-4 mx-auto">
-                  {step.step}
-                </div>
-                <h3 className="text-xl font-regular text-gray-900 dark:text-white mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-gray-500 dark:text-gray-400 font-light">
-                  {step.description}
-                </p>
-              </motion.div>
-            ))}
           </div>
+
+          <TestimonialSlider />
         </Container>
       </section>
 
-      {/* Testimonials Section */}
-      <section className="py-24 bg-white dark:bg-gray-900">
+      {/* CTA */}
+      <section className="py-32 bg-white border-t-2 border-blue-600">
         <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-sans font-regular text-gray-900 dark:text-white mb-6">
-              What Our Clients Say
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="text-4xl lg:text-5xl font-light mb-8 tracking-tight text-gray-900">
+              Ready to transform your communication?
             </h2>
-          </motion.div>
-
-          <TestimonialCarousel />
-        </Container>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="py-24 bg-gray-50 dark:bg-gray-800">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-5xl font-sans font-regular text-gray-900 dark:text-white mb-6">
-              Frequently Asked Questions
-            </h2>
-          </motion.div>
-
-          <div className="max-w-3xl mx-auto">
-            {voiceOBDData.faqs.map((faq, index) => (
-              <FAQItem 
-                key={index}
-                faq={faq}
-                index={index}
-                expanded={expandedFaq}
-                setExpanded={setExpandedFaq}
-              />
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-32 bg-blue-900">
-        <Container>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center max-w-3xl mx-auto"
-          >
-            <h2 className="text-5xl font-sans font-regular text-white mb-8">
-              Transform Your Communication Today
-            </h2>
-            <p className="text-xl font-light text-blue-200 mb-12">
-              Join thousands of businesses using our platform to scale their operations
-              and deliver exceptional customer experiences.
+            <p className="text-xl text-gray-600 font-light mb-12 leading-relaxed">
+              Join thousands of organizations building better connections.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4">
-              <Button
-                variant="primary"
-                size="lg"
-                className="bg-white text-blue-900 hover:bg-gray-100"
-              >
-                Get Started Now
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button variant="primary" size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+                <Phone className="w-4 h-4 mr-2" />
+                Start Free Trial
               </Button>
-              <Button
-                variant="secondary"
-                size="lg"
-                className="text-white border-white hover:bg-white/10"
-              >
+              <Button variant="secondary" size="lg" className="text-blue-600 border-blue-600 hover:bg-blue-50">
                 Schedule Demo
               </Button>
             </div>
-          </motion.div>
+          </div>
         </Container>
       </section>
     </MainLayout>

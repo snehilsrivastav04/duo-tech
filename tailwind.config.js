@@ -5,13 +5,16 @@ export default {
   theme: {
     extend: {
       colors: {
+        'deep-blue': '#0A2342',
+        'soft-gray': '#F0F0F0',
+        'pure-white': '#FFFFFF',
         primary: {
           50: '#edf2ff',
           100: '#dbe4ff',
           200: '#bac8ff',
           300: '#91a7ff',
           400: '#748ffc',
-          500: '#5c6bc0', // Main primary color
+          500: '#5c6bc0',
           600: '#4556b3',
           700: '#3949ab',
           800: '#303f9f',
@@ -24,7 +27,7 @@ export default {
           200: '#a1e8e2',
           300: '#6dded3',
           400: '#3dcfc0',
-          500: '#0abf9e', // Main secondary color (green)
+          500: '#0abf9e',
           600: '#00a392',
           700: '#008077',
           800: '#00665f',
@@ -37,7 +40,7 @@ export default {
           200: '#fedaad',
           300: '#fdc078',
           400: '#fb9d43',
-          500: '#fa8021', // Main accent color (orange)
+          500: '#fa8021',
           600: '#e95d0f',
           700: '#c14210',
           800: '#9a3516',

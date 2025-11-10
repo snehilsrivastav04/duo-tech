@@ -1,27 +1,139 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import { 
-  Users, BarChart2, Mail, Phone, MessageSquare, 
+  Users, BarChart2, Mail, MessageSquare, 
   Calendar, Check, Zap, Shield, GitBranch, Server, 
-  Clock, Terminal, Globe, CreditCard, Database,
-  ChevronLeft, ChevronRight, Download, Layers, Cpu, Settings,
-  ShieldCheck, Bell, MapPin, Camera, User, FileText, PieChart, 
-  RefreshCw, ShoppingCart, Smartphone, Heart, Book, Star, ArrowRight,
-  Building, Briefcase, Home, Truck, Factory, Coffee, Utensils, Hotel
+  Clock, Terminal, CreditCard, Database,
+  ChevronLeft, ChevronRight, Layers, Cpu, Settings,
+  FileText, PieChart, RefreshCw, ShoppingCart, Smartphone, 
+  Heart, Book, Star, ArrowRight, Briefcase, Home, Truck, 
+  Factory, Hotel, ChevronDown
 } from 'lucide-react';
-import { FaGoogle, FaWhatsapp, FaRegLightbulb, FaChalkboardTeacher } from 'react-icons/fa';
+import { FaWhatsapp, FaRegLightbulb, FaChalkboardTeacher } from 'react-icons/fa';
 import { SiSalesforce, SiHubspot, SiZoho, SiShopify } from 'react-icons/si';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import MainLayout from '../components/layout/MainLayout';
-import Container from '../components/ui/Container';
-import Button from '../components/ui/Button';
-import FAQAccordion from '../components/home/FAQAccordion';
+import { motion, useScroll } from 'framer-motion';
+
+// Mock components - replace with your actual components
+const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="min-h-screen bg-white">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
+      <div className="container mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="text-2xl font-light text-gray-900">CRM</div>
+          <nav className="hidden md:flex space-x-8">
+            {['Features', 'Services', 'Industries', 'Pricing', 'Contact'].map((item) => (
+              <a key={item} href="#" className="text-gray-600 hover:text-blue-600 font-light transition-colors">
+                {item}
+              </a>
+            ))}
+          </nav>
+          <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors">
+            Get Started
+          </button>
+        </div>
+      </div>
+    </header>
+    <main>{children}</main>
+  </div>
+);
+
+const Container: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
+  <div className={`container mx-auto px-6 ${className}`}>{children}</div>
+);
+
+interface ButtonProps {
+  children: React.ReactNode;
+  variant?: 'primary' | 'outline' | 'ghost' | 'accent';
+  size?: 'sm' | 'md' | 'lg';
+  className?: string;
+  icon?: React.ReactNode;
+  iconPosition?: 'left' | 'right';
+  onClick?: () => void;
+}
+
+const Button: React.FC<ButtonProps> = ({ 
+  children, 
+  variant = 'primary', 
+  size = 'md', 
+  className = '', 
+  icon, 
+  iconPosition = 'left',
+  onClick 
+}) => {
+  const baseStyles = 'inline-flex items-center justify-center rounded-full font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2';
+  
+  const variants = {
+    primary: 'bg-blue-600 hover:bg-blue-700 text-white border border-blue-600',
+    outline: 'border border-blue-600 text-blue-600 hover:bg-blue-50',
+    ghost: 'border border-transparent text-gray-600 hover:bg-gray-100',
+    accent: 'bg-cyan-400 hover:bg-cyan-500 text-blue-900'
+  };
+
+  const sizes = {
+    sm: 'px-4 py-2 text-sm',
+    md: 'px-6 py-3 text-base',
+    lg: 'px-8 py-4 text-lg'
+  };
+
+  return (
+    <button
+      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      onClick={onClick}
+    >
+      {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
+      {children}
+      {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
+    </button>
+  );
+};
+
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface FAQAccordionProps {
+  faqs: FAQItem[];
+}
+
+const FAQAccordion: React.FC<FAQAccordionProps> = ({ faqs }) => {
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  return (
+    <div className="max-w-3xl mx-auto space-y-4">
+      {faqs.map((faq, index) => (
+        <div key={index} className="border-b border-gray-200 pb-4">
+          <button
+            className="flex justify-between items-center w-full text-left py-4"
+            onClick={() => setOpenIndex(openIndex === index ? null : index)}
+          >
+            <span className="text-lg font-light text-gray-900">{faq.question}</span>
+            <ChevronDown
+              className={`w-5 h-5 text-blue-600 transition-transform duration-200 ${
+                openIndex === index ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
+          {openIndex === index && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="pb-4"
+            >
+              <p className="text-gray-600 font-light leading-relaxed">{faq.answer}</p>
+            </motion.div>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const CRMPage: React.FC = () => {
   const { scrollYProgress } = useScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
-  const [activeTab, setActiveTab] = useState<'features' | 'integrations'>('features');
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
+  const [expandedService, setExpandedService] = useState<number | null>(null);
 
   // Data for the page
   const pageData = {
@@ -29,8 +141,8 @@ const CRMPage: React.FC = () => {
       title: "Transform Your Business with Intelligent CRM",
       subtitle: "Our all-in-one CRM platform helps you build better relationships, streamline processes, and improve profitability",
       ctas: [
-        { text: "Get Free Demo", variant: "primary" },
-        { text: "See Pricing", variant: "outline" }
+        { text: "Get Free Demo", variant: "primary" as const },
+        { text: "See Pricing", variant: "outline" as const }
       ],
       features: [
         "360° Customer View",
@@ -42,68 +154,104 @@ const CRMPage: React.FC = () => {
     services: [
       {
         title: "Sales CRM",
-        icon: <Briefcase className="w-8 h-8 text-blue-500" />,
+        icon: <Briefcase className="w-6 h-6 text-blue-600" />,
         description: "Manage your sales pipeline and close deals faster with intelligent automation",
         features: [
           "Lead & Opportunity Tracking",
           "Sales Forecasting",
           "Pipeline Management",
           "AI-Powered Recommendations"
+        ],
+        process: [
+          "Initial consultation to understand sales workflow",
+          "Custom pipeline configuration",
+          "Sales team training and onboarding",
+          "Performance monitoring and optimization"
         ]
       },
       {
         title: "Marketing Automation",
-        icon: <Mail className="w-8 h-8 text-purple-500" />,
+        icon: <Mail className="w-6 h-6 text-blue-600" />,
         description: "Create targeted campaigns that convert with our marketing tools",
         features: [
           "Email Campaigns",
           "Lead Nurturing",
           "Customer Segmentation",
           "ROI Tracking"
+        ],
+        process: [
+          "Audience analysis and segmentation",
+          "Campaign strategy development",
+          "Automation workflow setup",
+          "Performance analytics implementation"
         ]
       },
       {
         title: "Customer Service",
-        icon: <MessageSquare className="w-8 h-8 text-green-500" />,
+        icon: <MessageSquare className="w-6 h-6 text-blue-600" />,
         description: "Deliver exceptional service with omnichannel support tools",
         features: [
           "Ticket Management",
           "Live Chat",
           "Knowledge Base",
           "Customer Satisfaction Tracking"
+        ],
+        process: [
+          "Support channel integration",
+          "Response template creation",
+          "Team training and guidelines",
+          "Quality assurance setup"
         ]
       },
       {
         title: "Analytics & Reporting",
-        icon: <BarChart2 className="w-8 h-8 text-yellow-500" />,
+        icon: <BarChart2 className="w-6 h-6 text-blue-600" />,
         description: "Get actionable insights with real-time dashboards and reports",
         features: [
           "Custom Dashboards",
           "Sales Performance",
           "Marketing ROI",
           "Forecasting Models"
+        ],
+        process: [
+          "Data source integration",
+          "Custom metric definition",
+          "Dashboard design and development",
+          "Report automation setup"
         ]
       },
       {
         title: "Field Service",
-        icon: <Truck className="w-8 h-8 text-orange-500" />,
+        icon: <Truck className="w-6 h-6 text-blue-600" />,
         description: "Optimize your field operations with mobile workforce tools",
         features: [
           "Job Scheduling",
           "Route Optimization",
           "Mobile Workforce",
           "Inventory Tracking"
+        ],
+        process: [
+          "Field team assessment",
+          "Mobile app configuration",
+          "Route optimization setup",
+          "Real-time tracking implementation"
         ]
       },
       {
         title: "Project Management",
-        icon: <Layers className="w-8 h-8 text-red-500" />,
+        icon: <Layers className="w-6 h-6 text-blue-600" />,
         description: "Collaborate effectively and deliver projects on time",
         features: [
           "Task Management",
           "Team Collaboration",
           "Time Tracking",
           "Resource Allocation"
+        ],
+        process: [
+          "Project workflow analysis",
+          "Team collaboration setup",
+          "Time tracking configuration",
+          "Resource management implementation"
         ]
       }
     ],
@@ -111,80 +259,80 @@ const CRMPage: React.FC = () => {
       {
         value: "45%",
         label: "Increase in Sales",
-        icon: <BarChart2 className="w-8 h-8 text-blue-500" />
+        icon: <BarChart2 className="w-6 h-6 text-blue-600" />
       },
       {
         value: "30%",
         label: "Faster Response Time",
-        icon: <Clock className="w-8 h-8 text-green-500" />
+        icon: <Clock className="w-6 h-6 text-blue-600" />
       },
       {
         value: "3.5x",
         label: "ROI on Marketing",
-        icon: <CreditCard className="w-8 h-8 text-yellow-500" />
+        icon: <CreditCard className="w-6 h-6 text-blue-600" />
       },
       {
         value: "95%",
         label: "Customer Satisfaction",
-        icon: <Heart className="w-8 h-8 text-red-500" />
+        icon: <Heart className="w-6 h-6 text-blue-600" />
       }
     ],
     techStack: {
       platforms: [
-        { name: "Salesforce", icon: <SiSalesforce className="w-6 h-6 text-blue-500" /> },
-        { name: "HubSpot", icon: <SiHubspot className="w-6 h-6 text-orange-500" /> },
-        { name: "Zoho CRM", icon: <SiZoho className="w-6 h-6 text-red-500" /> },
-        { name: "Microsoft Azure", icon: <Server className="w-6 h-6 text-blue-600" /> }
+        { name: "Salesforce", icon: <SiSalesforce className="w-5 h-5 text-blue-600" /> },
+        { name: "HubSpot", icon: <SiHubspot className="w-5 h-5 text-blue-600" /> },
+        { name: "Zoho CRM", icon: <SiZoho className="w-5 h-5 text-blue-600" /> },
+        { name: "Microsoft Azure", icon: <Server className="w-5 h-5 text-blue-600" /> }
       ],
       integrations: [
-        { name: "Email Platforms", icon: <Mail className="w-6 h-6" /> },
-        { name: "Calendar", icon: <Calendar className="w-6 h-6" /> },
-        { name: "WhatsApp", icon: <FaWhatsapp className="w-6 h-6 text-green-500" /> },
-        { name: "Shopify", icon: <SiShopify className="w-6 h-6" /> }
+        { name: "Email Platforms", icon: <Mail className="w-5 h-5 text-blue-600" /> },
+        { name: "Calendar", icon: <Calendar className="w-5 h-5 text-blue-600" /> },
+        { name: "WhatsApp", icon: <FaWhatsapp className="w-5 h-5 text-blue-600" /> },
+        { name: "Shopify", icon: <SiShopify className="w-5 h-5 text-blue-600" /> }
       ],
       features: [
-        { name: "AI & Machine Learning", icon: <Cpu className="w-6 h-6" /> },
-        { name: "Custom Reports", icon: <FileText className="w-6 h-6" /> },
-        { name: "Workflow Automation", icon: <RefreshCw className="w-6 h-6" /> },
-        { name: "API Access", icon: <Terminal className="w-6 h-6" /> }
+        { name: "AI & Machine Learning", icon: <Cpu className="w-5 h-5 text-blue-600" /> },
+        { name: "Custom Reports", icon: <FileText className="w-5 h-5 text-blue-600" /> },
+        { name: "Workflow Automation", icon: <RefreshCw className="w-5 h-5 text-blue-600" /> },
+        { name: "API Access", icon: <Terminal className="w-5 h-5 text-blue-600" /> }
       ]
     },
     process: [
       {
         title: "Discovery",
         description: "Understand your business needs and CRM requirements",
-        icon: <FaRegLightbulb className="w-6 h-6" />
+        icon: <FaRegLightbulb className="w-6 h-6 text-blue-600" />
       },
       {
         title: "Planning",
         description: "Create a customized CRM implementation plan",
-        icon: <FileText className="w-6 h-6" />
+        icon: <FileText className="w-6 h-6 text-blue-600" />
       },
       {
         title: "Configuration",
         description: "Set up and customize your CRM system",
-        icon: <Settings className="w-6 h-6" />
+        icon: <Settings className="w-6 h-6 text-blue-600" />
       },
       {
         title: "Data Migration",
         description: "Securely transfer your existing data",
-        icon: <Database className="w-6 h-6" />
+        icon: <Database className="w-6 h-6 text-blue-600" />
       },
       {
         title: "Training",
         description: "Onboard your team with comprehensive training",
-        icon: <FaChalkboardTeacher className="w-6 h-6" />
+        icon: <FaChalkboardTeacher className="w-6 h-6 text-blue-600" />
       },
       {
         title: "Go Live",
         description: "Launch your CRM and start transforming your business",
-        icon: <Zap className="w-6 h-6" />
+        icon: <Zap className="w-6 h-6 text-blue-600" />
       }
     ],
     industries: [
       { 
         name: "Retail & E-commerce", 
-        icon: <ShoppingCart className="w-8 h-8" />,
+        icon: <ShoppingCart className="w-8 h-8 text-blue-600" />,
         features: [
           "Customer purchase history",
           "Personalized recommendations",
@@ -194,7 +342,7 @@ const CRMPage: React.FC = () => {
       },
       { 
         name: "Healthcare", 
-        icon: <Heart className="w-8 h-8" />,
+        icon: <Heart className="w-8 h-8 text-blue-600" />,
         features: [
           "Patient management",
           "Appointment scheduling",
@@ -204,7 +352,7 @@ const CRMPage: React.FC = () => {
       },
       { 
         name: "Education", 
-        icon: <Book className="w-8 h-8" />,
+        icon: <Book className="w-8 h-8 text-blue-600" />,
         features: [
           "Student lifecycle management",
           "Parent communication",
@@ -214,7 +362,7 @@ const CRMPage: React.FC = () => {
       },
       { 
         name: "Real Estate", 
-        icon: <Home className="w-8 h-8" />,
+        icon: <Home className="w-8 h-8 text-blue-600" />,
         features: [
           "Property management",
           "Lead capture from portals",
@@ -224,7 +372,7 @@ const CRMPage: React.FC = () => {
       },
       { 
         name: "Manufacturing", 
-        icon: <Factory className="w-8 h-8" />,
+        icon: <Factory className="w-8 h-8 text-blue-600" />,
         features: [
           "Supply chain tracking",
           "Equipment maintenance",
@@ -234,7 +382,7 @@ const CRMPage: React.FC = () => {
       },
       { 
         name: "Hospitality", 
-        icon: <Hotel className="w-8 h-8" />,
+        icon: <Hotel className="w-8 h-8 text-blue-600" />,
         features: [
           "Guest profile management",
           "Reservation system",
@@ -244,7 +392,7 @@ const CRMPage: React.FC = () => {
       },
       { 
         name: "Financial Services", 
-        icon: <CreditCard className="w-8 h-8" />,
+        icon: <CreditCard className="w-8 h-8 text-blue-600" />,
         features: [
           "Client portfolio management",
           "Document compliance",
@@ -254,7 +402,7 @@ const CRMPage: React.FC = () => {
       },
       { 
         name: "Professional Services", 
-        icon: <Briefcase className="w-8 h-8" />,
+        icon: <Briefcase className="w-8 h-8 text-blue-600" />,
         features: [
           "Time tracking",
           "Project billing",
@@ -264,16 +412,16 @@ const CRMPage: React.FC = () => {
       }
     ],
     features: [
-      { name: "Contact Management", icon: <Users className="w-5 h-5" /> },
-      { name: "Lead Scoring", icon: <BarChart2 className="w-5 h-5" /> },
-      { name: "Email Tracking", icon: <Mail className="w-5 h-5" /> },
-      { name: "Task Automation", icon: <RefreshCw className="w-5 h-5" /> },
-      { name: "Document Management", icon: <FileText className="w-5 h-5" /> },
-      { name: "Calendar Sync", icon: <Calendar className="w-5 h-5" /> },
-      { name: "Mobile Access", icon: <Smartphone className="w-5 h-5" /> },
-      { name: "Custom Reports", icon: <PieChart className="w-5 h-5" /> },
-      { name: "Workflow Automation", icon: <GitBranch className="w-5 h-5" /> },
-      { name: "AI Insights", icon: <Cpu className="w-5 h-5" /> }
+      { name: "Contact Management", icon: <Users className="w-5 h-5 text-blue-600" /> },
+      { name: "Lead Scoring", icon: <BarChart2 className="w-5 h-5 text-blue-600" /> },
+      { name: "Email Tracking", icon: <Mail className="w-5 h-5 text-blue-600" /> },
+      { name: "Task Automation", icon: <RefreshCw className="w-5 h-5 text-blue-600" /> },
+      { name: "Document Management", icon: <FileText className="w-5 h-5 text-blue-600" /> },
+      { name: "Calendar Sync", icon: <Calendar className="w-5 h-5 text-blue-600" /> },
+      { name: "Mobile Access", icon: <Smartphone className="w-5 h-5 text-blue-600" /> },
+      { name: "Custom Reports", icon: <PieChart className="w-5 h-5 text-blue-600" /> },
+      { name: "Workflow Automation", icon: <GitBranch className="w-5 h-5 text-blue-600" /> },
+      { name: "AI Insights", icon: <Cpu className="w-5 h-5 text-blue-600" /> }
     ],
     deliverables: [
       "Custom CRM Implementation",
@@ -294,6 +442,12 @@ const CRMPage: React.FC = () => {
         quote: "The customer service tools helped us reduce response times and improve our satisfaction ratings significantly. Highly recommended!",
         author: "Michael Chen",
         role: "Customer Support Manager, ServicePro",
+        rating: 5
+      },
+      {
+        quote: "Implementation was seamless and the ongoing support has been exceptional. Our customer retention has improved dramatically.",
+        author: "Emily Rodriguez",
+        role: "Operations Manager, GrowthInc",
         rating: 5
       }
     ],
@@ -336,218 +490,327 @@ const CRMPage: React.FC = () => {
   return (
     <ParallaxProvider>
       <MainLayout>
-        {/* Hero Section */}
-        <section className="relative h-auto min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/circuit-pattern.svg')] bg-[size:100px_100px]" />
+        {/* Minimalist Hero Section */}
+        <section className="relative min-h-screen bg-white overflow-hidden pt-20">
+          {/* Subtle background pattern */}
+          <div className="absolute inset-0 opacity-[0.02]">
+            <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23000000\" fill-opacity=\"1\"%3E%3Ccircle cx=\"30\" cy=\"30\" r=\"1.5\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')" />
           </div>
-          
-          {/* Floating CRM elements */}
-          {[...Array(12)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{
-                y: [0, Math.random() * 80 - 40],
-                x: [0, Math.random() * 80 - 40],
-                rotate: [0, Math.random() * 20 - 10]
-              }}
-              transition={{
-                duration: 5 + Math.random() * 10,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
-              className={`absolute rounded-lg bg-white/10 backdrop-blur-sm ${
-                i % 3 === 0 ? 'w-16 h-16' : i % 2 === 0 ? 'w-12 h-12' : 'w-10 h-10'
-              } flex items-center justify-center`}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
-              }}
-            >
-              {[<Users />, <BarChart2 />, <Mail />, <MessageSquare />][i % 4]}
-            </motion.div>
-          ))}
 
-          <Container className="h-full flex items-center relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-16 items-center">
+          {/* Accent line at top */}
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-600 to-transparent" />
+
+          <Container className="relative min-h-screen flex items-center">
+            <div className="max-w-4xl mx-auto text-center">
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8 }}
               >
-                <motion.div
-                  initial={{ scale: 0.9 }}
-                  whileInView={{ scale: 1 }}
-                  className="inline-block mb-8"
-                >
-                  <div className="px-6 py-2 bg-white/10 rounded-full border border-white/20 text-white text-sm font-medium backdrop-blur-sm">
-                    CUSTOMER RELATIONSHIP MANAGEMENT
-                  </div>
-                </motion.div>
-
-                <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white mb-6 leading-tight">
-                  {pageData.hero.title}
+                <h1 className="text-5xl md:text-7xl font-light text-gray-900 mb-8 leading-tight tracking-tight">
+                  Customer
+                  <br />
+                  <span className="text-blue-600 font-normal">Relationship</span>
+                  <br />
+                  Management
                 </h1>
                 
-                <p className="text-xl text-blue-100 mb-8 max-w-2xl">
-                  {pageData.hero.subtitle}
+                <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed font-light">
+                  Streamline your customer interactions with our elegant, powerful CRM solution
                 </p>
 
-                <div className="flex flex-wrap gap-4 mb-12">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
                   {pageData.hero.ctas.map((cta, i) => (
                     <Button
                       key={i}
-                      variant={cta.variant as any}
+                      variant={cta.variant}
                       size="lg"
-                      className={`${i === 0 ? 'bg-cyan-500 hover:bg-cyan-600' : 'border-white text-white hover:bg-white/10'}`}
+                      className={`min-w-[160px] ${
+                        i === 0 
+                          ? 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600' 
+                          : 'border-blue-600 text-blue-600 hover:bg-blue-50'
+                      }`}
                     >
                       {cta.text}
                     </Button>
                   ))}
                 </div>
 
-                <div className="flex flex-wrap gap-4">
+                <div className="flex flex-wrap justify-center gap-6">
                   {pageData.hero.features.map((feature, i) => (
-                    <div key={i} className="flex items-center bg-white/5 rounded-full px-4 py-2 backdrop-blur-sm">
-                      <Check className="w-4 h-4 text-green-400 mr-2" />
-                      <span className="text-sm text-white">{feature}</span>
+                    <div key={i} className="flex items-center text-gray-700">
+                      <Check className="w-5 h-5 text-blue-600 mr-2" />
+                      <span className="text-lg font-light">{feature}</span>
                     </div>
                   ))}
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative"
-              >
-                {/* CRM dashboard mockup */}
-                <div className="relative w-full max-w-lg mx-auto">
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-600 rounded-3xl shadow-2xl transform rotate-1" />
-                  <div className="relative bg-gray-900 rounded-2xl p-3 shadow-2xl overflow-hidden border-8 border-gray-900">
-                    {/* Dashboard header */}
-                    <div className="h-12 flex items-center justify-between px-4 bg-gray-800 rounded-t-lg">
-                      <div className="flex space-x-2">
-                        <div className="w-3 h-3 rounded-full bg-red-500" />
-                        <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                        <div className="w-3 h-3 rounded-full bg-green-500" />
-                      </div>
-                      <div className="text-xs text-gray-400 font-medium">CRM Dashboard</div>
-                      <div className="w-6" />
-                    </div>
-                    
-                    {/* Dashboard content */}
-                    <div className="h-[500px] bg-gray-800 rounded-b-lg overflow-hidden relative">
-                      {/* Animated dashboard elements */}
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.5 }}
-                        className="absolute inset-0 p-4 grid grid-cols-2 gap-4"
-                      >
-                        {/* Stats cards */}
-                        <motion.div
-                          animate={{ y: [0, -5, 0] }}
-                          transition={{ duration: 4, repeat: Infinity }}
-                          className="bg-blue-900/50 rounded-lg p-3 border border-blue-700/30"
-                        >
-                          <div className="text-xs text-blue-300 mb-1">New Leads</div>
-                          <div className="text-xl font-bold text-white">1,248</div>
-                          <div className="text-xs text-green-400 mt-1">↑ 12% this month</div>
-                        </motion.div>
-                        
-                        <motion.div
-                          animate={{ y: [0, 5, 0] }}
-                          transition={{ duration: 4, repeat: Infinity, delay: 0.5 }}
-                          className="bg-purple-900/50 rounded-lg p-3 border border-purple-700/30"
-                        >
-                          <div className="text-xs text-purple-300 mb-1">Deals Closed</div>
-                          <div className="text-xl font-bold text-white">84</div>
-                          <div className="text-xs text-green-400 mt-1">↑ 8% this month</div>
-                        </motion.div>
-                        
-                        {/* Graph */}
-                        <motion.div
-                          className="col-span-2 bg-gray-700/50 rounded-lg p-3 border border-gray-600/30"
-                          initial={{ scale: 0.95 }}
-                          animate={{ scale: 1 }}
-                          transition={{ duration: 0.5 }}
-                        >
-                          <div className="flex justify-between items-center mb-2">
-                            <div className="text-xs text-gray-300">Sales Performance</div>
-                            <div className="text-xs text-blue-400">Last 6 Months</div>
-                          </div>
-                          <div className="h-32 relative">
-                            {/* Graph line */}
-                            <motion.div 
-                              className="absolute bottom-0 left-0 w-full h-px bg-gray-600/50"
-                              initial={{ scaleX: 0 }}
-                              animate={{ scaleX: 1 }}
-                              transition={{ duration: 1 }}
-                            />
-                            {/* Data points */}
-                            {[30, 45, 60, 75, 90, 110].map((value, i) => (
-                              <motion.div
-                                key={i}
-                                className="absolute bottom-0 bg-gradient-to-t from-cyan-500 to-blue-500 rounded-t-sm"
-                                initial={{ height: 0 }}
-                                animate={{ height: `${value}px` }}
-                                transition={{ duration: 1, delay: i * 0.1 }}
-                                style={{
-                                  width: '12%',
-                                  left: `${15 + i * 15}%`
-                                }}
-                              />
-                            ))}
-                          </div>
-                        </motion.div>
-                        
-                        {/* Recent activity */}
-                        <motion.div
-                          className="col-span-2 bg-gray-700/50 rounded-lg p-3 border border-gray-600/30 overflow-hidden"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: 1 }}
-                          transition={{ delay: 0.8 }}
-                        >
-                          <div className="text-xs text-gray-300 mb-2">Recent Activity</div>
-                          <div className="space-y-3">
-                            {[
-                              { name: "Sarah Johnson", action: "closed deal", amount: "$12,500" },
-                              { name: "Michael Chen", action: "scheduled meeting", time: "Tomorrow 10AM" },
-                              { name: "Emma Wilson", action: "added new lead", company: "TechCorp" }
-                            ].map((item, i) => (
-                              <motion.div
-                                key={i}
-                                className="flex items-center text-xs"
-                                initial={{ x: 20 }}
-                                animate={{ x: 0 }}
-                                transition={{ delay: 0.9 + i * 0.1 }}
-                              >
-                                <div className="w-6 h-6 rounded-full bg-blue-500/20 flex items-center justify-center mr-2">
-                                  <User className="w-3 h-3 text-blue-300" />
-                                </div>
-                                <div className="text-gray-300">
-                                  <span className="text-white">{item.name}</span> {item.action}{' '}
-                                  {item.amount && <span className="text-green-400">{item.amount}</span>}
-                                  {item.time && <span className="text-yellow-400"> {item.time}</span>}
-                                  {item.company && <span className="text-blue-300"> {item.company}</span>}
-                                </div>
-                              </motion.div>
-                            ))}
-                          </div>
-                        </motion.div>
-                      </motion.div>
-                    </div>
-                  </div>
                 </div>
               </motion.div>
             </div>
           </Container>
         </section>
 
-        {/* Services Section */}
-        <section className="py-32 bg-white dark:bg-gray-900 relative overflow-hidden">
+        {/* Linear Service List Section */}
+        <section className="py-32 bg-blue-50 relative overflow-hidden">
+          <Container>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center mb-20"
+            >
+              <h2 className="text-4xl font-light text-gray-900 mb-6">
+                Our <span className="text-blue-600 font-normal">Services</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
+                Comprehensive CRM solutions tailored to your business needs
+              </p>
+            </motion.div>
+
+            <div className="max-w-4xl mx-auto">
+              {pageData.services.map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                  className="relative"
+                >
+                  {/* Connecting line */}
+                  {index < pageData.services.length - 1 && (
+                    <div className="absolute left-6 top-20 bottom-0 w-px bg-blue-200 z-0" />
+                  )}
+
+                  <div 
+                    className={`relative bg-white rounded-lg border border-blue-100 transition-all duration-300 hover:shadow-lg ${
+                      expandedService === index ? 'shadow-lg' : 'shadow-sm'
+                    }`}
+                  >
+                    <button
+                      onClick={() => setExpandedService(expandedService === index ? null : index)}
+                      className="w-full p-8 text-left flex items-start justify-between hover:bg-blue-50/50 transition-colors rounded-lg"
+                    >
+                      <div className="flex items-start space-x-6">
+                        <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                          {service.icon}
+                        </div>
+                        <div>
+                          <h3 className="text-2xl font-light text-gray-900 mb-2">
+                            {service.title}
+                          </h3>
+                          <p className="text-gray-600 font-light leading-relaxed">
+                            {service.description}
+                          </p>
+                        </div>
+                      </div>
+                      <div className={`transform transition-transform duration-300 ${
+                        expandedService === index ? 'rotate-180' : ''
+                      }`}>
+                        <ChevronDown className="w-5 h-5 text-blue-600" />
+                      </div>
+                    </button>
+
+                    {/* Expanded content */}
+                    {expandedService === index && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="px-8 pb-8 border-t border-blue-100"
+                      >
+                        <div className="grid md:grid-cols-2 gap-8 pt-6">
+                          <div>
+                            <h4 className="text-lg font-normal text-gray-900 mb-4">Key Features</h4>
+                            <ul className="space-y-3">
+                              {service.features.map((feature, i) => (
+                                <li key={i} className="flex items-center text-gray-700">
+                                  <Check className="w-4 h-4 text-blue-600 mr-3" />
+                                  <span className="font-light">{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div>
+                            <h4 className="text-lg font-normal text-gray-900 mb-4">Implementation Process</h4>
+                            <ul className="space-y-3">
+                              {service.process.map((step, i) => (
+                                <li key={i} className="flex items-start text-gray-700">
+                                  <div className="flex-shrink-0 w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-0.5 mr-3">
+                                    <span className="text-xs text-blue-600 font-medium">{i + 1}</span>
+                                  </div>
+                                  <span className="font-light leading-relaxed">{step}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* Sticky Showcase Section */}
+        <section className="min-h-screen bg-white relative overflow-hidden">
+          <div className="sticky top-0 h-screen flex">
+            {/* Left side - Sticky content */}
+            <div className="flex-1 flex items-center justify-center p-12 bg-gradient-to-br from-blue-50 to-blue-100/50">
+              <div className="max-w-md">
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                >
+                  <h2 className="text-4xl font-light text-gray-900 mb-6">
+                    Why Choose
+                    <br />
+                    <span className="text-blue-600 font-normal">Our CRM</span>
+                  </h2>
+                  <p className="text-lg text-gray-600 mb-8 font-light leading-relaxed">
+                    Experience the difference with our carefully crafted CRM solution designed for modern businesses.
+                  </p>
+                  
+                  <div className="space-y-6">
+                    {[
+                      { icon: <Zap className="w-5 h-5" />, text: "Lightning fast performance" },
+                      { icon: <Shield className="w-5 h-5" />, text: "Enterprise-grade security" },
+                      { icon: <Settings className="w-5 h-5" />, text: "Easy customization" },
+                      { icon: <Users className="w-5 h-5" />, text: "Dedicated support team" }
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center text-gray-700">
+                        <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                          {item.icon}
+                        </div>
+                        <span className="font-light">{item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Right side - Scrollable features */}
+            <div className="flex-1 overflow-y-auto">
+              <div className="py-32 space-y-32">
+                {/* Feature 1 */}
+                <div className="px-12">
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="max-w-md"
+                  >
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                      <BarChart2 className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <h3 className="text-3xl font-light text-gray-900 mb-4">Advanced Analytics</h3>
+                    <p className="text-gray-600 font-light leading-relaxed mb-6">
+                      Gain deep insights into your customer behavior and business performance with our powerful analytics tools.
+                    </p>
+                    <ul className="space-y-3">
+                      {['Real-time dashboards', 'Custom reporting', 'Predictive analytics', 'Performance tracking'].map((item, i) => (
+                        <li key={i} className="flex items-center text-gray-700">
+                          <Check className="w-4 h-4 text-blue-600 mr-3" />
+                          <span className="font-light">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </div>
+
+                {/* Feature 2 */}
+                <div className="px-12">
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="max-w-md"
+                  >
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                      <RefreshCw className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <h3 className="text-3xl font-light text-gray-900 mb-4">Workflow Automation</h3>
+                    <p className="text-gray-600 font-light leading-relaxed mb-6">
+                      Automate repetitive tasks and streamline your business processes with intelligent workflow automation.
+                    </p>
+                    <ul className="space-y-3">
+                      {['Lead routing', 'Email sequences', 'Task assignment', 'Approval workflows'].map((item, i) => (
+                        <li key={i} className="flex items-center text-gray-700">
+                          <Check className="w-4 h-4 text-blue-600 mr-3" />
+                          <span className="font-light">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </div>
+
+                {/* Feature 3 */}
+                <div className="px-12">
+                  <motion.div
+                    initial={{ opacity: 0, x: 50 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    className="max-w-md"
+                  >
+                    <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                      <Smartphone className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <h3 className="text-3xl font-light text-gray-900 mb-4">Mobile Experience</h3>
+                    <p className="text-gray-600 font-light leading-relaxed mb-6">
+                      Access your CRM from anywhere with our fully responsive mobile application designed for on-the-go productivity.
+                    </p>
+                    <ul className="space-y-3">
+                      {['iOS and Android apps', 'Offline access', 'Push notifications', 'Mobile reporting'].map((item, i) => (
+                        <li key={i} className="flex items-center text-gray-700">
+                          <Check className="w-4 h-4 text-blue-600 mr-3" />
+                          <span className="font-light">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Metrics Section */}
+        <section className="py-32 bg-white relative overflow-hidden">
+          <Container>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl mx-auto">
+              {pageData.metrics.map((metric, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="text-center"
+                >
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    {metric.icon}
+                  </div>
+                  <motion.p
+                    className="text-4xl font-light text-gray-900 mb-2"
+                    initial={{ scale: 0.9 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 + 0.2 }}
+                  >
+                    {metric.value}
+                  </motion.p>
+                  <p className="text-gray-600 font-light">{metric.label}</p>
+                </motion.div>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* Industries Section */}
+        <section className="py-32 bg-blue-50 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -555,36 +818,35 @@ const CRMPage: React.FC = () => {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Comprehensive <span className="text-blue-600 dark:text-blue-400">CRM Solutions</span>
+              <h2 className="text-4xl font-light text-gray-900 mb-6">
+                Industry-Specific <span className="text-blue-600 font-normal">Solutions</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                End-to-end CRM modules to transform every customer interaction
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
+                Tailored CRM solutions for your business domain
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {pageData.services.map((service, i) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+              {pageData.industries.map((industry, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow border border-gray-100 dark:border-gray-700 group"
+                  className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow border border-blue-100"
                 >
-                  <div className="flex items-center mb-6">
-                    <div className="p-3 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/50 dark:to-blue-900/30 mr-4 group-hover:rotate-6 transition-transform">
-                      {service.icon}
+                  <div className="flex items-center mb-4">
+                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mr-4">
+                      {industry.icon}
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{service.title}</h3>
+                    <h3 className="text-lg font-normal text-gray-900">{industry.name}</h3>
                   </div>
-                  <p className="text-gray-600 dark:text-gray-300 mb-6">{service.description}</p>
-                  <ul className="space-y-3">
-                    {service.features.map((feature, j) => (
-                      <li key={j} className="flex items-center">
-                        <Check className="w-5 h-5 text-green-500 mr-2 flex-shrink-0" />
-                        <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+                  <ul className="space-y-2">
+                    {industry.features.map((feature, j) => (
+                      <li key={j} className="flex items-start text-sm text-gray-600">
+                        <Check className="w-4 h-4 text-blue-600 mt-0.5 mr-2 flex-shrink-0" />
+                        <span className="font-light">{feature}</span>
                       </li>
                     ))}
                   </ul>
@@ -594,46 +856,8 @@ const CRMPage: React.FC = () => {
           </Container>
         </section>
 
-        {/* Metrics Section */}
-        <section className="py-20 bg-gradient-to-r from-blue-600 to-cyan-500 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[size:100px_100px]" />
-          </div>
-
-          <Container>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {pageData.metrics.map((metric, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-xl p-8 text-center border border-white/20"
-                >
-                  <div className="flex justify-center mb-4">
-                    <div className="p-3 bg-white/20 rounded-full">
-                      {metric.icon}
-                    </div>
-                  </div>
-                  <motion.p
-                    className="text-5xl font-bold text-white mb-2"
-                    initial={{ scale: 0.9 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 + 0.2 }}
-                  >
-                    {metric.value}
-                  </motion.p>
-                  <p className="text-lg font-medium text-white/90">{metric.label}</p>
-                </motion.div>
-              ))}
-            </div>
-          </Container>
-        </section>
-
-        {/* Tech Stack Section */}
-        <section className="py-32 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
+        {/* Testimonials Section */}
+        <section className="py-32 bg-white relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -641,390 +865,72 @@ const CRMPage: React.FC = () => {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Our <span className="text-blue-600 dark:text-blue-400">Technology</span>
+              <h2 className="text-4xl font-light text-gray-900 mb-6">
+                What Our <span className="text-blue-600 font-normal">Clients Say</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Flexible CRM solutions built on the most trusted platforms
-              </p>
-            </motion.div>
-
-            <div className="mb-8 flex justify-center">
-              <div className="inline-flex rounded-full bg-gray-100 dark:bg-gray-800 p-1">
-                <button
-                  onClick={() => setActiveTab('features')}
-                  className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                    activeTab === 'features'
-                      ? 'bg-white dark:bg-gray-700 shadow-sm text-gray-900 dark:text-white'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                  }`}
-                >
-                  Key Features
-                </button>
-                <button
-                  onClick={() => setActiveTab('integrations')}
-                  className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                    activeTab === 'integrations'
-                      ? 'bg-white dark:bg-gray-700 shadow-sm text-gray-900 dark:text-white'
-                      : 'text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white'
-                  }`}
-                >
-                  Integrations
-                </button>
-              </div>
-            </div>
-
-            {activeTab === 'features' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {Object.entries(pageData.techStack).map(([category, items], i) => (
-                  <motion.div
-                    key={category}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow"
-                  >
-                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-6 capitalize">
-                      {category.replace(/([A-Z])/g, ' $1').trim()}
-                    </h3>
-                    <div className="space-y-4">
-                      {items.map((tech, j) => (
-                        <motion.div
-                          key={j}
-                          whileHover={{ x: 5 }}
-                          className="flex items-center p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
-                        >
-                          <div className="flex-shrink-0 mr-3">
-                            {tech.icon}
-                          </div>
-                          <span className="text-gray-700 dark:text-gray-300">{tech.name}</span>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {[
-                  {
-                    name: "Email & Calendar",
-                    description: "Seamless integration with Gmail, Outlook, and other email providers",
-                    icon: <Mail className="w-8 h-8 text-blue-500" />
-                  },
-                  {
-                    name: "Communication Tools",
-                    description: "Connect with WhatsApp, Slack, Microsoft Teams, and more",
-                    icon: <MessageSquare className="w-8 h-8 text-green-500" />
-                  },
-                  {
-                    name: "E-commerce Platforms",
-                    description: "Sync with Shopify, WooCommerce, Magento, and other storefronts",
-                    icon: <ShoppingCart className="w-8 h-8 text-purple-500" />
-                  },
-                  {
-                    name: "Payment Processors",
-                    description: "Integrate Stripe, PayPal, Razorpay for seamless transactions",
-                    icon: <CreditCard className="w-8 h-8 text-yellow-500" />
-                  },
-                  {
-                    name: "Marketing Tools",
-                    description: "Connect with Mailchimp, HubSpot, Google Ads, and more",
-                    icon: <BarChart2 className="w-8 h-8 text-red-500" />
-                  },
-                  {
-                    name: "Custom API Access",
-                    description: "Build custom integrations with our developer-friendly API",
-                    icon: <Terminal className="w-8 h-8 text-cyan-500" />
-                  }
-                ].map((integration, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow border border-gray-100 dark:border-gray-700"
-                  >
-                    <div className="flex items-center mb-4">
-                      <div className="p-3 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/50 dark:to-blue-900/30 mr-4">
-                        {integration.icon}
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">{integration.name}</h3>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-300">{integration.description}</p>
-                  </motion.div>
-                ))}
-              </div>
-            )}
-          </Container>
-        </section>
-
-        {/* Implementation Process Section */}
-        <section className="py-32 bg-white dark:bg-gray-900 relative overflow-hidden">
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Our <span className="text-blue-600 dark:text-blue-400">Implementation Process</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                A proven methodology for successful CRM deployment
-              </p>
-            </motion.div>
-
-            <div className="relative">
-              {/* Timeline line */}
-              <div className="absolute left-1/2 h-full w-1 bg-gradient-to-b from-blue-500 to-cyan-500 -translate-x-1/2 lg:block hidden" />
-
-              <div className="space-y-16 lg:space-y-0">
-                {pageData.process.map((step, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className={`relative flex flex-col lg:flex-row items-center ${i % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} lg:min-h-[150px]`}
-                  >
-                    {/* Timeline dot */}
-                    <div className="absolute left-1/2 w-6 h-6 bg-blue-500 rounded-full -translate-x-1/2 top-1/2 lg:block hidden z-10" />
-
-                    {/* Content */}
-                    <div className={`lg:w-5/12 ${i % 2 === 0 ? 'lg:pr-12' : 'lg:pl-12'} mb-8 lg:mb-0`}>
-                      <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg border border-gray-100 dark:border-gray-700">
-                        <div className="flex items-center mb-4">
-                          <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg mr-4">
-                            {step.icon}
-                          </div>
-                          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{step.title}</h3>
-                        </div>
-                        <p className="text-gray-600 dark:text-gray-300">{step.description}</p>
-                      </div>
-                    </div>
-
-                    {/* Step number */}
-                    <div className="lg:w-2/12 flex justify-center items-center">
-                      <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg z-10">
-                        {i + 1}
-                      </div>
-                    </div>
-
-                    {/* Empty spacer */}
-                    <div className="lg:w-5/12 hidden lg:block" />
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </Container>
-        </section>
-
-        {/* Industries Section */}
-        <section className="py-32 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Industry-Specific <span className="text-blue-600 dark:text-blue-400">Solutions</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Tailored CRM solutions for your business domain
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {pageData.industries.map((industry, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700 overflow-hidden group"
-                >
-                  <div className="p-6">
-                    <div className="flex items-center mb-4">
-                      <div className="p-3 bg-blue-100 dark:bg-blue-900/30 rounded-lg mr-4 group-hover:rotate-6 transition-transform">
-                        {industry.icon}
-                      </div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">{industry.name}</h3>
-                    </div>
-                    <ul className="space-y-2">
-                      {industry.features.map((feature, j) => (
-                        <li key={j} className="flex items-start">
-                          <Check className="w-4 h-4 text-green-500 mt-1 mr-2 flex-shrink-0" />
-                          <span className="text-gray-700 dark:text-gray-300 text-sm">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </Container>
-        </section>
-
-        {/* Features Section */}
-        <section className="py-32 bg-white dark:bg-gray-900 relative overflow-hidden">
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Powerful <span className="text-blue-600 dark:text-blue-400">CRM Features</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Everything you need to manage customer relationships effectively
-              </p>
-            </motion.div>
-
-            <div className="flex flex-wrap justify-center gap-4">
-              {pageData.features.map((feature, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  whileHover={{ y: -5 }}
-                  className="flex items-center bg-white dark:bg-gray-800 px-5 py-3 rounded-full shadow-sm hover:shadow-md transition-all border border-gray-100 dark:border-gray-700"
-                >
-                  <div className="mr-3 text-blue-500">
-                    {feature.icon}
-                  </div>
-                  <span className="text-gray-800 dark:text-gray-200 font-medium">{feature.name}</span>
-                </motion.div>
-              ))}
-            </div>
-          </Container>
-        </section>
-
-        {/* Deliverables Section */}
-        <section className="py-32 bg-gray-50 dark:bg-gray-900 relative overflow-hidden">
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                What You <span className="text-blue-600 dark:text-blue-400">Get</span>
-              </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-                Complete package delivered with every CRM implementation
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              {pageData.deliverables.map((item, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-start bg-white dark:bg-gray-800 p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-gray-100 dark:border-gray-700"
-                >
-                  <Check className="w-6 h-6 text-green-500 mt-1 mr-4 flex-shrink-0" />
-                  <span className="text-lg text-gray-800 dark:text-gray-200">{item}</span>
-                </motion.div>
-              ))}
-            </div>
-          </Container>
-        </section>
-
-        {/* Testimonials Carousel Section */}
-        <section className="py-32 bg-gradient-to-br from-blue-600 to-purple-600 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-[url('/images/circuit-pattern.svg')] bg-[size:100px_100px]" />
-          </div>
-
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold text-white mb-6">
-                Client <span className="text-cyan-300">Testimonials</span>
-              </h2>
-              <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
                 Don't just take our word for it - hear from our satisfied clients
               </p>
             </motion.div>
 
-            <div className="relative max-w-3xl mx-auto">
+            <div className="max-w-3xl mx-auto">
               <motion.div
                 key={currentTestimonial}
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.5 }}
-                className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 shadow-xl"
+                className="bg-white border border-blue-100 rounded-2xl p-8 shadow-sm"
               >
                 <div className="flex mb-4">
                   {[...Array(pageData.testimonials[currentTestimonial].rating)].map((_, j) => (
                     <Star key={j} className="w-5 h-5 text-yellow-400" fill="currentColor" />
                   ))}
                 </div>
-                <p className="text-xl text-white mb-6">"{pageData.testimonials[currentTestimonial].quote}"</p>
-                <div className="text-blue-100">
-                  <p className="font-bold">{pageData.testimonials[currentTestimonial].author}</p>
-                  <p className="text-sm">{pageData.testimonials[currentTestimonial].role}</p>
+                <p className="text-xl text-gray-700 mb-6 font-light leading-relaxed">
+                  "{pageData.testimonials[currentTestimonial].quote}"
+                </p>
+                <div className="text-gray-600">
+                  <p className="font-normal text-gray-900">{pageData.testimonials[currentTestimonial].author}</p>
+                  <p className="text-sm font-light">{pageData.testimonials[currentTestimonial].role}</p>
                 </div>
               </motion.div>
 
-              <div className="flex justify-between mt-6">
+              <div className="flex justify-between items-center mt-8">
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-white hover:bg-white/10"
                   onClick={prevTestimonial}
                   icon={<ChevronLeft size={20} />}
                 >
-                  <span className="sr-only">Previous testimonial</span>
+                  Previous
                 </Button>
+                <div className="flex gap-2">
+                  {pageData.testimonials.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentTestimonial(i)}
+                      className={`w-3 h-3 rounded-full transition-colors ${
+                        i === currentTestimonial ? 'bg-blue-600' : 'bg-blue-200'
+                      }`}
+                    />
+                  ))}
+                </div>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-white hover:bg-white/10"
                   onClick={nextTestimonial}
                   icon={<ChevronRight size={20} />}
+                  iconPosition="right"
                 >
-                  <span className="sr-only">Next testimonial</span>
+                  Next
                 </Button>
-              </div>
-
-              <div className="flex justify-center gap-2 mt-4">
-                {pageData.testimonials.map((_, i) => (
-                  <div
-                    key={i}
-                    className={`w-3 h-3 rounded-full ${
-                      i === currentTestimonial ? 'bg-cyan-400' : 'bg-white/30'
-                    }`}
-                  />
-                ))}
               </div>
             </div>
           </Container>
         </section>
 
         {/* FAQ Section */}
-        <section className="py-32 bg-white dark:bg-gray-900 relative overflow-hidden">
+        <section className="py-32 bg-blue-50 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -1032,10 +938,10 @@ const CRMPage: React.FC = () => {
               viewport={{ once: true }}
               className="text-center mb-16"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Frequently Asked <span className="text-blue-600 dark:text-blue-400">Questions</span>
+              <h2 className="text-4xl font-light text-gray-900 mb-6">
+                Frequently Asked <span className="text-blue-600 font-normal">Questions</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
                 Everything you need to know about our CRM solutions
               </p>
             </motion.div>
@@ -1045,75 +951,38 @@ const CRMPage: React.FC = () => {
         </section>
 
         {/* Final CTA Section */}
-        <section className="py-32 bg-gradient-to-r from-blue-900 to-purple-900 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0 bg-[url('/images/circuit-pattern.svg')] bg-[size:100px_100px]" />
-          </div>
-
-          {/* Floating CRM icons */}
-          {[...Array(8)].map((_, i) => (
+        <section className="py-32 bg-white relative overflow-hidden">
+          <Container>
             <motion.div
-              key={i}
-              animate={{
-                y: [0, Math.random() * 60 - 30],
-                x: [0, Math.random() * 60 - 30],
-                rotate: [0, Math.random() * 15 - 7.5]
-              }}
-              transition={{
-                duration: 5 + Math.random() * 10,
-                repeat: Infinity,
-                repeatType: "reverse"
-              }}
-              className="absolute rounded-lg bg-white/10 backdrop-blur-sm w-12 h-12 flex items-center justify-center border border-white/20"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
-              }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-center max-w-2xl mx-auto"
             >
-              {[<Users />, <Mail />, <BarChart2 />, <MessageSquare />][i % 4]}
-            </motion.div>
-          ))}
-
-          <Container className="relative z-10">
-            <motion.div
-              style={{ scale }}
-              className="text-center max-w-3xl mx-auto"
-            >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="inline-block mb-6"
-              >
-                <div className="px-6 py-2 bg-white/10 rounded-full border border-white/20 text-white text-sm font-medium backdrop-blur-sm">
-                  READY TO TRANSFORM YOUR BUSINESS?
-                </div>
-              </motion.div>
-
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-                Let's Build Your <span className="text-cyan-300">CRM Solution</span> Today
+              <h2 className="text-4xl font-light text-gray-900 mb-6">
+                Ready to Transform
+                <br />
+                <span className="text-blue-600 font-normal">Your Business?</span>
               </h2>
-              <p className="text-xl text-blue-200 mb-12">
-                Starting from just $49/user/month. Get a free consultation and demo.
+              <p className="text-xl text-gray-600 mb-8 font-light leading-relaxed">
+                Join thousands of businesses that trust our CRM solution to drive growth and efficiency.
               </p>
-
-              <div className="flex flex-wrap justify-center gap-4">
+              
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
-                  variant="accent"
+                  variant="primary"
                   size="lg"
-                  className="bg-cyan-400 hover:bg-cyan-500 text-blue-900 px-12"
+                  className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600 min-w-[160px]"
                   icon={<ArrowRight size={20} />}
                 >
-                  Get Started Now
+                  Get Started
                 </Button>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="lg"
-                  className="text-white border-white/30 hover:bg-white/10 px-12"
-                  icon={<MessageSquare size={20} />}
+                  className="border-blue-600 text-blue-600 hover:bg-blue-50 min-w-[160px]"
                 >
-                  Chat With Us
+                  View Demo
                 </Button>
               </div>
             </motion.div>

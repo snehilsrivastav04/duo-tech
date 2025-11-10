@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, Phone, Mail, MapPin, Check, ArrowRight } from 'lucide-react';
 
-const PrimeFinance = () => {
+const PrimeFinance = () => {import
   const [activeService, setActiveService] = useState(null);
   const [scrolled, setScrolled] = useState(false);
   const [hoveredService, setHoveredService] = useState(null);
