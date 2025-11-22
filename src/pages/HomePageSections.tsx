@@ -12,6 +12,8 @@ import {
   Smartphone,
   Palette,
   Code,
+  FileText,
+  Webhook
 } from 'lucide-react';
 
 // Prop-type interfaces
@@ -269,6 +271,79 @@ export const ServiceCard: FC<{ service: Service }> = ({ service }) => {
   );
 };
 
+
+// Developer Section Component
+export const DeveloperSection: FC = () => {
+  return (
+    <section className="bg-gray-900 text-white py-24">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center">
+          <h2 className="text-5xl font-bold">Our platform is built</h2>
+          <p className="text-3xl text-green-400 mt-2">&lt;for developers by developers&gt;</p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-12 mt-20">
+          <div className="text-center">
+            <div className="flex justify-center mb-4">
+              <Code size={40} className="text-green-400" />
+            </div>
+            <h3 className="text-2xl font-bold mb-2">Integrations</h3>
+            <p className="text-gray-400 mb-4">Find all popular platform SDKs, plugin, server integrations in our integration stack.</p>
+            <a href="#" className="text-green-400 font-bold">View Docs &rarr;</a>
+          </div>
+
+          <div className="text-center">
+            <div className="flex justify-center mb-4">
+              <FileText size={40} className="text-green-400" />
+            </div>
+            <h3 className="text-2xl font-bold mb-2">API Reference</h3>
+            <p className="text-gray-400 mb-4">Comprehensive documentation to build powerful payment solutions.</p>
+            <a href="#" className="text-green-400 font-bold">View Docs &rarr;</a>
+          </div>
+
+          <div className="text-center">
+            <div className="flex justify-center mb-4">
+              <Webhook size={40} className="text-green-400" />
+            </div>
+            <h3 className="text-2xl font-bold mb-2">Webhooks</h3>
+            <p className="text-gray-400 mb-4">Receive real-time notifications for all payment related transactions and events.</p>
+            <a href="#" className="text-green-400 font-bold">View Docs &rarr;</a>
+          </div>
+        </div>
+
+        <div className="mt-24">
+          <div className="text-center">
+            <h3 className="text-4xl font-bold mb-4">Try it out for yourself</h3>
+          </div>
+          <div className="bg-gray-800 rounded-lg p-4 mt-8">
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex space-x-2">
+                <span className="bg-gray-700 h-3 w-3 rounded-full"></span>
+                <span className="bg-gray-700 h-3 w-3 rounded-full"></span>
+                <span className="bg-gray-700 h-3 w-3 rounded-full"></span>
+              </div>
+              <p className="text-sm text-gray-400">Curl</p>
+            </div>
+            <pre>
+              <code className="language-bash">
+                curl -X POST https://api.razorpay.com/v1/orders \
+                -u [YOUR_KEY_ID]:[YOUR_KEY_SECRET] \
+                -H 'content-type:application/json' \
+                -d '&#123;
+                  "amount": 500,
+                  "currency": "INR",
+                  "receipt": "qwsaq1"
+                &#125;'
+              </code>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+
 // Demo Component
 export default function ComponentShowcase() {
   const testimonials: Testimonial[] = [
@@ -401,6 +476,8 @@ export default function ComponentShowcase() {
           </div>
         </div>
       </section>
+
+      <DeveloperSection />
 
       {/* Newsletter Section */}
       <section className="py-24 bg-blue-900">

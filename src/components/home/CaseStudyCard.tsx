@@ -1,5 +1,4 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
 
 interface CaseStudy {
   title: string;
@@ -15,50 +14,70 @@ interface CaseStudyCardProps {
   index: number;
 }
 
-const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ caseStudy, index }) => {
+const CaseStudyCard = ({ caseStudy, index }: CaseStudyCardProps) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setIsVisible(true), index * 100);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, [index]);
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      className="bg-white dark:bg-blue-900/50 rounded-xl border border-gray-200 dark:border-blue-800 overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
+    <div
+      ref={cardRef}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+        transition: 'opacity 0.6s ease, transform 0.6s ease'
+      }}
+      className="bg-white dark:bg-gray-900 rounded-lg border border-gray-100 dark:border-gray-800 overflow-hidden hover:shadow-2xl hover:border-gray-200 dark:hover:border-gray-700 transition-all duration-500"
     >
-      <div className="p-8">
-        <div className="flex items-center mb-6">
-          <img 
-            src={caseStudy.logo} 
-            alt={caseStudy.title} 
-            className="h-12 w-12 object-contain mr-4"
-          />
-          <h3 className="text-2xl font-bold text-gray-900 dark:text-white">{caseStudy.title}</h3>
+      <div className="p-12">
+        <div className="flex items-center mb-8">
+          <div className="h-14 w-14 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center mr-5 flex-shrink-0">
+            <span className="text-white text-xl font-light">{caseStudy.logo}</span>
+          </div>
+          <h3 className="text-3xl font-light text-gray-900 dark:text-white tracking-tight">{caseStudy.title}</h3>
         </div>
         
-        <div className="space-y-6">
-          <div>
-            <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-2">CHALLENGE</h4>
-            <p className="text-gray-600 dark:text-gray-300">{caseStudy.challenge}</p>
+        <div className="space-y-8">
+          <div className="border-l-2 border-blue-600 pl-6">
+            <h4 className="text-xs font-medium tracking-widest text-blue-600 dark:text-blue-400 mb-3">CHALLENGE</h4>
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-light">{caseStudy.challenge}</p>
           </div>
           
-          <div>
-            <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-2">SOLUTION</h4>
-            <p className="text-gray-600 dark:text-gray-300">{caseStudy.solution}</p>
+          <div className="border-l-2 border-blue-600 pl-6">
+            <h4 className="text-xs font-medium tracking-widest text-blue-600 dark:text-blue-400 mb-3">SOLUTION</h4>
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-light">{caseStudy.solution}</p>
           </div>
           
-          <div>
-            <h4 className="text-sm font-semibold text-blue-600 dark:text-blue-400 mb-2">RESULTS</h4>
-            <p className="text-gray-600 dark:text-gray-300">{caseStudy.results}</p>
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {caseStudy.metrics.map((metric, i) => (
-                <div key={i} className="bg-blue-50 dark:bg-blue-900/30 rounded-lg p-3">
-                  <p className="text-sm text-blue-600 dark:text-blue-400">{metric}</p>
+          <div className="border-l-2 border-blue-600 pl-6">
+            <h4 className="text-xs font-medium tracking-widest text-blue-600 dark:text-blue-400 mb-3">RESULTS</h4>
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-light mb-6">{caseStudy.results}</p>
+            <div className="grid grid-cols-2 gap-4">
+              {caseStudy.metrics.map((metric: string, i: number) => (
+                <div key={i} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-5 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-colors duration-300">
+                  <p className="text-sm text-gray-700 dark:text-gray-300 font-light leading-snug">{metric}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

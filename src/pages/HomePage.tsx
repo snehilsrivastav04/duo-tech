@@ -3,7 +3,7 @@ import { ParallaxProvider } from 'react-scroll-parallax';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight, Mail,
-  Zap, Shield, Server, Globe2
+  Zap, Shield, Server, Globe
 } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import MainLayout from '../components/layout/MainLayout';
@@ -17,7 +17,8 @@ import {
   TestimonialCarousel,
   NewsletterForm,
   UseCaseCard,
-  ServiceCard
+  ServiceCard,
+  DeveloperSection
 } from '../pages/HomePageSections';
 import ErrorBoundary from '../components/errors/ErrorBoundary';
 
@@ -31,151 +32,154 @@ const HomePage: FC = () => {
       <ParallaxProvider>
         <MainLayout>
           {/* HERO – REFINED MINIMALIST DESIGN */}
-          <section className="relative min-h-screen bg-white overflow-hidden flex items-center justify-center">
-            {/* Subtle paper texture overlay */}
-            <div
-              className="absolute inset-0 opacity-[0.015]"
-              style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z' fill='%231e40af'/%3E%3C/g%3E%3C/svg%3E")`,
-              }}
-            />
+          <section className="relative min-h-screen bg-white dark:bg-gray-950 overflow-hidden flex items-center justify-center">
+  {/* Ultra-subtle paper texture */}
+  <div
+    className="absolute inset-0 opacity-[0.008]"
+    style={{
+      backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50 L100 0 L100 100 L0 100 L0 0 Z' fill='none' stroke='%23000' stroke-width='0.5' stroke-opacity='0.05'/%3E%3C/svg%3E")`,
+    }}
+  />
 
-            {/* Gentle floating geometric shapes */}
-            <motion.div
-              animate={{ 
-                rotate: [0, 2, 0], 
-                x: [-30, 30, -30], 
-                y: [-20, 20, -20] 
-              }}
-              transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-              className="absolute top-32 left-20 w-72 h-72 bg-gradient-to-br from-blue-50/40 to-white/40 rounded-3xl shadow-sm opacity-50 blur-sm"
-              style={{ transform: "rotate(-8deg)" }}
-            />
-            <motion.div
-              animate={{ 
-                rotate: [0, -1.5, 0], 
-                x: [20, -20, 20], 
-                y: [15, -25, 15] 
-              }}
-              transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-              className="absolute bottom-40 right-24 w-64 h-64 bg-gradient-to-tr from-blue-50/30 to-white/30 rounded-3xl shadow-sm opacity-40 blur-sm"
-              style={{ transform: "rotate(6deg)" }}
-            />
+  {/* Minimal geometric elements */}
+  <motion.div
+    animate={{ 
+      rotate: [0, 180, 360],
+      scale: [1, 1.02, 1]
+    }}
+    transition={{ 
+      duration: 20, 
+      repeat: Infinity, 
+      ease: "linear" 
+    }}
+    className="absolute top-1/4 left-1/4 w-96 h-96 border border-gray-100 dark:border-gray-800 rounded-full opacity-20"
+  />
+  
+  <motion.div
+    animate={{ 
+      rotate: [360, 180, 0],
+      scale: [1.02, 1, 1.02]
+    }}
+    transition={{ 
+      duration: 25, 
+      repeat: Infinity, 
+      ease: "linear" 
+    }}
+    className="absolute bottom-1/4 right-1/4 w-80 h-80 border border-gray-100 dark:border-gray-800 rounded-full opacity-15"
+  />
 
-            <Container className="relative z-10 px-8 md:px-16 lg:px-24">
-              <div className="max-w-5xl mx-auto text-center">
+  <Container className="relative z-10 px-8">
+    <div className="max-w-4xl mx-auto text-center">
 
-                {/* Refined badge */}
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.7, ease: "easeOut" }}
-                  className="inline-flex items-center gap-2.5 px-5 py-2 mb-16 bg-blue-50/50 border border-blue-100/50 rounded-full text-blue-800 text-xs font-light tracking-wider uppercase"
-                >
-                  <Zap className="w-4 h-4" />
-                  <span>Enterprise-Grade Communication</span>
-                </motion.div>
+      {/* Sophisticated badge */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="inline-flex items-center gap-3 px-6 py-3 mb-20 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-full text-gray-600 dark:text-gray-400 text-sm font-light tracking-wider"
+      >
+        <div className="w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 rounded-full" />
+        <span>Enterprise Communication Platform</span>
+      </motion.div>
 
-                {/* Headline with refined typography */}
-                <motion.h1
-                  className="text-6xl md:text-7xl lg:text-8xl font-extralight text-gray-900 leading-[1.1]"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ staggerChildren: 0.15 }}
-                >
-                  <motion.span
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-                    className="block"
-                  >
-                    Build <span className="font-light text-blue-800">connections</span>
-                  </motion.span>
-                  <motion.span
-                    initial={{ y: 30, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.9, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-                    className="block mt-3"
-                  >
-                    that <span className="font-light text-blue-800">scale</span> your vision
-                  </motion.span>
-                </motion.h1>
+      {/* Elegant typography */}
+      <motion.h1
+        className="text-5xl md:text-6xl lg:text-7xl font-light text-gray-900 dark:text-white leading-[1.15] tracking-tight"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ staggerChildren: 0.12 }}
+      >
+        <motion.span
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+          className="block"
+        >
+          Build <span className="text-blue-600 dark:text-blue-400">connections</span>
+        </motion.span>
+        <motion.span
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+          className="block mt-4"
+        >
+          that <span className="text-blue-600 dark:text-blue-400">scale</span> your vision
+        </motion.span>
+      </motion.h1>
 
-                {/* Sub-headline with generous spacing */}
-                <motion.p
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.9, delay: 0.4 }}
-                  className="mt-14 text-xl md:text-2xl text-gray-600 font-extralight max-w-3xl mx-auto leading-relaxed"
-                >
-                  Real-time SMS, WhatsApp, Voice & Email – secure, compliant,
-                  <br className="hidden sm:block" />
-                  and ready for the next 10,000 businesses
-                </motion.p>
+      {/* Refined sub-headline */}
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.3 }}
+        className="mt-16 text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light max-w-2xl mx-auto leading-relaxed"
+      >
+        Real-time SMS, WhatsApp, Voice & Email – secure, compliant, and engineered for global scale
+      </motion.p>
 
-                {/* Refined CTA buttons */}
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.9, delay: 0.6 }}
-                  className="mt-16 flex flex-col sm:flex-row gap-4 justify-center"
-                >
-                  <Link to="/get-started">
-                    <Button className="group px-11 py-4 bg-blue-800 text-white font-light text-sm tracking-wide rounded-full shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2.5">
-                      Start Free Trial
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-                    </Button>
-                  </Link>
+      {/* Sophisticated CTA buttons */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, delay: 0.45 }}
+        className="mt-16 flex flex-col sm:flex-row gap-4 justify-center items-center"
+      >
+        <Link to="/get-started">
+          <Button className="group px-12 py-4 bg-blue-600 dark:bg-blue-500 text-white font-normal text-sm tracking-wide rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 flex items-center gap-3 shadow-sm hover:shadow-md">
+            Start Free Trial
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+          </Button>
+        </Link>
 
-                  <Link to="/demo">
-                    <Button className="px-11 py-4 border border-gray-200 text-gray-700 font-light text-sm tracking-wide rounded-full bg-white hover:border-gray-300 hover:bg-gray-50 transition-all duration-300">
-                      Schedule a Demo
-                    </Button>
-                  </Link>
-                </motion.div>
+        <Link to="/demo">
+          <Button className="px-12 py-4 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-normal text-sm tracking-wide rounded-lg bg-transparent hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-300">
+            Schedule Demo
+          </Button>
+        </Link>
+      </motion.div>
 
-                {/* Minimal trust indicators */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.9, duration: 1 }}
-                  className="mt-24 flex flex-wrap justify-center items-center gap-x-10 gap-y-4 text-xs text-gray-500 font-light tracking-wide"
-                >
-                  <div className="flex items-center gap-2">
-                    <Shield className="w-3.5 h-3.5 text-blue-700" />
-                    GDPR & ISO 27001
-                  </div>
-                  <span className="hidden sm:inline w-px h-3 bg-gray-200" />
-                  <div className="flex items-center gap-2">
-                    <Server className="w-3.5 h-3.5 text-blue-700" />
-                    99.99% Uptime
-                  </div>
-                  <span className="hidden sm:inline w-px h-3 bg-gray-200" />
-                  <div className="flex items-center gap-2">
-                    <Globe2 className="w-3.5 h-3.5 text-blue-700" />
-                    150+ Countries
-                  </div>
-                </motion.div>
-              </div>
-            </Container>
+      {/* Minimal trust indicators */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+        className="mt-24 flex flex-wrap justify-center items-center gap-x-12 gap-y-5 text-sm text-gray-500 dark:text-gray-500 font-light"
+      >
+        <div className="flex items-center gap-3">
+          <Shield className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+          <span>GDPR & ISO 27001</span>
+        </div>
+        <div className="w-px h-4 bg-gray-300 dark:bg-gray-700" />
+        <div className="flex items-center gap-3">
+          <Server className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+          <span>99.99% Uptime</span>
+        </div>
+        <div className="w-px h-4 bg-gray-300 dark:bg-gray-700" />
+        <div className="flex items-center gap-3">
+          <Globe className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+          <span>150+ Countries</span>
+        </div>
+      </motion.div>
+    </div>
+  </Container>
 
-            {/* Subtle scroll indicator */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2 }}
-              className="absolute bottom-12 left-1/2 -translate-x-1/2 text-gray-300"
-            >
-              <motion.div
-                animate={{ y: [0, 6, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                className="flex flex-col items-center text-[10px] font-light tracking-[0.2em] uppercase"
-              >
-                <span>Scroll</span>
-                <ArrowRight className="w-4 h-4 mt-2 rotate-90" />
-              </motion.div>
-            </motion.div>
-          </section>
+  {/* Elegant scroll indicator */}
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ delay: 0.9 }}
+    className="absolute bottom-8 left-1/2 -translate-x-1/2"
+  >
+    <motion.div
+      animate={{ y: [0, 8, 0] }}
+      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      className="flex flex-col items-center text-xs text-gray-400 dark:text-gray-600 font-light tracking-widest uppercase"
+    >
+      <span>Explore</span>
+      <ArrowRight className="w-4 h-4 mt-3 rotate-90" />
+    </motion.div>
+  </motion.div>
+</section>
 
           {/* Services Section - Refined */}
           <section id="services" className="py-40 bg-gray-50 relative overflow-hidden">
@@ -377,6 +381,8 @@ const HomePage: FC = () => {
               </div>
             </Container>
           </section>
+
+          <DeveloperSection />
 
           {/* Newsletter - Refined */}
           <section className="py-32 bg-gray-50">

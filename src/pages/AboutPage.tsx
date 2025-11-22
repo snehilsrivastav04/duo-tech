@@ -1,533 +1,525 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, MouseEvent } from 'react';
+import { Target, Handshake, Brain, Rocket, Clock, Users, Shield, MessageCircle, ChevronRight, Sparkles, TrendingUp, Zap } from 'lucide-react';
 import MainLayout from '../components/layout/MainLayout';
-import Container from '../components/ui/Container';
-import Button from '../components/ui/Button';
-import { 
-  Target, Handshake, Brain, Rocket, Clock, Users, Shield, 
-  MessageCircle, ArrowRight, Heart, X
-} from 'lucide-react';
-
-// Define types for our data structures
-interface Value {
-  id: number;
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  fullText: string;
-}
-
-interface Milestone {
-  year: string;
-  title: string;
-  description: string;
-  detail: string;
-  impact: string;
-}
-
-interface Stat {
-  value: string;
-  suffix: string;
-  label: string;
-  icon: React.ReactNode;
-  detail: string;
-}
 
 const AboutPage = () => {
-  const [selectedValue, setSelectedValue] = useState(0);
-  const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [selectedMilestone, setSelectedMilestone] = useState<Milestone | null>(null);
+  const [activeValue, setActiveValue] = useState(0);
+  const [expandedMilestone, setExpandedMilestone] = useState<number | null>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [hoveredStat, setHoveredStat] = useState<number | null>(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [activeTab, setActiveTab] = useState('vision');
 
-  const values: Value[] = [
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const currentProgress = (window.scrollY / totalScroll) * 100;
+      setScrollProgress(currentProgress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setMousePosition({
+      x: ((e.clientX - rect.left) / rect.width) * 100,
+      y: ((e.clientY - rect.top) / rect.height) * 100
+    });
+  };
+
+  const values = [
     {
       id: 0,
-      icon: <Target className="w-8 h-8" />,
+      icon: <Target className="w-6 h-6" />,
       title: "Purpose-Driven",
-      description: "Building meaningful solutions that create real impact",
-      fullText: "Every feature, every line of code, every design decision is made with clear intention. We build technology that serves humanity, not the other way around. Our purpose is to create tools that genuinely improve how people communicate and connect."
+      subtitle: "Building meaningful solutions",
+      description: "Every feature, every line of code, every design decision is made with clear intention. We build technology that serves humanity, not the other way around.",
+      color: "from-blue-900 to-blue-800"
     },
     {
       id: 1,
-      icon: <Handshake className="w-8 h-8" />,
+      icon: <Handshake className="w-6 h-6" />,
       title: "Partnership Mindset",
-      description: "Your success fuels our growth and innovation",
-      fullText: "We don't just deliver projects—we build lasting partnerships. When you win, we win. This mindset drives us to go beyond expectations, to truly understand your challenges, and to celebrate your victories as our own."
+      subtitle: "Your success fuels our growth",
+      description: "We don't just deliver projects—we build lasting partnerships. When you win, we win. This mindset drives us to go beyond expectations.",
+      color: "from-indigo-900 to-indigo-800"
     },
     {
       id: 2,
-      icon: <Brain className="w-8 h-8" />,
+      icon: <Brain className="w-6 h-6" />,
       title: "Continuous Evolution",
-      description: "Learning, adapting, and staying ahead of the curve",
-      fullText: "The digital world never stands still, and neither do we. We invest heavily in learning, experimentation, and staying at the forefront of technology. Our team thrives on curiosity and the pursuit of mastery."
+      subtitle: "Learning and adapting",
+      description: "The digital world never stands still, and neither do we. We invest heavily in learning, experimentation, and staying at the forefront of technology.",
+      color: "from-violet-900 to-violet-800"
     },
     {
       id: 3,
-      icon: <Rocket className="w-8 h-8" />,
+      icon: <Rocket className="w-6 h-6" />,
       title: "Bold Innovation",
-      description: "Challenging conventions to discover better ways",
-      fullText: "We take calculated risks to push boundaries and explore what's possible. Innovation isn't just about adopting the latest tech—it's about fundamentally rethinking how we solve problems and create value for our partners."
+      subtitle: "Challenging conventions",
+      description: "We take calculated risks to push boundaries and explore what's possible. Innovation isn't just about adopting the latest tech—it's about fundamentally rethinking solutions.",
+      color: "from-purple-900 to-purple-800"
     }
   ];
 
-  const milestones: Milestone[] = [
+  const milestones = [
     { 
-      year: '2010', 
+      year: 'June 2025', 
       title: 'The Beginning', 
-      description: 'A small team with an ambitious vision',
-      detail: 'Founded in a modest office with three passionate individuals and a dream to democratize enterprise communication. We started with SMS services and a commitment to excellence that would define our journey.',
-      impact: 'Launched with 5 pilot clients'
+      summary: 'Our journey starts',
+      detail: 'Founded with a vision to revolutionize digital communication. Started with a small dedicated team and an ambitious goal to make enterprise-grade tools accessible to everyone.',
+      impact: 'Launched beta platform',
+      icon: <Sparkles className="w-5 h-5" />
     },
     { 
-      year: '2013', 
-      title: 'Breaking Through', 
-      description: 'Our first Fortune 500 partnership',
-      detail: 'Secured our breakthrough contract that validated our approach and opened doors to enterprise-scale opportunities. This milestone proved that quality and dedication could compete with established giants.',
-      impact: 'Scaled to 50+ enterprise clients'
+      year: 'Q3 2025', 
+      title: 'First Clients', 
+      summary: 'Building trust',
+      detail: 'Secured our first wave of forward-thinking partners who believed in our vision. Their feedback shaped our platform into something truly special.',
+      impact: 'Onboarded 10+ partners',
+      icon: <Users className="w-5 h-5" />
     },
     { 
-      year: '2016', 
+      year: 'Q4 2025', 
       title: 'Platform Evolution', 
-      description: 'From SMS to multi-channel powerhouse',
-      detail: 'Launched our comprehensive communication platform, expanding from SMS-only to email, voice, push notifications, and more. This transformation positioned us as a complete communication solution provider.',
-      impact: 'Processed 100M+ messages monthly'
+      summary: 'Expanding capabilities',
+      detail: 'Launched multi-channel communication features, expanding beyond SMS to email, voice, and push notifications. Positioned ourselves as a comprehensive solution.',
+      impact: 'Processing millions of messages',
+      icon: <TrendingUp className="w-5 h-5" />
     },
     { 
-      year: '2020', 
-      title: 'Global Expansion', 
-      description: 'Reaching three continents, staying personal',
-      detail: 'Opened offices in London and Singapore, establishing a truly global presence. Despite our growth, we maintained our commitment to personalized service and treating every client like family.',
-      impact: 'Serving 500+ partners worldwide'
-    },
-    { 
-      year: '2023', 
-      title: 'Innovation Lab', 
-      description: 'Investing in tomorrow\'s technologies',
-      detail: 'Launched our dedicated R&D division to explore AI, machine learning, blockchain, and next-generation communication technologies. This investment ensures we stay ahead of industry trends.',
-      impact: 'Filed 12 technology patents'
-    },
-    { 
-      year: '2025', 
+      year: '2026', 
       title: 'Future Forward', 
-      description: 'Shaping the next decade of communication',
-      detail: 'Today we stand at the forefront of digital communication innovation, powered by a team of over 200 specialists and driven by the same passion that started it all 15 years ago.',
-      impact: '99.9% platform reliability'
+      summary: 'Scaling innovation',
+      detail: 'Our roadmap includes AI-powered insights, global expansion, and next-generation communication technologies that will redefine the industry.',
+      impact: 'Industry-leading reliability',
+      icon: <Zap className="w-5 h-5" />
     }
   ];
 
-  const stats: Stat[] = [
+  const stats = [
     { 
-      value: '15', 
-      suffix: 'Years',
-      label: 'Of Excellence', 
+      value: '2025',
+      label: 'Founded', 
       icon: <Clock className="w-5 h-5" />,
-      detail: 'Consistently delivering innovation since 2010'
+      detail: 'Building the future',
+      trend: '+100% growth'
     },
     { 
-      value: '500', 
-      suffix: '+',
-      label: 'Global Partners', 
+      value: '50+',
+      label: 'Partners', 
       icon: <Users className="w-5 h-5" />,
-      detail: 'Trusted by enterprises across 40+ countries'
+      detail: 'Growing rapidly',
+      trend: 'Accelerating'
     },
     { 
-      value: '99.9', 
-      suffix: '%',
-      label: 'Uptime SLA', 
+      value: '99.9%',
+      label: 'Uptime', 
       icon: <Shield className="w-5 h-5" />,
-      detail: 'Industry-leading reliability guarantee'
+      detail: 'Enterprise reliability',
+      trend: 'Best-in-class'
     },
     { 
-      value: '24', 
-      suffix: '/7',
+      value: '24/7',
       label: 'Support', 
       icon: <MessageCircle className="w-5 h-5" />,
-      detail: 'Always here when you need us'
+      detail: 'Always available',
+      trend: 'Instant response'
     }
+  ];
+
+  const founderTabs = [
+    { id: 'vision', label: 'Vision', content: 'Satyam founded DuoTech in June 2025 with a singular mission: to make enterprise-grade communication tools accessible to everyone. His vision combines technical excellence with a deep understanding of human connection.' },
+    { id: 'background', label: 'Background', content: 'With a background in software engineering and product design, Satyam brings a unique perspective that bridges technology and human experience. His approach focuses on creating solutions that feel both powerful and intuitive.' },
+    { id: 'philosophy', label: 'Philosophy', content: 'Believes in building technology that serves people, not the other way around. Every decision at DuoTech is guided by the principle that great technology should feel invisible, natural, and empowering.' }
   ];
 
   return (
     <MainLayout>
-      <div className="bg-white text-slate-900">
-        {/* Hero Section */}
-        <section className="min-h-screen flex items-center justify-center bg-white border-b border-slate-100">
-          <div className="max-w-6xl mx-auto px-6 py-32 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            >
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-                className="inline-block mb-8 px-4 py-1.5 border border-slate-200 rounded-full text-slate-600 text-sm font-light tracking-wide"
-              >
-                WELCOME
-              </motion.div>
+      <div className="min-h-screen bg-white">
+        {/* Scroll Progress Bar */}
+        <div className="fixed top-0 left-0 right-0 h-0.5 bg-gray-100 z-50">
+          <div 
+            className="h-full bg-gradient-to-r from-blue-900 to-violet-900 transition-all duration-300"
+            style={{ width: `${scrollProgress}%` }}
+          />
+        </div>
+
+        {/* Hero Section with Interactive Background */}
+        <section className="relative overflow-hidden border-b border-gray-100">
+          <div 
+            className="absolute inset-0 opacity-[0.03] transition-opacity duration-1000"
+            onMouseMove={handleMouseMove}
+          >
+            <div 
+              className="absolute inset-0 transition-transform duration-700 ease-out"
+              style={{
+                backgroundImage: `radial-gradient(circle at 2px 2px, rgb(30, 58, 138) 1px, transparent 0)`,
+                backgroundSize: '48px 48px',
+                transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
+              }} 
+            />
+          </div>
+
+          <div className="relative max-w-6xl mx-auto px-8 py-32 md:py-40">
+            <div className="max-w-3xl">
+              <div className="inline-block mb-6 px-3 py-1 border border-gray-200 text-xs tracking-[0.2em] text-gray-500 uppercase animate-fade-in">
+                About Us
+              </div>
               
-              <h1 className="text-6xl md:text-7xl lg:text-8xl font-light text-slate-900 mb-8 leading-tight tracking-tight">
-                Building the<br />
-                <span className="font-normal text-blue-900">future of</span><br />
-                connection
+              <h1 className="text-5xl md:text-7xl font-light text-gray-900 mb-8 leading-[1.1] tracking-tight">
+                Building the future<br />
+                of <span className="text-blue-900 relative inline-block group">
+                  connection
+                  <span className="absolute bottom-0 left-0 w-full h-px bg-blue-900 transform origin-left transition-transform duration-500 group-hover:scale-x-110"></span>
+                </span>
               </h1>
               
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto mb-12 font-light leading-relaxed"
-              >
-                For over 15 years, we've crafted communication solutions that feel human, 
-                intuitive, and powerful. Technology that brings people closer together.
-              </motion.p>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                className="flex flex-wrap justify-center gap-4"
-              >
-                <button className="px-8 py-3 bg-blue-900 hover:bg-blue-800 text-white font-light rounded transition-colors duration-300">
-                  Our Story
-                </button>
-                <button className="px-8 py-3 border border-slate-300 hover:border-blue-900 text-slate-700 hover:text-blue-900 font-light rounded transition-all duration-300">
-                  Meet the Team
-                </button>
-              </motion.div>
-            </motion.div>
+              <p className="text-xl md:text-2xl text-gray-500 font-light leading-relaxed mb-12">
+                We craft communication solutions that feel human, intuitive, and powerful. 
+                Technology that brings people closer together.
+              </p>
+
+              <div className="flex items-center gap-3 text-sm text-gray-400">
+                <div className="w-12 h-px bg-gradient-to-r from-gray-200 to-transparent animate-pulse" />
+                <span className="tracking-wide">Est. June 2025</span>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="py-24 bg-slate-50">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Interactive Stats Grid */}
+        <section className="border-b border-gray-100">
+          <div className="max-w-6xl mx-auto px-8 py-20">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-100">
               {stats.map((stat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.6 }}
+                <div 
+                  key={i} 
+                  className="bg-white p-8 group hover:bg-gradient-to-br hover:from-blue-50 hover:to-white transition-all duration-500 cursor-pointer relative overflow-hidden"
                   onMouseEnter={() => setHoveredStat(i)}
                   onMouseLeave={() => setHoveredStat(null)}
-                  className="group"
                 >
-                  <div className="p-8 bg-white border border-slate-200 hover:border-blue-900 rounded transition-all duration-300">
-                    <div className="flex justify-between items-start mb-6">
-                      <div className="text-slate-400 group-hover:text-blue-900 transition-colors duration-300">
-                        {stat.icon}
-                      </div>
+                  {/* Hover effect overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br from-blue-900/5 to-transparent transition-opacity duration-500 ${hoveredStat === i ? 'opacity-100' : 'opacity-0'}`} />
+                  
+                  <div className="relative">
+                    <div className={`text-gray-300 group-hover:text-blue-900 transition-all duration-500 mb-6 transform ${hoveredStat === i ? 'scale-110 rotate-12' : 'scale-100 rotate-0'}`}>
+                      {stat.icon}
                     </div>
-                    
-                    <div className="text-4xl font-light text-slate-900 mb-2">
-                      {stat.value}<span className="text-2xl text-slate-600">{stat.suffix}</span>
+                    <div className="text-3xl md:text-4xl font-light text-gray-900 mb-2 tracking-tight transform transition-transform duration-500 group-hover:translate-x-1">
+                      {stat.value}
                     </div>
-                    
-                    <div className="text-sm text-slate-600 font-light mb-3">
+                    <div className="text-sm text-gray-500 mb-2 tracking-wide">
                       {stat.label}
                     </div>
-                    
-                    <div className={`text-xs text-slate-500 font-light transition-all duration-300 ${
-                      hoveredStat === i ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
-                    }`}>
-                      {stat.detail}
+                    <div className={`text-xs font-light transition-all duration-500 ${hoveredStat === i ? 'text-blue-900 opacity-100 translate-y-0' : 'text-gray-400 opacity-0 translate-y-2'}`}>
+                      {stat.trend}
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Values Section */}
-        <section className="py-32 bg-white">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-16 text-center"
-            >
-              <div className="inline-block mb-6 px-4 py-1.5 border border-slate-200 rounded-full text-slate-600 text-sm font-light tracking-wide">
-                CORE VALUES
+        {/* Interactive Values Section */}
+        <section className="border-b border-gray-100">
+          <div className="max-w-6xl mx-auto px-8 py-32">
+            <div className="max-w-2xl mb-20">
+              <div className="inline-block mb-6 px-3 py-1 border border-gray-200 text-xs tracking-[0.2em] text-gray-500 uppercase">
+                Core Values
               </div>
-              <h2 className="text-5xl md:text-6xl font-light text-slate-900 mb-6 tracking-tight">
-                What Drives Us
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6 tracking-tight">
+                What drives us forward
               </h2>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
+              <p className="text-lg text-gray-500 font-light leading-relaxed">
                 The principles that guide every decision we make
               </p>
-            </motion.div>
-
-            {/* Value Tabs */}
-            <div className="flex flex-wrap justify-center gap-3 mb-12">
-              {values.map((value, index) => (
-                <motion.button
-                  key={value.id}
-                  onClick={() => setSelectedValue(index)}
-                  initial={{ opacity: 0 }}
-                  whileInView={{ opacity: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`px-6 py-2.5 rounded-full font-light transition-all duration-300 ${
-                    selectedValue === index
-                      ? 'bg-blue-900 text-white'
-                      : 'bg-white text-slate-600 border border-slate-200 hover:border-slate-300'
-                  }`}
-                >
-                  {value.title}
-                </motion.button>
-              ))}
             </div>
 
-            {/* Value Content */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={selectedValue}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                className="max-w-4xl mx-auto"
-              >
-                <div className="p-12 bg-slate-50 border border-slate-200 rounded">
-                  <div className="flex items-start gap-6 mb-8">
-                    <div className="p-4 bg-white border border-slate-200 rounded">
-                      <div className="text-blue-900">
-                        {values[selectedValue].icon}
-                      </div>
+            {/* Interactive Value Cards */}
+            <div className="grid md:grid-cols-2 gap-4">
+              {values.map((value, i) => (
+                <button
+                  key={value.id}
+                  onClick={() => setActiveValue(i)}
+                  className={`text-left p-8 transition-all duration-500 relative overflow-hidden group ${
+                    activeValue === i 
+                      ? `bg-gradient-to-br ${value.color} text-white shadow-xl scale-105` 
+                      : 'bg-white hover:bg-gray-50 border border-gray-200'
+                  }`}
+                >
+                  {/* Animated background effect */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${value.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                  
+                  <div className="relative">
+                    <div className={`p-3 border mb-6 inline-block transition-all duration-500 ${
+                      activeValue === i 
+                        ? 'border-white/30 text-white transform rotate-6 scale-110' 
+                        : 'border-gray-200 text-gray-400 group-hover:border-blue-900 group-hover:text-blue-900'
+                    }`}>
+                      {value.icon}
                     </div>
-                    <div>
-                      <h3 className="text-3xl font-light text-slate-900 mb-2">
-                        {values[selectedValue].title}
-                      </h3>
-                      <p className="text-slate-600 font-light">
-                        {values[selectedValue].description}
+                    
+                    <h3 className={`text-2xl font-light tracking-tight mb-2 transition-colors duration-500 ${
+                      activeValue === i ? 'text-white' : 'text-gray-900'
+                    }`}>
+                      {value.title}
+                    </h3>
+                    
+                    <p className={`text-sm mb-4 transition-colors duration-500 ${
+                      activeValue === i ? 'text-white/80' : 'text-gray-500'
+                    }`}>
+                      {value.subtitle}
+                    </p>
+                    
+                    <div className={`overflow-hidden transition-all duration-700 ${
+                      activeValue === i ? 'max-h-32 opacity-100' : 'max-h-0 opacity-0'
+                    }`}>
+                      <p className={`text-sm font-light leading-relaxed ${
+                        activeValue === i ? 'text-white/90' : 'text-gray-600'
+                      }`}>
+                        {value.description}
                       </p>
                     </div>
                   </div>
-                  
-                  <p className="text-lg text-slate-700 font-light leading-relaxed">
-                    {values[selectedValue].fullText}
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </section>
-
-        {/* Journey Timeline */}
-        <section className="py-32 bg-slate-50 border-t border-slate-200">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-20 text-center"
-            >
-              <div className="inline-block mb-6 px-4 py-1.5 border border-slate-200 rounded-full text-slate-600 text-sm font-light tracking-wide">
-                OUR JOURNEY
-              </div>
-              <h2 className="text-5xl md:text-6xl font-light text-slate-900 mb-6 tracking-tight">
-                15 Years of Impact
-              </h2>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
-                Key moments that shaped who we are today
-              </p>
-            </motion.div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {milestones.map((milestone, index) => (
-                <motion.button
-                  key={index}
-                  onClick={() => {
-                    setSelectedMilestone(milestone);
-                    setIsPanelOpen(true);
-                  }}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="group p-8 bg-white border border-slate-200 hover:border-blue-900 rounded text-left transition-all duration-300"
-                >
-                  <div className="text-4xl font-light text-blue-900 mb-4">
-                    {milestone.year}
-                  </div>
-                  <h3 className="text-xl font-normal text-slate-900 mb-3">
-                    {milestone.title}
-                  </h3>
-                  <p className="text-slate-600 font-light mb-4 leading-relaxed">
-                    {milestone.description}
-                  </p>
-                  <div className="flex items-center text-blue-900 text-sm font-light">
-                    <span>Learn more</span>
-                    <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </motion.button>
+                </button>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Team Section */}
-        <section className="py-32 bg-white">
-          <div className="max-w-6xl mx-auto px-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-16 text-center"
-            >
-              <div className="inline-block mb-6 px-4 py-1.5 border border-slate-200 rounded-full text-slate-600 text-sm font-light tracking-wide">
-                LEADERSHIP
+        {/* Interactive Journey Timeline */}
+        <section className="border-b border-gray-100">
+          <div className="max-w-6xl mx-auto px-8 py-32">
+            <div className="max-w-2xl mb-20">
+              <div className="inline-block mb-6 px-3 py-1 border border-gray-200 text-xs tracking-[0.2em] text-gray-500 uppercase">
+                Our Journey
               </div>
-              <h2 className="text-5xl md:text-6xl font-light text-slate-900 mb-6 tracking-tight">
-                Meet Our Founder
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6 tracking-tight">
+                Growing together
               </h2>
-              <p className="text-lg text-slate-600 max-w-2xl mx-auto font-light">
-                The visionary behind DuoTech Solutions
+              <p className="text-lg text-gray-500 font-light leading-relaxed">
+                Key moments shaping our path forward
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="max-w-4xl mx-auto"
-            >
-              <div className="p-12 bg-slate-50 border border-slate-200 rounded">
-                <div className="flex flex-col md:flex-row gap-12 items-center">
-                  <div className="flex-shrink-0">
-                    <div className="w-48 h-48 md:w-56 md:h-56">
-                      <img 
-                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" 
-                        alt="Satyam Sharma" 
-                        className="w-full h-full object-cover rounded border border-slate-200"
-                      />
+            {/* Timeline with visual connection */}
+            <div className="relative">
+              {/* Vertical line */}
+              <div className="absolute left-8 top-0 bottom-0 w-px bg-gradient-to-b from-blue-900 via-violet-900 to-purple-900 opacity-20" />
+              
+              <div className="space-y-4">
+                {milestones.map((milestone, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setExpandedMilestone(expandedMilestone === i ? null : i)}
+                    className={`w-full text-left p-8 transition-all duration-500 relative overflow-hidden group ${
+                      expandedMilestone === i 
+                        ? 'bg-gradient-to-br from-blue-50 to-white border-2 border-blue-900 shadow-lg' 
+                        : 'bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300'
+                    }`}
+                  >
+                    {/* Animated indicator */}
+                    <div className={`absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-500 ${
+                      expandedMilestone === i 
+                        ? 'bg-blue-900 scale-150' 
+                        : 'bg-gray-300 scale-100'
+                    }`} />
+                    
+                    <div className="flex items-start gap-8 pl-6">
+                      <div className="flex-shrink-0 w-32">
+                        <div className={`text-3xl font-light tracking-tight transition-all duration-500 ${
+                          expandedMilestone === i 
+                            ? 'text-blue-900 scale-110' 
+                            : 'text-gray-400 group-hover:text-blue-900'
+                        }`}>
+                          {milestone.year}
+                        </div>
+                      </div>
+                      
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex items-center gap-3">
+                            <div className={`p-2 transition-all duration-500 ${
+                              expandedMilestone === i 
+                                ? 'bg-blue-900 text-white scale-110' 
+                                : 'bg-gray-100 text-gray-400 group-hover:bg-blue-100 group-hover:text-blue-900'
+                            }`}>
+                              {milestone.icon}
+                            </div>
+                            <h3 className="text-xl font-light text-gray-900">
+                              {milestone.title}
+                            </h3>
+                          </div>
+                          <ChevronRight className={`w-5 h-5 text-gray-300 transition-all duration-500 ${
+                            expandedMilestone === i ? 'rotate-90 text-blue-900' : 'group-hover:text-blue-900'
+                          }`} />
+                        </div>
+                        
+                        <p className="text-sm text-gray-500 mb-4">
+                          {milestone.summary}
+                        </p>
+                        
+                        <div className={`overflow-hidden transition-all duration-700 ${
+                          expandedMilestone === i ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+                        }`}>
+                          <div className="pt-4 border-t border-gray-200">
+                            <p className="text-sm text-gray-600 font-light leading-relaxed mb-4">
+                              {milestone.detail}
+                            </p>
+                            <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-900 text-white text-xs transform hover:scale-105 transition-transform duration-300">
+                              <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                              {milestone.impact}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div className="flex-1">
-                    <h3 className="text-3xl font-light text-slate-900 mb-2">
-                      Satyam Sharma
-                    </h3>
-                    <p className="text-blue-900 mb-6 font-light">
-                      Founder & Chief Executive Officer
-                    </p>
-                    <p className="text-slate-700 font-light leading-relaxed mb-6">
-                      With over 15 years of pioneering experience in digital communication, 
-                      Satyam founded DuoTech in 2010 with a singular mission: to make enterprise-grade 
-                      communication tools accessible to everyone. His vision has transformed how 
-                      thousands of businesses connect with their customers.
-                    </p>
-                    <div className="flex flex-wrap gap-6 text-sm text-slate-600 font-light">
-                      <div>Tech Visionary</div>
-                      <div>People Champion</div>
-                      <div>Innovation Driver</div>
-                    </div>
-                  </div>
-                </div>
+                  </button>
+                ))}
               </div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="py-32 bg-blue-900 border-t border-blue-800">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="max-w-3xl mx-auto text-center text-white">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <div className="inline-block mb-8 px-4 py-1.5 border border-blue-700 rounded-full text-sm font-light tracking-wide">
-                  LET'S WORK TOGETHER
-                </div>
-                
-                <h2 className="text-5xl md:text-6xl font-light mb-8 leading-tight">
-                  Ready to Transform<br />Your Communication?
-                </h2>
-                
-                <p className="text-lg text-blue-100 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
-                  Join hundreds of innovative companies who trust DuoTech to power 
-                  their most critical communications. Your success story starts here.
-                </p>
-                
-                <div className="flex flex-wrap justify-center gap-4">
-                  <button className="px-8 py-3 bg-white hover:bg-blue-50 text-blue-900 font-light rounded transition-colors duration-300">
-                    Schedule a Demo
-                  </button>
-                  <button className="px-8 py-3 border border-blue-700 hover:border-blue-600 text-white font-light rounded transition-colors duration-300">
-                    View Case Studies
-                  </button>
-                </div>
-              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Milestone Detail Panel */}
-        <AnimatePresence>
-          {isPanelOpen && selectedMilestone && (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setIsPanelOpen(false)}
-                className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40"
-              />
-              <motion.div
-                initial={{ x: '100%' }}
-                animate={{ x: 0 }}
-                exit={{ x: '100%' }}
-                transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                className="fixed right-0 top-0 bottom-0 w-full md:w-[600px] bg-white border-l border-slate-200 shadow-2xl z-50 overflow-y-auto"
-              >
-                <div className="p-12">
-                  <button
-                    onClick={() => setIsPanelOpen(false)}
-                    className="mb-8 p-2 hover:bg-slate-50 rounded transition-colors"
-                  >
-                    <X className="w-6 h-6 text-slate-400" />
-                  </button>
-                  
-                  <div className="text-5xl font-light text-blue-900 mb-8">
-                    {selectedMilestone.year}
-                  </div>
-                  
-                  <h3 className="text-3xl font-light text-slate-900 mb-4">
-                    {selectedMilestone.title}
-                  </h3>
-                  
-                  <p className="text-lg text-slate-600 font-light leading-relaxed mb-8">
-                    {selectedMilestone.description}
-                  </p>
-                  
-                  <div className="p-8 bg-slate-50 border border-slate-200 rounded mb-8">
-                    <p className="text-slate-700 font-light leading-relaxed">
-                      {selectedMilestone.detail}
-                    </p>
-                  </div>
+        {/* Interactive Founder Section with Tabs */}
+        <section className="border-b border-gray-100">
+          <div className="max-w-6xl mx-auto px-8 py-32">
+            <div className="max-w-2xl mb-20">
+              <div className="inline-block mb-6 px-3 py-1 border border-gray-200 text-xs tracking-[0.2em] text-gray-500 uppercase">
+                Leadership
+              </div>
+              <h2 className="text-4xl md:text-5xl font-light text-gray-900 mb-6 tracking-tight">
+                Meet our founder
+              </h2>
+            </div>
 
-                  <div className="flex items-center gap-4 p-6 bg-slate-50 border border-slate-200 rounded">
-                    <div className="p-3 bg-blue-900 rounded">
-                      <Heart className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <div className="text-sm text-slate-500 font-light mb-1">Impact</div>
-                      <div className="text-slate-900 font-light">{selectedMilestone.impact}</div>
-                    </div>
-                  </div>
+            <div className="grid md:grid-cols-2 gap-16 items-start">
+              <div className="aspect-[4/5] bg-gray-100 overflow-hidden relative group">
+                <img 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" 
+                  alt="Satyam Sharma" 
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+              
+              <div>
+                <h3 className="text-3xl font-light text-gray-900 mb-2 tracking-tight">
+                  Satyam Sharma
+                </h3>
+                <p className="text-blue-900 mb-8 tracking-wide text-sm">
+                  Founder & Chief Executive Officer
+                </p>
+                
+                {/* Interactive Tabs */}
+                <div className="flex gap-2 mb-6 border-b border-gray-200">
+                  {founderTabs.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`px-4 py-2 text-sm transition-all duration-300 relative ${
+                        activeTab === tab.id 
+                          ? 'text-blue-900' 
+                          : 'text-gray-400 hover:text-gray-600'
+                      }`}
+                    >
+                      {tab.label}
+                      {activeTab === tab.id && (
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-900 animate-slide-in" />
+                      )}
+                    </button>
+                  ))}
                 </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence>
+                
+                {/* Tab Content */}
+                <div className="relative min-h-[120px]">
+                  {founderTabs.map((tab) => (
+                    <div
+                      key={tab.id}
+                      className={`transition-all duration-500 absolute inset-0 ${
+                        activeTab === tab.id 
+                          ? 'opacity-100 translate-y-0' 
+                          : 'opacity-0 translate-y-4 pointer-events-none'
+                      }`}
+                    >
+                      <p className="text-gray-600 font-light leading-relaxed">
+                        {tab.content}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="flex gap-px bg-gray-100 mt-8">
+                  {['Tech Visionary', 'People Champion', 'Innovation Driver'].map((badge, i) => (
+                    <div 
+                      key={i}
+                      className="bg-white px-4 py-2 text-xs text-gray-500 tracking-wide hover:bg-blue-50 hover:text-blue-900 transition-all duration-300 cursor-pointer transform hover:scale-105"
+                    >
+                      {badge}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section with Gradient Animation */}
+        <section className="bg-gradient-to-br from-blue-900 via-indigo-900 to-violet-900 relative overflow-hidden">
+          {/* Animated background elements */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" />
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          </div>
+          
+          <div className="relative max-w-6xl mx-auto px-8 py-32">
+            <div className="max-w-2xl">
+              <div className="inline-block mb-6 px-3 py-1 border border-blue-700 text-xs tracking-[0.2em] text-blue-300 uppercase animate-fade-in">
+                Let's Work Together
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-light text-white mb-8 tracking-tight leading-tight">
+                Ready to transform your communication?
+              </h2>
+              
+              <p className="text-lg text-blue-100 font-light leading-relaxed mb-12">
+                Join forward-thinking companies who trust DuoTech to power their 
+                most critical communications. Your success story starts here.
+              </p>
+              
+              <div className="flex flex-wrap gap-3">
+                <button className="px-8 py-3 bg-white hover:bg-blue-50 text-blue-900 text-sm tracking-wide transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                  Schedule a Demo
+                </button>
+                <button className="px-8 py-3 border border-blue-700 hover:border-blue-600 hover:bg-blue-800/30 text-white text-sm tracking-wide transition-all duration-300 transform hover:scale-105">
+                  View Case Studies
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <style>{`
+          @keyframes fade-in {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          @keyframes slide-in {
+            from { transform: scaleX(0); }
+            to { transform: scaleX(1); }
+          }
+          .animate-fade-in {
+            animation: fade-in 0.8s ease-out;
+          }
+          .animate-slide-in {
+            animation: slide-in 0.3s ease-out;
+            transform-origin: left;
+          }
+        `}</style>
       </div>
     </MainLayout>
   );

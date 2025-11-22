@@ -4,7 +4,8 @@ import {
   Phone, Check, ArrowRight, ChevronLeft, ChevronRight, 
   Globe, Users, Shield, Server, Clock, Zap, GitBranch,
   Headphones, BarChart2, Mail, MessageSquare, CreditCard,
-  MapPin, Voicemail, PhoneForwarded, PhoneIncoming, PhoneOutgoing
+  MapPin, Voicemail, PhoneForwarded, PhoneIncoming, PhoneOutgoing,
+  Star
 } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import MainLayout from '../components/layout/MainLayout';
@@ -18,8 +19,8 @@ import TestimonialCarousel from '../components/home/TestimonialCarousel';
 // Data for the Virtual Numbers page
 const virtualNumbersData = {
   hero: {
-    title: 'Powerful Virtual Numbers for Your Business',
-    subtitle: 'Establish a professional presence anywhere in the world without physical offices',
+    title: 'Virtual Numbers for Modern Business',
+    subtitle: 'Establish professional global presence with intelligent communication solutions',
     features: [
       'Global coverage in 100+ countries',
       'Instant activation',
@@ -29,46 +30,40 @@ const virtualNumbersData = {
   },
   features: [
     {
-      icon: <Globe className="w-6 h-6 text-blue-600 dark:text-blue-400" />,
+      icon: <Globe className="w-6 h-6" />,
       title: 'Global Presence',
       description: 'Get local numbers in countries where you want to establish a presence with area codes that build trust',
-      gradient: 'from-blue-100 to-blue-50 dark:from-blue-900/50 dark:to-blue-900/30'
     },
     {
-      icon: <PhoneForwarded className="w-6 h-6 text-blue-600 dark:text-blue-400" />,
+      icon: <PhoneForwarded className="w-6 h-6" />,
       title: 'Smart Call Routing',
       description: 'Route calls based on timezone, language, or department for optimal customer experience',
-      gradient: 'from-purple-100 to-purple-50 dark:from-purple-900/50 dark:to-purple-900/30'
     },
     {
-      icon: <Shield className="w-6 h-6 text-blue-600 dark:text-blue-400" />,
+      icon: <Shield className="w-6 h-6" />,
       title: 'Enterprise Security',
       description: 'Military-grade encryption and compliance with global communication standards',
-      gradient: 'from-cyan-100 to-cyan-50 dark:from-cyan-900/50 dark:to-cyan-900/30'
     },
     {
-      icon: <BarChart2 className="w-6 h-6 text-blue-600 dark:text-blue-400" />,
+      icon: <BarChart2 className="w-6 h-6" />,
       title: 'Advanced Analytics',
       description: 'Real-time call tracking and performance metrics to optimize your operations',
-      gradient: 'from-green-100 to-green-50 dark:from-green-900/50 dark:to-green-900/30'
     },
     {
-      icon: <Voicemail className="w-6 h-6 text-blue-600 dark:text-blue-400" />,
+      icon: <Voicemail className="w-6 h-6" />,
       title: 'Voicemail Transcription',
       description: 'Automatically convert voicemails to text and forward to email',
-      gradient: 'from-orange-100 to-orange-50 dark:from-orange-900/50 dark:to-orange-900/30'
     },
     {
-      icon: <PhoneIncoming className="w-6 h-6 text-blue-600 dark:text-blue-400" />,
+      icon: <PhoneIncoming className="w-6 h-6" />,
       title: 'Call Recording',
       description: 'Record calls for quality assurance, training, and compliance purposes',
-      gradient: 'from-pink-100 to-pink-50 dark:from-pink-900/50 dark:to-pink-900/30'
     }
   ],
   numberTypes: [
     {
       title: 'Local Numbers',
-      icon: <MapPin className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
+      icon: <MapPin className="w-8 h-8" />,
       description: 'Numbers with local area codes to establish presence in specific locations',
       features: [
         'Build local trust with area codes',
@@ -78,7 +73,7 @@ const virtualNumbersData = {
     },
     {
       title: 'Toll-Free Numbers',
-      icon: <Phone className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
+      icon: <Phone className="w-8 h-8" />,
       description: 'Numbers that allow customers to call your business for free',
       features: [
         'Increase call volume from customers',
@@ -88,7 +83,7 @@ const virtualNumbersData = {
     },
     {
       title: 'International Numbers',
-      icon: <Globe className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
+      icon: <Globe className="w-8 h-8" />,
       description: 'Numbers from other countries to support global operations',
       features: [
         'Establish international presence',
@@ -101,22 +96,22 @@ const virtualNumbersData = {
     {
       title: 'Cost Efficiency',
       description: 'Eliminate expensive hardware and reduce international call costs by up to 70%',
-      icon: <CreditCard className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+      icon: <CreditCard className="w-8 h-8" />
     },
     {
       title: 'Operational Flexibility',
       description: 'Add, remove or change numbers instantly as your business needs evolve',
-      icon: <GitBranch className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+      icon: <GitBranch className="w-8 h-8" />
     },
     {
       title: 'Professional Image',
       description: 'Present a local presence even when operating remotely or internationally',
-      icon: <Users className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+      icon: <Users className="w-8 h-8" />
     },
     {
       title: 'Advanced Features',
       description: 'Access capabilities like IVR, call recording, and analytics not available with traditional lines',
-      icon: <Server className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+      icon: <Server className="w-8 h-8" />
     }
   ],
   howItWorks: [
@@ -124,25 +119,25 @@ const virtualNumbersData = {
       step: '1',
       title: 'Select Your Number',
       description: 'Choose from available local, toll-free, or international numbers in our dashboard',
-      icon: <Phone className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      icon: <Phone className="w-6 h-6" />
     },
     {
       step: '2',
       title: 'Configure Settings',
       description: 'Set up call routing rules, business hours, voicemail, and other preferences',
-      icon: <MessageSquare className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      icon: <MessageSquare className="w-6 h-6" />
     },
     {
       step: '3',
       title: 'Connect Your Team',
       description: 'Forward calls to existing phones or use our mobile/web applications',
-      icon: <Headphones className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      icon: <Headphones className="w-6 h-6" />
     },
     {
       step: '4',
       title: 'Go Live',
       description: 'Start receiving calls immediately with your new professional number',
-      icon: <PhoneOutgoing className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+      icon: <PhoneOutgoing className="w-6 h-6" />
     }
   ],
   industries: [
@@ -260,74 +255,33 @@ const virtualNumbersData = {
       value: '100+',
       label: 'Countries',
       description: 'Covered with local and toll-free numbers',
-      icon: <Globe className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+      icon: <Globe className="w-8 h-8" />
     },
     {
       value: '24/7',
       label: 'Support',
       description: 'Dedicated assistance whenever you need it',
-      icon: <Clock className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+      icon: <Clock className="w-8 h-8" />
     },
     {
       value: '99.99%',
       label: 'Uptime',
       description: 'Guaranteed reliability for your business',
-      icon: <Server className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+      icon: <Server className="w-8 h-8" />
     },
     {
       value: 'Instant',
       label: 'Activation',
       description: 'Get numbers working in minutes',
-      icon: <Zap className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+      icon: <Zap className="w-8 h-8" />
     }
   ]
 };
 
-// Interfaces
-interface Feature {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  gradient?: string;
-}
-
-interface NumberType {
-  title: string;
-  icon: React.ReactNode;
-  description: string;
-  features: string[];
-}
-
-interface Benefit {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-}
-
-interface HowItWorksStep {
-  step: string;
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-}
-
-interface IndustryUse {
-  title: string;
-  description: string;
-  features: string[];
-}
-
-interface Stat {
-  value: string;
-  label: string;
-  description: string;
-  icon: React.ReactNode;
-}
-
-// Stats Grid Component
-const StatsGrid: React.FC<{ stats: Stat[]; className?: string }> = React.memo(({ stats, className }) => {
+// Minimalist Stats Grid Component
+const StatsGrid: React.FC<{ stats: any[]; className?: string }> = React.memo(({ stats, className }) => {
   return (
-    <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ${className ?? ''}`}>
+    <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 ${className ?? ''}`}>
       {stats.map((stat, i) => (
         <motion.div
           key={i}
@@ -335,14 +289,18 @@ const StatsGrid: React.FC<{ stats: Stat[]; className?: string }> = React.memo(({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: i * 0.1 }}
-          className="bg-white/90 dark:bg-blue-900/90 p-6 rounded-xl border border-white/20 dark:border-blue-700 backdrop-blur-sm shadow-md hover:shadow-lg transition-shadow"
+          className="text-center group"
         >
-          <div className="flex items-center mb-4">
-            <div className="p-2 bg-blue-100 dark:bg-blue-800 rounded-lg mr-3">
-              {stat.icon}
+          <div className="bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-900/50 transition-all duration-500">
+            <div className="flex justify-center mb-6">
+              <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-2xl group-hover:bg-blue-100 dark:group-hover:bg-blue-800/30 transition-colors duration-500">
+                <div className="text-blue-600 dark:text-blue-400">
+                  {stat.icon}
+                </div>
+              </div>
             </div>
             <motion.p
-              className="text-4xl font-bold text-gray-900 dark:text-white"
+              className="text-5xl font-light text-gray-900 dark:text-white mb-3 tracking-tight"
               initial={{ scale: 0.9 }}
               whileInView={{ scale: 1 }}
               viewport={{ once: true }}
@@ -350,37 +308,51 @@ const StatsGrid: React.FC<{ stats: Stat[]; className?: string }> = React.memo(({
             >
               {stat.value}
             </motion.p>
+            <p className="text-lg font-normal text-gray-600 dark:text-gray-400 mb-2">
+              {stat.label}
+            </p>
+            <p className="text-sm text-gray-500 dark:text-gray-500">
+              {stat.description}
+            </p>
           </div>
-          <p className="text-lg font-medium text-gray-900 dark:text-white mb-1">{stat.label}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-300">{stat.description}</p>
         </motion.div>
       ))}
     </div>
   );
 });
 
-// Number Type Card Component
-const NumberTypeCard: React.FC<{ numberType: NumberType }> = ({ numberType }) => {
+// Minimalist Number Type Card Component
+const NumberTypeCard: React.FC<{ numberType: any }> = ({ numberType }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="bg-white dark:bg-blue-900/50 rounded-xl p-6 border border-gray-200 dark:border-blue-800 shadow-sm hover:shadow-md transition-shadow"
+      className="group bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-900/50 transition-all duration-500 h-full"
     >
-      <div className="flex items-center mb-4">
-        <div className="p-3 bg-blue-100 dark:bg-blue-800 rounded-lg mr-4">
-          {numberType.icon}
+      <div className="flex items-start mb-6">
+        <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-2xl group-hover:bg-blue-100 dark:group-hover:bg-blue-800/30 transition-colors duration-500 mr-5">
+          <div className="text-blue-600 dark:text-blue-400">
+            {numberType.icon}
+          </div>
         </div>
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white">{numberType.title}</h3>
+        <h3 className="text-2xl font-normal text-gray-900 dark:text-white pt-2 tracking-tight">
+          {numberType.title}
+        </h3>
       </div>
-      <p className="text-gray-600 dark:text-gray-300 mb-6">{numberType.description}</p>
-      <ul className="space-y-2">
-        {numberType.features.map((feature, i) => (
-          <li key={i} className="flex items-start">
-            <Check className="w-5 h-5 text-green-500 mt-0.5 mr-2 flex-shrink-0" />
-            <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+      <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+        {numberType.description}
+      </p>
+      <ul className="space-y-4">
+        {numberType.features.map((feature: string, i: number) => (
+          <li key={i} className="flex items-center group/item">
+            <div className="w-6 h-6 flex items-center justify-center mr-4">
+              <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 transform group-hover/item:scale-110 transition-transform duration-300" />
+            </div>
+            <span className="text-gray-700 dark:text-gray-300 group-hover/item:text-gray-900 dark:group-hover/item:text-white transition-colors duration-300">
+              {feature}
+            </span>
           </li>
         ))}
       </ul>
@@ -388,68 +360,88 @@ const NumberTypeCard: React.FC<{ numberType: NumberType }> = ({ numberType }) =>
   );
 };
 
-// Benefit Card Component
-const BenefitCard: React.FC<{ benefit: Benefit }> = ({ benefit }) => {
+// Minimalist Benefit Card Component
+const BenefitCard: React.FC<{ benefit: any }> = ({ benefit }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="bg-white dark:bg-blue-900/50 rounded-xl p-6 border border-gray-200 dark:border-blue-800 shadow-sm hover:shadow-md transition-shadow"
+      className="group bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-900/50 transition-all duration-500 h-full text-center"
     >
-      <div className="p-3 bg-blue-100 dark:bg-blue-800 rounded-lg w-14 h-14 flex items-center justify-center mb-4">
-        {benefit.icon}
+      <div className="flex justify-center mb-6">
+        <div className="p-5 bg-blue-50 dark:bg-blue-900/20 rounded-2xl group-hover:bg-blue-100 dark:group-hover:bg-blue-800/30 transition-colors duration-500">
+          <div className="text-blue-600 dark:text-blue-400">
+            {benefit.icon}
+          </div>
+        </div>
       </div>
-      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{benefit.title}</h3>
-      <p className="text-gray-600 dark:text-gray-300">{benefit.description}</p>
+      <h3 className="text-xl font-normal text-gray-900 dark:text-white mb-4 tracking-tight">
+        {benefit.title}
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+        {benefit.description}
+      </p>
     </motion.div>
   );
 };
 
-// How It Works Step Component
-const HowItWorksStep: React.FC<{ step: HowItWorksStep; index: number }> = ({ step, index }) => {
+// Minimalist How It Works Step Component
+const HowItWorksStep: React.FC<{ step: any; index: number }> = ({ step, index }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="flex items-start space-x-6 p-6 bg-white dark:bg-blue-900/20 rounded-xl border border-gray-200 dark:border-blue-800"
+      className="flex items-start space-x-8 p-8 bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-900/50 transition-all duration-500 group"
     >
-      <div className="flex-shrink-0 w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-800 flex items-center justify-center">
-        <span className="text-xl font-bold text-blue-600 dark:text-blue-400">{step.step}</span>
+      <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 group-hover:bg-blue-100 dark:group-hover:bg-blue-800/30 flex items-center justify-center transition-colors duration-500">
+        <span className="text-2xl font-light text-blue-600 dark:text-blue-400">{step.step}</span>
       </div>
-      <div>
-        <div className="flex items-center mb-2">
-          <div className="mr-3 text-blue-600 dark:text-blue-400">
+      <div className="flex-1">
+        <div className="flex items-center mb-4">
+          <div className="mr-4 text-blue-600 dark:text-blue-400">
             {step.icon}
           </div>
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white">{step.title}</h3>
+          <h3 className="text-xl font-normal text-gray-900 dark:text-white tracking-tight">
+            {step.title}
+          </h3>
         </div>
-        <p className="text-gray-600 dark:text-gray-300">{step.description}</p>
+        <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+          {step.description}
+        </p>
       </div>
     </motion.div>
   );
 };
 
-// Industry Use Card Component
-const IndustryUseCard: React.FC<{ industry: IndustryUse }> = ({ industry }) => {
+// Minimalist Industry Use Card Component
+const IndustryUseCard: React.FC<{ industry: any }> = ({ industry }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="bg-white dark:bg-blue-900/50 rounded-xl p-6 border border-gray-200 dark:border-blue-800 shadow-sm hover:shadow-md transition-shadow"
+      className="group bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-900/50 transition-all duration-500 h-full"
     >
-      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{industry.title}</h3>
-      <p className="text-gray-600 dark:text-gray-300 mb-6">{industry.description}</p>
-      <ul className="space-y-2">
-        {industry.features.map((feature, i) => (
-          <li key={i} className="flex items-start">
-            <Check className="w-5 h-5 text-green-500 mt-0.5 mr-2 flex-shrink-0" />
-            <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+      <h3 className="text-xl font-normal text-gray-900 dark:text-white mb-4 tracking-tight">
+        {industry.title}
+      </h3>
+      <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
+        {industry.description}
+      </p>
+      <ul className="space-y-4">
+        {industry.features.map((feature: string, i: number) => (
+          <li key={i} className="flex items-center group/item">
+            <div className="w-6 h-6 flex items-center justify-center mr-4">
+              <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 transform group-hover/item:scale-110 transition-transform duration-300" />
+            </div>
+            <span className="text-gray-700 dark:text-gray-300 group-hover/item:text-gray-900 dark:group-hover/item:text-white transition-colors duration-300">
+              {feature}
+            </span>
           </li>
         ))}
       </ul>
@@ -467,244 +459,256 @@ const VirtualNumbersPage: React.FC = () => {
   return (
     <ParallaxProvider>
       <MainLayout>
-        {/* Hero Section (kept as requested) */}
-        <section className="relative h-screen overflow-hidden bg-gradient-to-br from-blue-900 to-blue-700">
-          <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] opacity-10" />
-          <div className="absolute inset-0 flex items-center">
-            <Container className="relative z-10">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        {/* Hero Section - Minimalist Design */}
+        <section className="relative min-h-screen bg-white dark:bg-gray-950 overflow-hidden">
+          {/* Subtle background pattern */}
+          <div className="absolute inset-0 opacity-[0.02]">
+            <div className="absolute inset-0 bg-[linear-gradient(45deg,#0000_74%,#0ea5e9_75%,#0000_76%,#0000_89%,#0ea5e9_90%)] bg-[size:100px_100px]" />
+          </div>
+          
+          {/* Floating elements */}
+          {[...Array(8)].map((_, i) => (
+            <motion.div
+              key={i}
+              animate={{
+                y: [0, Math.random() * 40 - 20],
+                opacity: [0.3, 0.7, 0.3],
+              }}
+              transition={{
+                duration: 8 + Math.random() * 10,
+                repeat: Infinity,
+                repeatType: "reverse"
+              }}
+              className={`absolute rounded-full bg-blue-600/5 dark:bg-blue-400/5 ${
+                i % 4 === 0 ? 'w-24 h-24' : i % 3 === 0 ? 'w-16 h-16' : i % 2 === 0 ? 'w-12 h-12' : 'w-8 h-8'
+              }`}
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`
+              }}
+            />
+          ))}
+
+          <Container className="h-full flex items-center relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center py-20">
+              {/* Text Content */}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="lg:pr-8"
+              >
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="inline-flex items-center mb-8 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full border border-blue-100 dark:border-blue-800/30"
                 >
-                  <motion.div
-                    initial={{ scale: 0.9 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ type: "spring" }}
-                    className="inline-block mb-6"
+                  <div className="w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full mr-3"></div>
+                  <span className="text-sm font-medium text-blue-600 dark:text-blue-400 tracking-wide">
+                    Virtual Numbers Solution
+                  </span>
+                </motion.div>
+
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-gray-900 dark:text-white mb-8 leading-tight tracking-tight">
+                  {virtualNumbersData.hero.title.split(' ').map((word, i) => (
+                    <span key={i} className={i === virtualNumbersData.hero.title.split(' ').length - 1 ? "font-normal text-blue-600 dark:text-blue-400" : ""}>
+                      {word}{' '}
+                    </span>
+                  ))}
+                </h1>
+                
+                <p className="text-xl text-gray-600 dark:text-gray-300 mb-12 leading-relaxed max-w-2xl">
+                  {virtualNumbersData.hero.subtitle}
+                </p>
+
+                {/* Features List */}
+                <div className="space-y-3 mb-16">
+                  {virtualNumbersData.hero.features.map((feature, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.4 + i * 0.1 }}
+                      className="flex items-center text-gray-600 dark:text-gray-400 group"
+                    >
+                      <div className="w-6 h-6 flex items-center justify-center mr-4">
+                        <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 transform group-hover:scale-110 transition-transform duration-300" />
+                      </div>
+                      <span className="text-lg group-hover:text-gray-900 dark:group-hover:text-white transition-colors duration-300">
+                        {feature}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-wrap gap-4">
+                  <Button
+                    variant="primary"
+                    size="lg"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-normal text-base transition-all duration-300"
+                    icon={<ArrowRight className="w-5 h-5" />}
                   >
-                    <div className="px-6 py-3 bg-white/10 rounded-full border border-white/20 text-white text-sm font-medium backdrop-blur-sm">
-                      VIRTUAL NUMBERS SOLUTION
-                    </div>
-                  </motion.div>
-
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-                    {virtualNumbersData.hero.title}
-                  </h1>
-                  
-                  <p className="text-xl text-blue-200 mb-8">
-                    {virtualNumbersData.hero.subtitle}
-                  </p>
-
-                  <ul className="space-y-3 mb-10">
-                    {virtualNumbersData.hero.features.map((feature, i) => (
-                      <motion.li
-                        key={i}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: i * 0.1 }}
-                        className="flex items-center text-white"
-                      >
-                        <Check className="w-5 h-5 text-green-400 mr-3" />
-                        <span>{feature}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-
-                  <div className="flex flex-wrap gap-4">
-                    <Button
-                      variant="accent"
-                      size="lg"
-                      className="bg-white text-blue-800 hover:bg-blue-50 px-8"
-                      icon={<ArrowRight size={20} />}
-                    >
-                      Get Your Number Now
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      size="lg"
-                      className="text-white border-white/30 hover:bg-white/10 px-8"
-                    >
-                      Learn More
-                    </Button>
-                  </div>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="relative"
-                >
-                  <div className="relative bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl overflow-hidden">
-                    <div className="absolute inset-0 bg-[url('/images/circuit-pattern.svg')] opacity-10" />
-                    <div className="relative z-10">
-                      <div className="flex justify-between items-center mb-8">
-                        <div className="flex items-center space-x-2">
-                          <div className="w-3 h-3 rounded-full bg-red-500" />
-                          <div className="w-3 h-3 rounded-full bg-yellow-500" />
-                          <div className="w-3 h-3 rounded-full bg-green-500" />
-                        </div>
-                        <div className="text-sm text-white/70">Virtual Number Dashboard</div>
-                      </div>
-
-                      <div className="bg-white/5 rounded-xl p-6 mb-6">
-                        <div className="flex justify-between items-center mb-4">
-                          <h3 className="text-lg font-medium text-white">Your Numbers</h3>
-                          <button className="text-xs bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-full">
-                            + Add Number
-                          </button>
-                        </div>
-                        
-                        <div className="space-y-4">
-                          {[
-                            { country: 'United States', number: '+1 (415) 555-0199', type: 'Local' },
-                            { country: 'United Kingdom', number: '+44 20 7946 0958', type: 'Toll-Free' },
-                            { country: 'Germany', number: '+49 30 5678 9101', type: 'Local' }
-                          ].map((num, i) => (
-                            <div key={i} className="flex items-center justify-between p-3 bg-white/5 rounded-lg hover:bg-white/10 transition-colors">
-                              <div>
-                                <p className="text-white font-medium">{num.country}</p>
-                                <p className="text-blue-200 text-sm">{num.number}</p>
-                              </div>
-                              <span className="text-xs bg-blue-900/50 text-blue-200 px-2 py-1 rounded">
-                                {num.type}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-white/5 rounded-xl p-4">
-                          <p className="text-xs text-blue-200 mb-1">Total Calls</p>
-                          <p className="text-2xl font-bold text-white">1,248</p>
-                        </div>
-                        <div className="bg-white/5 rounded-xl p-4">
-                          <p className="text-xs text-blue-200 mb-1">Avg. Duration</p>
-                          <p className="text-2xl font-bold text-white">4:32</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </Container>
-          </div>
-
-          <motion.div
-            style={{ opacity, y }}
-            className="absolute bottom-10 left-0 right-0 flex justify-center"
-          >
-            <motion.div
-              animate={{ y: [0, 15, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="text-white text-center"
-            >
-              <p className="mb-2">Scroll to explore</p>
-              <motion.div
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 2, repeat: Infinity }}
-              >
-                <ArrowRight className="w-6 h-6 mx-auto rotate-90" />
+                    Get Your Number Now
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 px-8 py-4 rounded-lg font-normal text-base transition-all duration-300"
+                  >
+                    Learn More
+                  </Button>
+                </div>
               </motion.div>
-            </motion.div>
-          </motion.div>
+
+              {/* Dashboard Mockup */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="relative flex justify-center lg:justify-end"
+              >
+                <div className="relative w-full max-w-md">
+                  {/* Main dashboard container */}
+                  <div className="relative bg-white dark:bg-gray-900 rounded-3xl p-8 shadow-2xl border border-gray-100 dark:border-gray-800">
+                    {/* Header */}
+                    <div className="flex items-center justify-between mb-8">
+                      <div className="flex items-center space-x-2">
+                        <div className="w-3 h-3 rounded-full bg-red-400"></div>
+                        <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <div className="w-3 h-3 rounded-full bg-green-400"></div>
+                      </div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">Virtual Numbers</div>
+                    </div>
+
+                    {/* Numbers List */}
+                    <div className="space-y-4 mb-8">
+                      <h3 className="text-lg font-normal text-gray-900 dark:text-white mb-4">Your Numbers</h3>
+                      {[
+                        { country: 'United States', number: '+1 (415) 555-0199', type: 'Local' },
+                        { country: 'United Kingdom', number: '+44 20 7946 0958', type: 'Toll-Free' },
+                        { country: 'Germany', number: '+49 30 5678 9101', type: 'Local' }
+                      ].map((num, i) => (
+                        <div key={i} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                          <div>
+                            <p className="text-gray-900 dark:text-white font-normal">{num.country}</p>
+                            <p className="text-gray-500 dark:text-gray-400 text-sm">{num.number}</p>
+                          </div>
+                          <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full">
+                            {num.type}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Stats */}
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Total Calls</p>
+                        <p className="text-2xl font-light text-gray-900 dark:text-white">1,248</p>
+                      </div>
+                      <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4">
+                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Avg. Duration</p>
+                        <p className="text-2xl font-light text-gray-900 dark:text-white">4:32</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Decorative elements */}
+                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-blue-600/10 rounded-full"></div>
+                  <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-blue-600/5 rounded-full"></div>
+                </div>
+              </motion.div>
+            </div>
+          </Container>
         </section>
 
-        {/* Features Section - Expanded */}
-        <section id="features" className="py-32 bg-white dark:bg-blue-950 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/images/dot-pattern.svg')] bg-[size:20px_20px] opacity-10 dark:opacity-5" />
-          
+        {/* Features Section */}
+        <section className="py-28 bg-gray-50 dark:bg-gray-950 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
               className="text-center mb-20"
             >
-              <motion.div
-                initial={{ scale: 0.9 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ type: "spring" }}
-                className="inline-block mb-6"
-              >
-                <div className="px-6 py-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full text-white text-sm font-bold tracking-wide shadow-lg shadow-blue-400/30">
-                  KEY FEATURES
-                </div>
-              </motion.div>
-              
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-                Powerful <span className="text-blue-600 dark:text-blue-400">Virtual Number</span> Capabilities
+              <div className="inline-block mb-4">
+                <div className="h-px w-16 bg-blue-600 dark:bg-blue-400 mb-3 mx-auto"></div>
+                <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-light">
+                  Key Features
+                </h3>
+              </div>
+              <h2 className="text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
+                Powerful <span className="font-normal text-blue-600 dark:text-blue-400">Capabilities</span>
               </h2>
-              
-              <p className="text-xl text-gray-600 dark:text-blue-200 max-w-2xl mx-auto">
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
                 Everything you need to establish and manage professional business communications globally
               </p>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ staggerChildren: 0.1 }}
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {virtualNumbersData.features.map((feature, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    className={`bg-gradient-to-br ${feature.gradient} rounded-xl p-6 border border-gray-200 dark:border-blue-800 shadow-sm hover:shadow-lg transition-all duration-300`}
-                  >
-                    <div className="flex items-center mb-4">
-                      <div className="p-3 bg-white dark:bg-blue-900 rounded-lg mr-4 shadow-sm">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {virtualNumbersData.features.map((feature, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1, duration: 0.5 }}
+                  className="group bg-white dark:bg-gray-900 rounded-2xl p-8 border border-gray-100 dark:border-gray-800 hover:border-blue-200 dark:hover:border-blue-900/50 transition-all duration-500 h-full"
+                >
+                  <div className="flex items-start mb-6">
+                    <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-2xl group-hover:bg-blue-100 dark:group-hover:bg-blue-800/30 transition-colors duration-500 mr-5">
+                      <div className="text-blue-600 dark:text-blue-400">
                         {feature.icon}
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white">{feature.title}</h3>
                     </div>
-                    <p className="text-gray-600 dark:text-gray-300">{feature.description}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+                    <h3 className="text-xl font-normal text-gray-900 dark:text-white pt-1 tracking-tight">
+                      {feature.title}
+                    </h3>
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
 
+            {/* Stats Section */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="mt-28 relative"
+              className="mt-28"
             >
-              <div className="absolute -top-8 left-1/2 w-3/4 h-1 bg-gradient-to-r from-transparent via-blue-400 to-transparent opacity-30 rounded-full" />
-              <StatsGrid 
-                stats={virtualNumbersData.stats}
-                className="bg-gradient-to-b from-white to-blue-50 dark:from-blue-950/50 dark:to-blue-900/30 rounded-3xl p-8 shadow-lg border border-gray-100 dark:border-blue-800"
-              />
+              <StatsGrid stats={virtualNumbersData.stats} />
             </motion.div>
           </Container>
         </section>
 
         {/* Number Types Section */}
-        <section id="number-types" className="py-32 bg-gray-50 dark:bg-blue-950/50">
+        <section className="py-28 bg-white dark:bg-gray-950 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              transition={{ duration: 0.6 }}
+              className="text-center mb-20"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Virtual Number <span className="text-blue-600 dark:text-blue-400">Types</span>
+              <div className="inline-block mb-4">
+                <div className="h-px w-16 bg-blue-600 dark:bg-blue-400 mb-3 mx-auto"></div>
+                <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-light">
+                  Number Types
+                </h3>
+              </div>
+              <h2 className="text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
+                Choose Your <span className="font-normal text-blue-600 dark:text-blue-400">Number Type</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-blue-200 max-w-2xl mx-auto">
-                Choose the right type of virtual number for your business needs
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                Select the right virtual number solution for your specific business needs
               </p>
             </motion.div>
 
@@ -717,25 +721,30 @@ const VirtualNumbersPage: React.FC = () => {
         </section>
 
         {/* Benefits Section */}
-        <section id="benefits" className="py-32 bg-white dark:bg-blue-950 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:60px_60px] opacity-5 dark:opacity-[0.02]" />
-          
+        <section className="py-28 bg-gray-50 dark:bg-gray-950 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              transition={{ duration: 0.6 }}
+              className="text-center mb-20"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Why Choose Our <span className="text-blue-600 dark:text-blue-400">Virtual Numbers</span>
+              <div className="inline-block mb-4">
+                <div className="h-px w-16 bg-blue-600 dark:bg-blue-400 mb-3 mx-auto"></div>
+                <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-light">
+                  Benefits
+                </h3>
+              </div>
+              <h2 className="text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
+                Strategic <span className="font-normal text-blue-600 dark:text-blue-400">Advantages</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-blue-200 max-w-2xl mx-auto">
-                The strategic advantages of using our virtual number solutions
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                Why businesses choose our virtual number solutions for their communication needs
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {virtualNumbersData.benefits.map((benefit, i) => (
                 <BenefitCard key={i} benefit={benefit} />
               ))}
@@ -744,23 +753,30 @@ const VirtualNumbersPage: React.FC = () => {
         </section>
 
         {/* How It Works Section */}
-        <section id="how-it-works" className="py-32 bg-gray-50 dark:bg-blue-950/50">
+        <section className="py-28 bg-white dark:bg-gray-950 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              transition={{ duration: 0.6 }}
+              className="text-center mb-20"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                How Our <span className="text-blue-600 dark:text-blue-400">Virtual Numbers</span> Work
+              <div className="inline-block mb-4">
+                <div className="h-px w-16 bg-blue-600 dark:bg-blue-400 mb-3 mx-auto"></div>
+                <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-light">
+                  Process
+                </h3>
+              </div>
+              <h2 className="text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
+                How It <span className="font-normal text-blue-600 dark:text-blue-400">Works</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-blue-200 max-w-2xl mx-auto">
-                Get started with professional business numbers in minutes
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                Get started with professional business numbers in just a few simple steps
               </p>
             </motion.div>
 
-            <div className="max-w-3xl mx-auto space-y-6">
+            <div className="max-w-4xl mx-auto space-y-6">
               {virtualNumbersData.howItWorks.map((step, i) => (
                 <HowItWorksStep key={i} step={step} index={i} />
               ))}
@@ -776,7 +792,7 @@ const VirtualNumbersPage: React.FC = () => {
               <Button
                 variant="primary"
                 size="lg"
-                className="bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-lg"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-normal text-base transition-all duration-300"
                 icon={<ArrowRight className="w-5 h-5" />}
               >
                 Get Started Now
@@ -786,21 +802,26 @@ const VirtualNumbersPage: React.FC = () => {
         </section>
 
         {/* Industry Applications Section */}
-        <section id="industries" className="py-32 bg-white dark:bg-blue-950 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:60px_60px] opacity-5 dark:opacity-[0.02]" />
-          
+        <section className="py-28 bg-gray-50 dark:bg-gray-950 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              transition={{ duration: 0.6 }}
+              className="text-center mb-20"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Industry <span className="text-blue-600 dark:text-blue-400">Applications</span>
+              <div className="inline-block mb-4">
+                <div className="h-px w-16 bg-blue-600 dark:bg-blue-400 mb-3 mx-auto"></div>
+                <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-light">
+                  Applications
+                </h3>
+              </div>
+              <h2 className="text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
+                Industry <span className="font-normal text-blue-600 dark:text-blue-400">Solutions</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-blue-200 max-w-2xl mx-auto">
-                How different industries leverage virtual numbers for business growth
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                How different industries leverage virtual numbers for business growth and efficiency
               </p>
             </motion.div>
 
@@ -813,19 +834,26 @@ const VirtualNumbersPage: React.FC = () => {
         </section>
 
         {/* Case Studies Section */}
-        <section id="case-studies" className="py-32 bg-gray-50 dark:bg-blue-950/50">
+        <section className="py-28 bg-white dark:bg-gray-950 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              transition={{ duration: 0.6 }}
+              className="text-center mb-20"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Virtual Number <span className="text-blue-600 dark:text-blue-400">Success Stories</span>
+              <div className="inline-block mb-4">
+                <div className="h-px w-16 bg-blue-600 dark:bg-blue-400 mb-3 mx-auto"></div>
+                <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-light">
+                  Success Stories
+                </h3>
+              </div>
+              <h2 className="text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
+                Client <span className="font-normal text-blue-600 dark:text-blue-400">Case Studies</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-blue-200 max-w-2xl mx-auto">
-                See how businesses are transforming their communications with our solutions
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                See how businesses are transforming their communications with our virtual number solutions
               </p>
             </motion.div>
 
@@ -834,35 +862,30 @@ const VirtualNumbersPage: React.FC = () => {
                 <CaseStudyCard key={i} caseStudy={caseStudy} index={i} />
               ))}
             </div>
-
-            <div className="text-center mt-16">
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-900/50"
-              >
-                View All Case Studies
-              </Button>
-            </div>
           </Container>
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-32 bg-white dark:bg-blue-950 relative overflow-hidden">
-          <div className="absolute inset-0 bg-[url('/images/circuit-pattern.svg')] opacity-10 dark:opacity-5" />
-          
+        <section className="py-28 bg-gray-50 dark:bg-gray-950 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              transition={{ duration: 0.6 }}
+              className="text-center mb-20"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                What Our <span className="text-blue-600 dark:text-blue-400">Customers</span> Say
+              <div className="inline-block mb-4">
+                <div className="h-px w-16 bg-blue-600 dark:bg-blue-400 mb-3 mx-auto"></div>
+                <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-light">
+                  Testimonials
+                </h3>
+              </div>
+              <h2 className="text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
+                Client <span className="font-normal text-blue-600 dark:text-blue-400">Feedback</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-blue-200 max-w-2xl mx-auto">
-                Don't just take our word for it - hear from businesses using our virtual numbers
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                Hear from businesses that have transformed their communications with our solutions
               </p>
             </motion.div>
 
@@ -871,19 +894,26 @@ const VirtualNumbersPage: React.FC = () => {
         </section>
 
         {/* FAQ Section */}
-        <section id="faq" className="py-32 bg-gray-50 dark:bg-blue-950/50">
+        <section className="py-28 bg-white dark:bg-gray-950 relative overflow-hidden">
           <Container>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-center mb-16"
+              transition={{ duration: 0.6 }}
+              className="text-center mb-20"
             >
-              <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-                Virtual Number <span className="text-blue-600 dark:text-blue-400">FAQs</span>
+              <div className="inline-block mb-4">
+                <div className="h-px w-16 bg-blue-600 dark:bg-blue-400 mb-3 mx-auto"></div>
+                <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-light">
+                  FAQ
+                </h3>
+              </div>
+              <h2 className="text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight">
+                Common <span className="font-normal text-blue-600 dark:text-blue-400">Questions</span>
               </h2>
-              <p className="text-xl text-gray-600 dark:text-blue-200 max-w-2xl mx-auto">
-                Answers to common questions about our virtual number solutions
+              <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                Answers to frequently asked questions about our virtual number solutions
               </p>
             </motion.div>
 
@@ -892,51 +922,41 @@ const VirtualNumbersPage: React.FC = () => {
         </section>
 
         {/* CTA Section */}
-        <section className="py-32 bg-gradient-to-r from-blue-900 via-blue-800 to-blue-900 relative overflow-hidden">
-          <div className="absolute inset-0">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl" />
-            <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[size:100px_100px] opacity-10" />
-          </div>
-
+        <section className="py-28 bg-gray-50 dark:bg-gray-950 relative overflow-hidden">
           <Container>
             <motion.div
-              style={{ scale }}
-              className="relative z-10 text-center max-w-3xl mx-auto"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center max-w-3xl mx-auto"
             >
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
-                className="inline-block mb-6"
-              >
-                <div className="px-6 py-2 bg-white/10 rounded-full border border-white/20 text-white text-sm font-medium backdrop-blur-sm">
-                  READY TO GET STARTED?
-                </div>
-              </motion.div>
-
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">
-                Get Your <span className="text-cyan-300">Virtual Number</span> Today
+              <div className="inline-block mb-4">
+                <div className="h-px w-16 bg-blue-600 dark:bg-blue-400 mb-3 mx-auto"></div>
+                <h3 className="text-sm uppercase tracking-widest text-gray-500 dark:text-gray-400 font-light">
+                  Get Started
+                </h3>
+              </div>
+              <h2 className="text-5xl font-light text-gray-900 dark:text-white mb-8 tracking-tight">
+                Ready to Transform Your <span className="font-normal text-blue-600 dark:text-blue-400">Communications?</span>
               </h2>
-              <p className="text-xl text-blue-200 mb-12">
-                Join thousands of businesses using our virtual numbers to establish their global presence
-                and improve customer communications.
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-12 leading-relaxed">
+                Join thousands of businesses using our virtual numbers to establish global presence and improve customer communications
               </p>
 
               <div className="flex flex-wrap justify-center gap-4">
                 <Button
-                  variant="accent"
+                  variant="primary"
                   size="lg"
-                  className="bg-cyan-400 hover:bg-cyan-500 text-blue-900 px-12"
-                  icon={<ArrowRight size={20} />}
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-12 py-4 rounded-lg font-normal text-base transition-all duration-300"
+                  icon={<ArrowRight className="w-5 h-5" />}
                 >
                   Get Started Now
                 </Button>
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="lg"
-                  className="text-white border-white/30 hover:bg-white/10 px-12"
+                  className="border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 px-12 py-4 rounded-lg font-normal text-base transition-all duration-300"
                 >
                   Contact Sales
                 </Button>
