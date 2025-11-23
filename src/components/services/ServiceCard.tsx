@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, MessageSquare, MessageCircle, Phone, MessageSquareMore, Mail, Megaphone, Code as CodeIcon, Palette } from 'lucide-react';
 import { Service } from '../../utils/types';
-import Card from '../ui/Card';
+import { Card } from '../ui/Card';
 import { Link } from 'react-router-dom';
 
 interface ServiceCardProps {
@@ -42,7 +42,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({ service, index = 0 }) => {
         <p className="text-gray-600 dark:text-gray-300 mb-6 flex-grow">
           {service.description}
         </p>
-        <Link 
+        <Link
           to={`/services/${service.id}`}
           className="inline-flex items-center text-primary-600 dark:text-primary-400 font-medium hover:text-primary-700 dark:hover:text-primary-300"
         >

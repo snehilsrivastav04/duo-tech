@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Package, Pencil, Trash2, MoreVertical, Plus } from 'lucide-react';
 import Button from '../../ui/Button';
-import Card from '../../ui/Card';
+import { Card } from '../../ui/Card';
 import { services } from '../../../data/services';
 
 const ServicesTable: React.FC = () => {

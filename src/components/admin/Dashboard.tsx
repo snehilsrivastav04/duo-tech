@@ -14,7 +14,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { AdminStats } from '../../utils/types';
-import Card from '../ui/Card';
+import { Card } from '../ui/Card';
 import Button from '../ui/Button';
 
 const mockStats: AdminStats = {

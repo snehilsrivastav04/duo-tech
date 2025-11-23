@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Save } from 'lucide-react';
 import Button from '../../ui/Button';
-import Card from '../../ui/Card';
+import { Card } from '../../ui/Card';
 
 const SettingsForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {

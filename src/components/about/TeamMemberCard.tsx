@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { TeamMember } from '../../utils/types';
-import Card from '../ui/Card';
+import { Card } from '../ui/Card';
 
 interface TeamMemberCardProps {
   member: TeamMember;
