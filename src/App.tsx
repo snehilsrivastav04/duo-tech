@@ -54,6 +54,7 @@ import HostedCallCenter from './pages/hostedcallcentre';
 import PrivacyPolicyPage from './pages/privacy-policy';
 import NotFoundPage from './pages/NotFoundPage';
 import Realestate from './pages/realestate';
+import Refund from './pages/refund.tsx';
 
 
 const ProtectedRoute: React.FC<{ 
@@ -120,6 +121,7 @@ function App() {
         <Route path="/services/hosted-call-center" element={<HostedCallCenter />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/realestate" element={<Realestate />} />
+        <Route path="/refund" element={<Refund />} />
 
 
         {/* Admin Routes */}

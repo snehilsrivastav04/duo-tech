@@ -51,6 +51,11 @@ interface Service {
   icon: React.ReactNode;
   description: string;
   features: string[];
+  cta: string;
+  ctaLink: string;
+  bgColor: string;
+  textColor: string;
+  iconColor: string;
 }
 
 interface Testimonial {
@@ -196,130 +201,26 @@ export const homeData: HomeData = {
   ],
   services: [
     {
-      title: 'IVR Service',
-      icon: <Phone className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Interactive Voice Response solutions for automated customer interactions.',
-      features: [
-        'Outbound Calls',
-        'Custom IVR',
-        'Inbound Calls',
-        'Survey Calls',
-        'Reminder Calls',
-        'Missed Calls'
-      ]
+        title: 'MoneySaver Export Account',
+        icon: <Globe className="w-6 h-6" />,
+        description: 'Open a virtual account in 200+ countries, save up to 50% on international bank transfer charges. Receive ACH/SWIFT/SEPA/BACS payments',
+        features: ['Receive international wire transfers with ease with a smart account'],
+        cta: 'Sign Up',
+        ctaLink: '#',
+        bgColor: 'bg-white',
+        textColor: 'text-black',
+        iconColor: 'text-black'
     },
     {
-      title: 'SMS Services',
-      icon: <FaSms className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Reliable SMS solutions for promotional and transactional messaging.',
-      features: [
-        'Promotional SMS',
-        'Transactional SMS (OTP\'s related)'
-      ]
-    },
-    {
-      title: 'Virtual Numbers',
-      icon: <Phone className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Professional virtual numbers for business communications.',
-      features: []
-    },
-    {
-      title: 'Toll Free Numbers',
-      icon: <Phone className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Toll-free numbers to enhance customer accessibility.',
-      features: []
-    },
-    {
-      title: 'Email Marketing',
-      icon: <Mail className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Effective email campaigns for promotional and transactional purposes.',
-      features: [
-        'Promotional Emails',
-        'Transactional Emails (OTP\'s related)'
-      ]
-    },
-    {
-      title: 'WhatsApp Marketing',
-      icon: <FaWhatsapp className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Engage customers through powerful WhatsApp marketing solutions.',
-      features: [
-        'Bulk Messaging: Supports text, images, videos, PDFs',
-        'Button Campaigns: Interactive messages with CTAs',
-        'DP Campaigns: Branded display pictures',
-        'Action Campaigns: Automated messages based on triggers',
-        'Broadcast Campaigns: Personalized messaging',
-        'WhatsApp Chatbot Integration: 24/7 support automation',
-        'Lead Capture & CRM Integration',
-        'Real-Time Analytics Dashboard',
-        'WhatsApp Business API & Green Tick Support'
-      ]
-    },
-    {
-      title: 'Digital Marketing',
-      icon: <Globe className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Comprehensive digital marketing to boost your online presence.',
-      features: [
-        'Search Engine Optimization (SEO): Keyword research, on-page/off-page SEO',
-        'Content Marketing: Blogs, videos, infographics',
-        'Social Media Marketing: Organic and paid campaigns',
-        'Video Marketing: YouTube, Instagram Reels, TikTok',
-        'Conversion Rate Optimization (CRO): A/B testing, UX improvements'
-      ]
-    },
-    {
-      title: 'Website Development',
-      icon: <Globe className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Custom websites tailored to your business needs.',
-      features: [
-        'Custom Website Design & Development',
-        'Responsive Design: Mobile-friendly layouts',
-        'E-commerce Development: Secure payment gateways',
-        'CMS Integration: WordPress, Shopify',
-        'Web Portal Development'
-      ]
-    },
-    {
-      title: 'Android App Development',
-      icon: <SiAndroid className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Feature-rich Android apps for your business.',
-      features: [
-        'Custom Android App Design',
-        'Native & Hybrid Development: Kotlin/Java, Flutter',
-        'App UI/UX Design',
-        'App Deployment & Maintenance'
-      ]
-    },
-    {
-      title: 'UI/UX Design Services',
-      icon: <PenTool className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Intuitive and visually appealing designs for better user engagement.',
-      features: [
-        'Wireframing & Prototyping',
-        'User Interface (UI) Design',
-        'User Experience (UX) Optimization',
-        'Design System & Brand Consistency'
-      ]
-    },
-    {
-      title: 'Graphic Designing Services',
-      icon: <PenTool className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Creative graphic design solutions for branding and marketing.',
-      features: [
-        'Brand Identity Design: Logo, guidelines, stationery',
-        'Marketing & Promotional Design: Brochures, posters, social media graphics',
-        'Packaging & Product Design: Labels, mockups',
-        'Digital & Web Graphics: Banners, icons, infographics',
-        'Custom Design Solutions: Event invitations, presentations'
-      ]
-    },
-    {
-      title: 'Products',
-      icon: <LayoutTemplate className="w-8 h-8 text-blue-600 dark:text-blue-400" />,
-      description: 'Specialized products to streamline your business operations.',
-      features: [
-        'WhatsApp API and Source Code',
-        'CRMs for Every Business Need'
-      ]
+        title: 'Turbo UPI',
+        icon: <Zap className="w-6 h-6" />,
+        description: 'Experience a 5X faster checkout, achieve a 10% success rate boost, all without any redirections to UPI apps.',
+        features: ['Get India\'s fastest one-step UPI payment solution for businesses'],
+        cta: 'Sign Up',
+        ctaLink: '#',
+        bgColor: 'bg-gray-100',
+        textColor: 'text-black',
+        iconColor: 'text-black'
     }
   ],
   testimonials: [
