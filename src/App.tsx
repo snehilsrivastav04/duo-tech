@@ -87,27 +87,28 @@ function App() {
         <Route path="/services/virtual-number" element={<VirtualNumberPage />} />
         <Route path="/services/toll-free-number" element={<TollFreeNumberNumberPage />} />
         <Route path="/services/whatsapp-bulk" element={<WhatsappbulkPage />} />
-        <Route path="/services/VoiceOBDPage" element={<VoiceobdPage />} />
+        <Route path="/services/voice-obd" element={<VoiceobdPage />} />
         <Route path="/services/rcs" element={<RcsPage />} />
 
-        <Route path="/digital/email-marketing" element={<EmailmarketingPage />} />
-        <Route path="/digital/social-media" element={<SocialMediaPage />} />
-        <Route path="/digital/seo" element={<SeoPage />} />
-        <Route path="/digital/graphic-design" element={<GraphicsDesignPage />} />
-        <Route path="/digital/ppc" element={<PPCPage />} />
-        <Route path="/digital/digital-marketing" element={<DigitalMarketingPage />} />
+        <Route path="/services/digital-marketing" element={<DigitalMarketingPage />} />
+        <Route path="/services/digital-marketing/email-marketing" element={<EmailmarketingPage />} />
+        <Route path="/services/digital-marketing/social-media" element={<SocialMediaPage />} />
+        <Route path="/services/digital-marketing/seo" element={<SeoPage />} />
+        <Route path="/services/digital-marketing/graphic-design" element={<GraphicsDesignPage />} />
+        <Route path="/services/digital-marketing/ppc" element={<PPCPage />} />
 
-
-        <Route path="/development/web" element={<WebDevHomePage />} />
-        <Route path="/development/android" element={<AndroidDevelopmentPage />} />
-        <Route path="/development/ui-ux" element={<AndroidDevelopmentPage />} /> {/* Replace with correct component */}
-        <Route path="/development/api" element={<AndroidDevelopmentPage />} />   {/* Replace with correct component */}
+        <Route path="/services/development/web" element={<WebDevHomePage />} />
+        <Route path="/services/development/android" element={<AndroidDevelopmentPage />} />
+        <Route path="/services/development/ui-ux" element={<NotFoundPage />} />
+        <Route path="/services/development/api" element={<NotFoundPage />} />
 
 
         <Route path="/products/whatsapp-api" element={<WhatsAppAPIPage />} />
         <Route path="/products/sms-gateway" element={<SMSGatewayPage />} />
-        <Route path="/products/source-codes" element={<ProductsPage />} />       {/* Replace with correct component */}
+        <Route path="/products/source-codes" element={<ProductsPage />} />
         <Route path="/products/crm" element={<CRMPage />} />
+        <Route path="/products/hosted-call-center" element={<HostedCallCenter />} />
+
 
         <Route path="/services/:id" element={<ServiceDetailPage />} />
         <Route path="/products" element={<ProductsPage />} />
@@ -118,7 +119,7 @@ function App() {
         <Route path="/client-side" element={<ClientSidePage />} />
         <Route path="/terms-and-conditions" element={<TermsandConditions />} />
         <Route path="/sms-pricing" element={<SmsPricing />} />
-        <Route path="/services/hosted-call-center" element={<HostedCallCenter />} />
+        
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/realestate" element={<Realestate />} />
         <Route path="/refund" element={<Refund />} />

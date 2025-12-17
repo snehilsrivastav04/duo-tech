@@ -11,6 +11,7 @@ import {
   CTA,
   ContactForm
 } from '../components/ivr';
+import MainLayout from '../components/layout/MainLayout';
 
 const IVRSolutionsPage = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -260,16 +261,18 @@ const IVRSolutionsPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white relative">
-      <ProgressBar scrollProgress={scrollProgress} />
-      <Hero demoFlows={demoFlows} onShowContactForm={() => setShowContactForm(true)} />
-      <PricingCalculator />
-      <FeatureExplorer features={features} />
-      <UseCases useCases={useCases} />
-      <WhyChooseUs reasons={reasons} />
-      <CTA onShowContactForm={() => setShowContactForm(true)} />
-      {showContactForm && <ContactForm onClose={() => setShowContactForm(false)} />}
-    </div>
+    <MainLayout>
+      <div className="min-h-screen bg-white relative">
+        <ProgressBar scrollProgress={scrollProgress} />
+        <Hero demoFlows={demoFlows} onShowContactForm={() => setShowContactForm(true)} />
+        <PricingCalculator />
+        <FeatureExplorer features={features} />
+        <UseCases useCases={useCases} />
+        <WhyChooseUs reasons={reasons} />
+        <CTA onShowContactForm={() => setShowContactForm(true)} />
+        {showContactForm && <ContactForm onClose={() => setShowContactForm(false)} />}
+      </div>
+    </MainLayout>
   );
 };
 

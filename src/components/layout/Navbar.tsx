@@ -41,9 +41,9 @@ const Navbar = () => {
         category: 'Messaging',
         items: [
           { name: 'Bulk SMS', href: '/services/bulk-sms', icon: <Smartphone className="w-4 h-4" /> },
-          { name: 'Promotional SMS', href: '/services/promotional-sms', icon: <Megaphone className="w-4 h-4" /> },
           { name: 'Transactional SMS', href: '/services/transactional-sms', icon: <Briefcase className="w-4 h-4" /> },
           { name: 'WhatsApp Bulk', href: '/services/whatsapp-bulk', icon: <MessageSquare className="w-4 h-4" /> },
+          { name: 'RCS', href: '/services/rcs', icon: <Rocket className="w-4 h-4" /> },
         ]
       },
       {
@@ -52,7 +52,20 @@ const Navbar = () => {
           { name: 'IVR Solutions', href: '/services/ivr', icon: <Phone className="w-4 h-4" /> },
           { name: 'Voice OBD', href: '/services/voice-obd', icon: <Phone className="w-4 h-4" /> },
           { name: 'Virtual Numbers', href: '/services/virtual-number', icon: <Smartphone className="w-4 h-4" /> },
-          { name: 'Toll Free', href: '/services/toll-free', icon: <Phone className="w-4 h-4" /> },
+          { name: 'Toll Free Number', href: '/services/toll-free-number', icon: <Phone className="w-4 h-4" /> },
+          { name: 'Hosted Call Center', href: '/products/hosted-call-center', icon: <Users className="w-4 h-4" /> },
+        ]
+      }
+    ],
+    'Digital Marketing': [
+      {
+        category: 'Services',
+        items: [
+            { name: 'Email Marketing', href: '/services/digital-marketing/email-marketing', icon: <Mail className="w-4 h-4" /> },
+            { name: 'Social Media', href: '/services/digital-marketing/social-media', icon: <Users className="w-4 h-4" /> },
+            { name: 'SEO', href: '/services/digital-marketing/seo', icon: <Search className="w-4 h-4" /> },
+            { name: 'Graphic Design', href: '/services/digital-marketing/graphic-design', icon: <Box className="w-4 h-4" /> },
+            { name: 'PPC', href: '/services/digital-marketing/ppc', icon: <Rocket className="w-4 h-4" /> },
         ]
       }
     ],
@@ -60,9 +73,10 @@ const Navbar = () => {
       {
         category: 'Web & Mobile',
         items: [
-          { name: 'Web Development', href: '/dev/web', icon: <Code className="w-4 h-4" /> },
-          { name: 'Android Apps', href: '/dev/android', icon: <Smartphone className="w-4 h-4" /> },
-          { name: 'iOS Apps', href: '/dev/ios', icon: <Smartphone className="w-4 h-4" /> },
+          { name: 'Web Development', href: '/services/development/web', icon: <Code className="w-4 h-4" /> },
+          { name: 'Android Apps', href: '/services/development/android', icon: <Smartphone className="w-4 h-4" /> },
+          { name: 'UI/UX Design', href: '/services/development/ui-ux', icon: <Box className="w-4 h-4" /> },
+          { name: 'API Development', href: '/services/development/api', icon: <Code className="w-4 h-4" /> },
         ]
       }
     ],
@@ -73,6 +87,7 @@ const Navbar = () => {
           { name: 'WhatsApp API', href: '/products/whatsapp-api', icon: <MessageSquare className="w-4 h-4" /> },
           { name: 'SMS Gateway', href: '/products/sms-gateway', icon: <Smartphone className="w-4 h-4" /> },
           { name: 'CRM Solutions', href: '/products/crm', icon: <Briefcase className="w-4 h-4" /> },
+          { name: 'Source Codes', href: '/products/source-codes', icon: <Code className="w-4 h-4" /> },
         ]
       }
     ]
@@ -81,7 +96,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Home', href: '/', hasMenu: false },
     { name: 'Services', hasMenu: true },
-    { name: 'Digital Marketing', href: '/digital-marketing', hasMenu: false },
+    { name: 'Digital Marketing', href: '/services/digital-marketing', hasMenu: true },
     { name: 'Development', hasMenu: true },
     { name: 'Products', hasMenu: true },
     { name: 'About', href: '/about', hasMenu: false },
@@ -139,6 +154,7 @@ const Navbar = () => {
                   >
                     {link.hasMenu ? (
                       <button
+                        onClick={() => window.location.href = link.href || '#'}
                         className={`group relative px-5 py-2.5 text-[13px] font-light tracking-wide transition-colors duration-300 ${
                           activeMenu === link.name ? 'text-blue-900' : 'text-gray-600 hover:text-gray-900'
                         }`}
@@ -356,7 +372,13 @@ const Navbar = () => {
                       {link.hasMenu ? (
                         <div>
                           <button
-                            onClick={() => setActiveMenu(activeMenu === link.name ? null : link.name)}
+                            onClick={() => {
+                              if (link.href) {
+                                window.location.href = link.href;
+                              } else {
+                                setActiveMenu(activeMenu === link.name ? null : link.name)
+                              }
+                            }}
                             className={`w-full flex items-center justify-between p-4 rounded-xl text-left transition-all duration-300 ${
                               activeMenu === link.name
                                 ? 'bg-blue-50 text-blue-900'
@@ -440,9 +462,6 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Spacer */}
-      <div className="h-24" />
     </>
   );
 };

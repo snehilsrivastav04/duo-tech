@@ -1,481 +1,498 @@
-import { FC } from 'react';
-import { ParallaxProvider } from 'react-scroll-parallax';
-import { Link } from 'react-router-dom';
+import { useState, FC, memo, KeyboardEvent } from 'react';
 import {
-  ArrowRight, Mail,
-  Zap, Shield, Server, Globe,
-  Users, Code, MessageCircle, Phone, Send,
-  Check, Star, Play, BarChart3, GitBranch,
-  Clock, Globe2, Terminal, LayoutTemplate, PenTool
+  ChevronLeft,
+  ChevronRight,
+  ArrowRight,
+  Check,
+  Phone,
+  MessageSquare,
+  Globe,
+  Mail,
+  TrendingUp,
+  Smartphone,
+  Palette,
+  Code,
+  FileText,
+  Webhook
 } from 'lucide-react';
-import { FaWhatsapp, FaSms, FaRegLightbulb } from 'react-icons/fa';
-import { SiAndroid } from 'react-icons/si';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import MainLayout from '../layout/MainLayout';
-import Container from '../ui/Container';
-import Button from '../ui/Button';
-import LogoCarousel from './LogoCarousel';
-import CaseStudyCard from './CaseStudyCard';
-import FAQAccordion from './FAQAccordion';
-import { homeData } from '../../data/homeData';
-import ErrorBoundary from '../errors/ErrorBoundary';
-import ServiceCard from './ServiceCard';
 
-// Simple Testimonial Carousel Component
-const TestimonialCarousel: FC<{ testimonials: any[] }> = ({ testimonials }) => (
-  <div class="max-w-4xl mx-auto">
-    <div class="grid gap-8">
-      {testimonials.map((testimonial, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: index * 0.1 }}
-          className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-800"
-        >
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center text-white font-light">
-              {testimonial.author.charAt(0)}
-            </div>
-            <div>
-              <div className="font-light text-gray-900 dark:text-white">{testimonial.author}</div>
-              <div className="text-sm text-gray-500 dark:text-gray-400">{testimonial.role}</div>
-            </div>
-          </div>
-          <p className="text-gray-600 dark:text-gray-300 font-light leading-relaxed">
-            "{testimonial.quote}"
-          </p>
-          <div className="flex gap-1 mt-4">
-            {[...Array(testimonial.rating)].map((_, i) => (
-              <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-            ))}
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  </div>
-);
+// Prop-type interfaces
+interface Testimonial {
+  quote: string;
+  author: string;
+  role: string;
+  rating: number;
+}
 
-// Simple Newsletter Form Component
-const NewsletterForm: FC = () => (
-  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-1 border border-white/20">
-    <form className="flex flex-col sm:flex-row gap-2">
-      <input
-        type="email"
-        placeholder="Enter your email"
-        className="flex-1 px-4 py-3 bg-transparent border-0 text-white placeholder-blue-200/60 focus:outline-none focus:ring-0"
-      />
-      <Button
-        type="submit"
-        className="px-6 py-3 bg-white text-blue-600 hover:bg-blue-50 font-light rounded-lg transition-all duration-300 whitespace-nowrap"
+interface Stat {
+  value: string;
+  label: string;
+  description: string;
+  icon: React.ReactNode;
+}
+
+interface UseCase {
+  title: string;
+  icon: React.ReactNode;
+  description: string;
+  features: string[];
+}
+
+interface Service {
+  title: string;
+  icon: React.ReactNode;
+  description: string;
+  features: string[];
+}
+
+// Testimonial Carousel Component
+export const TestimonialCarousel: FC<{ testimonials: Testimonial[] }> = memo(({ testimonials }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const nextTestimonial = () => {
+    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+  };
+
+  const prevTestimonial = () => {
+    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  };
+
+  const handleKeyDown = (e: KeyboardEvent, index: number) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      setCurrentIndex(index);
+    }
+  };
+
+  return (
+    <div className="relative max-w-4xl mx-auto px-4">
+      <div
+        key={currentIndex}
+        className="bg-white border border-gray-100 p-12 md:p-16 transition-all duration-700 ease-out"
+        role="region"
+        aria-live="polite"
       >
-        Subscribe
-      </Button>
-    </form>
-  </div>
-);
-
-// Simple Use Case Card Component
-const UseCaseCard: FC<{ useCase: any }> = ({ useCase }) => (
-  <motion.div
-    whileHover={{ y: -5 }}
-    className="bg-white dark:bg-gray-900 rounded-2xl p-8 shadow-sm border border-gray-100 dark:border-gray-800 hover:shadow-md transition-all duration-300"
-  >
-    <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mb-6">
-      {useCase.icon}
-    </div>
-    <h3 className="text-xl font-light text-gray-900 dark:text-white mb-3">
-      {useCase.title}
-    </h3>
-    <p className="text-gray-600 dark:text-gray-300 font-light leading-relaxed mb-4">
-      {useCase.description}
-    </p>
-    <ul className="space-y-2">
-      {useCase.features.map((feature: string, index: number) => (
-        <li key={index} className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
-          <Check className="w-4 h-4 text-green-500" />
-          {feature}
-        </li>
-      ))}
-    </ul>
-  </motion.div>
-);
-
-// Simple Developer Section Component
-const DeveloperSection: FC = () => (
-  <section className="py-40 bg-gray-50 dark:bg-gray-900">
-    <Container>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="inline-flex items-center gap-3 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full text-blue-600 dark:text-blue-400 text-sm font-light mb-6">
-            <Code className="w-4 h-4" />
-            <span>For Developers</span>
-          </div>
-          <h2 className="text-5xl md:text-6xl font-extralight text-gray-900 dark:text-white mb-6 leading-tight">
-            Built for <span className="font-light text-blue-600 dark:text-blue-400">developers</span>
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 font-light mb-8 leading-relaxed">
-            Clean, intuitive APIs and comprehensive documentation to get you up and running in minutes.
-          </p>
-          <div className="space-y-4 mb-8">
-            {[
-              'RESTful API with predictable resource-oriented URLs',
-              'JSON requests and responses with standard HTTP response codes',
-              'Authentication via API keys',
-              'Comprehensive documentation with code samples'
-            ].map((feature, index) => (
-              <div key={index} className="flex items-center gap-4">
-                <Check className="w-5 h-5 text-green-500" />
-                <span className="text-gray-600 dark:text-gray-300 font-light">{feature}</span>
-              </div>
-            ))}
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/docs">
-              <Button className="px-8 py-3 bg-blue-600 dark:bg-blue-500 text-white font-light rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 inline-flex items-center gap-2">
-                View Documentation
-                <ArrowRight className="w-4 h-4" />
-              </Button>
-            </Link>
-            <Link to="/api-keys">
-              <Button className="px-8 py-3 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-light rounded-lg bg-transparent hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-300">
-                Get API Keys
-              </Button>
-            </Link>
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="relative"
-        >
-          <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl p-8 text-white">
-            <div className="font-mono text-sm">
-              <div className="text-blue-200">// Send SMS in one request</div>
-              <div className="mt-4">
-                <div className="text-blue-200">fetch(<span className="text-green-400">'https://api.example.com/sms'</span>, { '{' }</div>
-                <div className="ml-4">method: <span className="text-green-400">'POST'</span>,</div>
-                <div className="ml-4">headers: { '{' }</div>
-                <div className="ml-8">Authorization: <span className="text-green-400">'Bearer your_api_key'</span>,</div>
-                <div className="ml-8">Content-Type: <span className="text-green-400">'application/json'</span></div>
-                <div className="ml-4">{'}'}</div>
-                <div className="ml-4">body: JSON.stringify({ '{' }</div>
-                <div className="ml-8">to: <span className="text-green-400">'+1234567890'</span>,</div>
-                <div className="ml-8">message: <span className="text-green-400">'Your verification code is 123456'</span></div>
-                <div className="ml-4">{'}'})</div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-    </Container>
-  </section>
-);
-
-// Features Section Component
-const FeaturesSection: FC = () => (
-  <section className="py-40 bg-gray-50 dark:bg-gray-900">
-    <Container>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="text-center mb-24"
-      >
-        <h2 className="text-5xl md:text-6xl font-extralight text-gray-900 dark:text-white mb-8 leading-tight">
-          Why choose <span className="font-light text-blue-600 dark:text-blue-400">our platform</span>
-        </h2>
-        <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-extralight max-w-2xl mx-auto">
-          Enterprise-grade features designed for scale and reliability
+        <div className="flex mb-8 justify-center md:justify-start">
+          {[...Array(testimonials[currentIndex].rating)].map((_, i) => (
+            <svg
+              key={i}
+              className="w-5 h-5 text-blue-900 mx-0.5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              aria-hidden="true"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          ))}
+        </div>
+        <p className="text-2xl md:text-3xl text-gray-800 font-light leading-relaxed mb-12 text-center md:text-left">
+          "{testimonials[currentIndex].quote}"
         </p>
-      </motion.div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {homeData.features.map((feature, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            className="text-center"
-          >
-            <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-              {feature.icon}
-            </div>
-            <h3 className="text-xl font-light text-gray-900 dark:text-white mb-3">
-              {feature.title}
-            </h3>
-            <p className="text-gray-600 dark:text-gray-300 font-light leading-relaxed">
-              {feature.description}
-            </p>
-          </motion.div>
-        ))}
+        <div className="text-gray-600 text-center md:text-left">
+          <p className="font-medium text-lg text-blue-900">{testimonials[currentIndex].author}</p>
+          <p className="text-sm font-light mt-1">{testimonials[currentIndex].role}</p>
+        </div>
       </div>
-    </Container>
-  </section>
-);
 
-// Stats Section Component
-const StatsSection: FC = () => (
-  <section className="py-24 bg-white dark:bg-gray-950 border-y border-gray-200 dark:border-gray-800">
-    <Container>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-        {homeData.stats.map((stat, index) => (
-          <motion.div
-            key={stat.label}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            className="text-center"
-          >
-            <div className="w-12 h-12 bg-blue-50 dark:bg-blue-900/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+      <div className="flex justify-center mt-12 space-x-6 items-center">
+        <button
+          onClick={prevTestimonial}
+          aria-label="Previous testimonial"
+          className="p-3 border border-gray-200 hover:border-blue-900 transition-all duration-300 focus:outline-none focus:border-blue-900"
+        >
+          <ChevronLeft className="w-5 h-5 text-gray-600" />
+        </button>
+        <div className="flex items-center space-x-3" role="tablist" aria-label="Testimonial navigation">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentIndex(i)}
+              onKeyDown={(e) => handleKeyDown(e, i)}
+              className={`h-0.5 transition-all duration-500 focus:outline-none ${
+                i === currentIndex ? 'bg-blue-900 w-12' : 'bg-gray-300 w-8 hover:bg-gray-400'
+              }`}
+              aria-label={`Go to testimonial ${i + 1}`}
+              aria-selected={i === currentIndex}
+              role="tab"
+            />
+          ))}
+        </div>
+        <button
+          onClick={nextTestimonial}
+          aria-label="Next testimonial"
+          className="p-3 border border-gray-200 hover:border-blue-900 transition-all duration-300 focus:outline-none focus:border-blue-900"
+        >
+          <ChevronRight className="w-5 h-5 text-gray-600" />
+        </button>
+      </div>
+    </div>
+  );
+});
+
+// Stats Grid Component
+export const StatsGrid: FC<{ stats: Stat[]; className?: string }> = memo(({ stats, className }) => {
+  return (
+    <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-gray-200 ${className ?? ''}`}>
+      {stats.map((stat, i) => (
+        <div
+          key={i}
+          className="bg-white p-10 transition-all duration-500 hover:bg-gray-50 group"
+        >
+          <div className="flex flex-col items-start space-y-6">
+            <div className="text-blue-900 opacity-40 group-hover:opacity-100 transition-opacity duration-500">
               {stat.icon}
             </div>
-            <div className="text-3xl lg:text-4xl font-light text-gray-900 dark:text-white mb-2">
-              {stat.value}
+            <div>
+              <p className="text-5xl font-light text-blue-900 mb-3 tracking-tight">
+                {stat.value}
+              </p>
+              <p className="text-base font-medium text-gray-800 mb-2">{stat.label}</p>
+              <p className="text-sm font-light text-gray-500 leading-relaxed">{stat.description}</p>
             </div>
-            <div className="text-sm font-light text-gray-600 dark:text-gray-400 mb-1">
-              {stat.label}
-            </div>
-            <div className="text-xs text-gray-500 dark:text-gray-500 font-light">
-              {stat.description}
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </Container>
-  </section>
-);
-
-const ServicesSection: FC = () => (
-    <section id="services" className="py-40 bg-white dark:bg-gray-950 relative overflow-hidden">
-    <Container className="relative">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8 }}
-        className="text-center mb-24"
-      >
-        <h2 className="text-5xl md:text-6xl font-extralight text-gray-900 dark:text-white mb-8 leading-tight">
-          Comprehensive <span className="font-light text-blue-600 dark:text-blue-400">Services</span>
-        </h2>
-        <p className="text-lg md:text-xl text-gray-600 dark:text-gray-400 font-extralight max-w-2xl mx-auto leading-relaxed">
-          End-to-end communication and digital solutions for your business
-        </p>
-      </motion.div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-        {homeData.services.map((service, i) => (
-          <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ delay: i * 0.08, duration: 0.6 }}
-          >
-            <ServiceCard service={service} />
-          </motion.div>
-        ))}
-      </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3, duration: 0.6 }}
-        className="mt-20 text-center"
-      >
-        <Link to="/services">
-          <Button
-            variant="primary"
-            size="lg"
-            className="px-10 py-4 bg-blue-600 dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white font-light text-sm tracking-wide rounded-full shadow-sm hover:shadow-md transition-all duration-300 inline-flex items-center gap-2.5"
-          >
-            Explore All Services
-            <ArrowRight className="w-4 h-4" />
-          </Button>
-        </Link>
-        <p className="mt-6 text-sm text-gray-500 dark:text-gray-400 font-light">
-          Not sure what you need?{' '}
-          <Link to="/contact" className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors duration-200 border-b border-blue-200 dark:border-blue-800 hover:border-blue-300 dark:hover:border-blue-600">
-            Get a free consultation
-          </Link>
-        </p>
-      </motion.div>
-    </Container>
-  </section>
-);
-
-const HeroSection: FC = () => (
-    <section className="relative min-h-screen bg-white dark:bg-gray-950 overflow-hidden flex items-center justify-center">
-    {/* Ultra-subtle paper texture */}
-    <div
-      className="absolute inset-0 opacity-[0.008]"
-      style={{
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 50 L100 0 L100 100 L0 100 L0 0 Z' fill='none' stroke='%23000' stroke-width='0.5' stroke-opacity='0.05'/%3E%3C/svg%3E")`,
-      }}
-    />
-
-    {/* Minimal geometric elements */}
-    <motion.div
-      animate={{ 
-        rotate: [0, 180, 360],
-        scale: [1, 1.02, 1]
-      }}
-      transition={{ 
-        duration: 20, 
-        repeat: Infinity, 
-        ease: "linear" 
-      }}
-      className="absolute top-1/4 left-1/4 w-96 h-96 border border-gray-100 dark:border-gray-800 rounded-full opacity-20"
-    />
-    
-    <motion.div
-      animate={{ 
-        rotate: [360, 180, 0],
-        scale: [1.02, 1, 1.02]
-      }}
-      transition={{ 
-        duration: 25, 
-        repeat: Infinity, 
-        ease: "linear" 
-      }}
-      className="absolute bottom-1/4 right-1/4 w-80 h-80 border border-gray-100 dark:border-gray-800 rounded-full opacity-15"
-    />
-
-    <Container className="relative z-10 px-8">
-      <div className="max-w-4xl mx-auto text-center">
-        {/* Sophisticated badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="inline-flex items-center gap-3 px-6 py-3 mb-20 bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-full text-gray-600 dark:text-gray-400 text-sm font-light tracking-wider"
-        >
-          <div className="w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 rounded-full" />
-          <span>Enterprise Communication Platform</span>
-        </motion.div>
-
-        {/* Elegant typography */}
-        <motion.h1
-          className="text-5xl md:text-6xl lg:text-7xl font-light text-gray-900 dark:text-white leading-[1.15] tracking-tight"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ staggerChildren: 0.12 }}
-        >
-          <motion.span
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="block"
-          >
-            Build <span className="text-blue-600 dark:text-blue-400">connections</span>
-          </motion.span>
-          <motion.span
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-            className="block mt-4"
-          >
-            that <span className="text-blue-600 dark:text-blue-400">scale</span> your vision
-          </motion.span>
-        </motion.h1>
-
-        {/* Refined sub-headline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.3 }}
-          className="mt-16 text-lg md:text-xl text-gray-600 dark:text-gray-400 font-light max-w-2xl mx-auto leading-relaxed"
-        >
-          Real-time SMS, WhatsApp, Voice & Email – secure, compliant, and engineered for global scale
-        </motion.p>
-
-        {/* Sophisticated CTA buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, delay: 0.45 }}
-          className="mt-16 flex flex-col sm:flex-row gap-4 justify-center items-center"
-        >
-          <Link to="/get-started">
-            <Button className="group px-12 py-4 bg-blue-600 dark:bg-blue-500 text-white font-normal text-sm tracking-wide rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-all duration-300 flex items-center gap-3 shadow-sm hover:shadow-md">
-              Start Free Trial
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-            </Button>
-          </Link>
-
-          <Link to="/demo">
-            <Button className="px-12 py-4 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-normal text-sm tracking-wide rounded-lg bg-transparent hover:bg-gray-50 dark:hover:bg-gray-900 transition-all duration-300">
-              Schedule Demo
-            </Button>
-          </Link>
-        </motion.div>
-
-        {/* Minimal trust indicators */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-          className="mt-24 flex flex-wrap justify-center items-center gap-x-12 gap-y-5 text-sm text-gray-500 dark:text-gray-500 font-light"
-        >
-          <div className="flex items-center gap-3">
-            <Shield className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-            <span>GDPR & ISO 27001</span>
           </div>
-          <div className="w-px h-4 bg-gray-300 dark:bg-gray-700" />
-          <div className="flex items-center gap-3">
-            <Server className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-            <span>99.99% Uptime</span>
-          </div>
-          <div className="w-px h-4 bg-gray-300 dark:bg-gray-700" />
-          <div className="flex items-center gap-3">
-            <Globe className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-            <span>150+ Countries</span>
-          </div>
-        </motion.div>
+        </div>
+      ))}
+    </div>
+  );
+});
+
+// Newsletter Form Component
+export const NewsletterForm: FC = () => {
+  const [email, setEmail] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setSubmitted(true);
+      setEmail('');
+      setError('');
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (err) {
+      setError('Failed to subscribe. Please try again.');
+    }
+  };
+
+  return (
+    <div className="space-y-6 max-w-md">
+      <div className="relative">
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter your email address"
+          required
+          className="w-full px-6 py-4 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-blue-900 transition-colors duration-300 font-light"
+          aria-label="Email address"
+        />
+        <button
+          onClick={handleSubmit}
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-900 text-white p-3 hover:bg-blue-800 transition-colors duration-300 focus:outline-none"
+          aria-label="Subscribe"
+        >
+          <ArrowRight className="w-5 h-5" />
+        </button>
       </div>
-    </Container>
-
-    {/* Elegant scroll indicator */}
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.9 }}
-      className="absolute bottom-8 left-1/2 -translate-x-1/2"
-    >
-      <motion.div
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        className="flex flex-col items-center text-xs text-gray-400 dark:text-gray-600 font-light tracking-widest uppercase"
-      >
-        <span>Explore</span>
-        <ArrowRight className="w-4 h-4 mt-3 rotate-90" />
-      </motion.div>
-    </motion.div>
-  </section>
-);
-
-export {
-    HeroSection,
-    ServicesSection,
-    StatsSection,
-    FeaturesSection,
-    DeveloperSection,
-    UseCaseCard,
-    NewsletterForm,
-    TestimonialCarousel,
+      {submitted && (
+        <div className="text-center text-blue-900 text-sm font-light animate-pulse">
+          Thank you for subscribing. We'll be in touch soon.
+        </div>
+      )}
+      {error && (
+        <div className="text-center text-red-600 text-sm font-light">
+          {error}
+        </div>
+      )}
+      <p className="text-xs text-gray-500 font-light text-center leading-relaxed">
+        We respect your privacy.{' '}
+        <a href="#" className="text-blue-900 hover:opacity-70 transition-opacity duration-300" aria-label="Privacy Policy">
+          Read our privacy policy
+        </a>
+      </p>
+    </div>
+  );
 };
+
+// Use Case Card Component
+export const UseCaseCard: FC<{ useCase: UseCase }> = ({ useCase }) => {
+  return (
+    <div className="bg-white border border-gray-100 p-10 transition-all duration-500 hover:border-blue-900 group">
+      <div className="flex items-start space-x-5 mb-8">
+        <div className="text-blue-900 opacity-40 group-hover:opacity-100 transition-opacity duration-500 mt-1">
+          {useCase.icon}
+        </div>
+        <h3 className="text-2xl font-light text-blue-900">{useCase.title}</h3>
+      </div>
+      <p className="text-gray-600 font-light leading-relaxed mb-10">{useCase.description}</p>
+      <div className="space-y-4">
+        {useCase.features.map((feature: string, i: number) => (
+          <div key={i} className="flex items-start group/item">
+            <div className="w-1 h-1 bg-blue-900 mt-2.5 mr-4 flex-shrink-0 transition-all duration-300 group-hover/item:w-3" />
+            <span className="text-gray-700 font-light leading-relaxed">{feature}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// Service Card Component
+export const ServiceCard: FC<{ service: Service }> = ({ service }) => {
+  return (
+    <div className="bg-white border border-gray-100 p-10 transition-all duration-500 hover:border-blue-900 hover:shadow-sm group cursor-pointer">
+      <div className="flex items-start space-x-5 mb-8">
+        <div className="text-blue-900 opacity-40 group-hover:opacity-100 transition-opacity duration-500 mt-1">
+          {service.icon}
+        </div>
+        <h3 className="text-2xl font-light text-blue-900">{service.title}</h3>
+      </div>
+      <p className="text-gray-600 font-light leading-relaxed mb-10">
+        {service.description}
+      </p>
+      {service.features.length > 0 && (
+        <div className="space-y-4 mb-10">
+          {service.features.slice(0, 4).map((feature, i) => (
+            <div key={i} className="flex items-start group/item">
+              <div className="w-1 h-1 bg-blue-900 mt-2.5 mr-4 flex-shrink-0 transition-all duration-300 group-hover/item:w-3" />
+              <span className="text-gray-700 font-light leading-relaxed">{feature}</span>
+            </div>
+          ))}
+        </div>
+      )}
+      
+      <div className="flex items-center justify-between pt-6 border-t border-gray-100 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+        <span className="text-sm font-light text-blue-900 tracking-wide">
+          Learn More
+        </span>
+        <ArrowRight className="w-4 h-4 text-blue-900 transform group-hover:translate-x-1 transition-transform duration-300" />
+      </div>
+    </div>
+  );
+};
+
+
+// Developer Section Component
+export const DeveloperSection: FC = () => {
+  return (
+    <section className="bg-gray-900 text-white py-24">
+      <div className="max-w-7xl mx-auto px-6">
+        <div className="text-center">
+          <h2 className="text-5xl font-bold">Our platform is built</h2>
+          <p className="text-3xl text-green-400 mt-2">&lt;for developers by developers&gt;</p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-12 mt-20">
+          <div className="text-center">
+            <div className="flex justify-center mb-4">
+              <Code size={40} className="text-green-400" />
+            </div>
+            <h3 className="text-2xl font-bold mb-2">Integrations</h3>
+            <p className="text-gray-400 mb-4">Find all popular platform SDKs, plugin, server integrations in our integration stack.</p>
+            <a href="#" className="text-green-400 font-bold">View Docs &rarr;</a>
+          </div>
+
+          <div className="text-center">
+            <div className="flex justify-center mb-4">
+              <FileText size={40} className="text-green-400" />
+            </div>
+            <h3 className="text-2xl font-bold mb-2">API Reference</h3>
+            <p className="text-gray-400 mb-4">Comprehensive documentation to build powerful payment solutions.</p>
+            <a href="#" className="text-green-400 font-bold">View Docs &rarr;</a>
+          </div>
+
+          <div className="text-center">
+            <div className="flex justify-center mb-4">
+              <Webhook size={40} className="text-green-400" />
+            </div>
+            <h3 className="text-2xl font-bold mb-2">Webhooks</h3>
+            <p className="text-gray-400 mb-4">Receive real-time notifications for all payment related transactions and events.</p>
+            <a href="#" className="text-green-400 font-bold">View Docs &rarr;</a>
+          </div>
+        </div>
+
+        <div className="mt-24">
+          <div className="text-center">
+            <h3 className="text-4xl font-bold mb-4">Try it out for yourself</h3>
+          </div>
+          <div className="bg-gray-800 rounded-lg p-4 mt-8">
+            <div className="flex justify-between items-center mb-4">
+              <div className="flex space-x-2">
+                <span className="bg-gray-700 h-3 w-3 rounded-full"></span>
+                <span className="bg-gray-700 h-3 w-3 rounded-full"></span>
+                <span className="bg-gray-700 h-3 w-3 rounded-full"></span>
+              </div>
+              <p className="text-sm text-gray-400">Curl</p>
+            </div>
+            <pre>
+              <code className="language-bash">
+                curl -X POST https://api.razorpay.com/v1/orders \
+                -u [YOUR_KEY_ID]:[YOUR_KEY_SECRET] \
+                -H 'content-type:application/json' \
+                -d '&#123;
+                  "amount": 500,
+                  "currency": "INR",
+                  "receipt": "qwsaq1"
+                &#125;'
+              </code>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+
+// Demo Component
+export default function ComponentShowcase() {
+  const testimonials: Testimonial[] = [
+    {
+      quote: "The attention to detail and quality of service exceeded all our expectations. A truly transformative experience.",
+      author: "Sarah Mitchell",
+      role: "Chief Marketing Officer, TechCorp",
+      rating: 5
+    },
+    {
+      quote: "Professional, efficient, and remarkable results. They understood our vision perfectly.",
+      author: "James Chen",
+      role: "Founder, StartupHub",
+      rating: 5
+    }
+  ];
+
+  const stats: Stat[] = [
+    {
+      value: "500+",
+      label: "Clients",
+      description: "Trusted by leading brands",
+      icon: <Globe className="w-6 h-6" />
+    },
+    {
+      value: "98%",
+label: "Satisfaction",
+      description: "Client retention rate",
+      icon: <TrendingUp className="w-6 h-6" />
+    },
+    {
+      value: "50M+",
+      label: "Messages",
+      description: "Delivered monthly",
+      icon: <MessageSquare className="w-6 h-6" />
+    },
+    {
+      value: "24/7",
+      label: "Support",
+      description: "Always here for you",
+      icon: <Phone className="w-6 h-6" />
+    }
+  ];
+
+  const useCases: UseCase[] = [
+    {
+      title: "Enterprise Solutions",
+      icon: <Code className="w-6 h-6" />,
+      description: "Comprehensive communication platforms designed for scale and reliability.",
+      features: [
+        "Multi-channel integration",
+        "Advanced analytics dashboard",
+        "Custom workflow automation",
+        "Enterprise-grade security"
+      ]
+    }
+  ];
+
+  const services: Service[] = [
+    {
+      title: "IVR Service",
+      icon: <Phone className="w-6 h-6" />,
+      description: "Intelligent voice response systems that enhance customer experience.",
+      features: [
+        "Custom voice menus",
+        "Call routing optimization",
+        "Multi-language support",
+        "Real-time analytics"
+      ]
+    },
+    {
+      title: "Digital Marketing",
+      icon: <TrendingUp className="w-6 h-6" />,
+      description: "Strategic campaigns that drive engagement and conversion.",
+      features: [
+        "SEO optimization",
+        "Content strategy",
+        "Performance tracking",
+        "Brand positioning"
+      ]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Testimonials Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-light text-blue-900 text-center mb-20">
+            Client Testimonials
+          </h2>
+          <TestimonialCarousel testimonials={testimonials} />
+        </div>
+      </section>
+
+      {/* Stats Section */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 mb-16">
+          <h2 className="text-4xl md:text-5xl font-light text-blue-900 text-center">
+            Our Impact
+          </h2>
+        </div>
+        <StatsGrid stats={stats} />
+      </section>
+
+      {/* Use Cases Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-light text-blue-900 mb-20">
+            Use Cases
+          </h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-px bg-gray-200">
+            {useCases.map((useCase, i) => (
+              <UseCaseCard key={i} useCase={useCase} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-light text-blue-900 mb-20">
+            Our Services
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-gray-200">
+            {services.map((service, i) => (
+              <ServiceCard key={i} service={service} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <DeveloperSection />
+
+      {/* Newsletter Section */}
+      <section className="py-24 bg-blue-900">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-4xl md:text-5xl font-light text-white mb-6">
+            Stay Connected
+          </h2>
+          <p className="text-gray-300 font-light mb-12 max-w-2xl mx-auto leading-relaxed">
+            Subscribe to receive insights, updates, and exclusive offers.
+          </p>
+          <div className="flex justify-center">
+            <NewsletterForm />
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
