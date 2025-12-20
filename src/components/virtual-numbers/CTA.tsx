@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
+import { Link } from 'react-router-dom';
 
 const CTA: React.FC = () => {
   return (
@@ -29,6 +30,7 @@ const CTA: React.FC = () => {
           </p>
 
           <div className="flex flex-wrap justify-center gap-4">
+          <Link to="/contact">
             <Button
               variant="primary"
               size="lg"
@@ -37,6 +39,8 @@ const CTA: React.FC = () => {
             >
               Get Started Now
             </Button>
+            </Link>
+            <Link to="/contact">
             <Button
               variant="outline"
               size="lg"
@@ -44,6 +48,7 @@ const CTA: React.FC = () => {
             >
               Contact Sales
             </Button>
+            </Link>
           </div>
         </motion.div>
       </Container>

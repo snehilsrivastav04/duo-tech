@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Phone, Play } from 'lucide-react';
 import { obdContent } from '../../data/obd-data.tsx';
 import Button from '../ui/Button';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   const { title, subtitle, description, stats } = obdContent.hero;
@@ -27,14 +28,18 @@ const Hero = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-20">
+            <Link to="/contact">
               <Button variant="primary" size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
                 <Phone className="w-4 h-4 mr-2" />
                 Get Started
               </Button>
+              </Link>
+              <Link to="/contact">
               <Button variant="secondary" size="lg" className="text-blue-600 border-blue-600 hover:bg-blue-50">
                 <Play className="w-4 h-4 mr-2" />
                 Watch Demo
               </Button>
+              </Link>
             </div>
 
             <div className="grid grid-cols-3 gap-8 pt-12 border-t border-blue-600/20">

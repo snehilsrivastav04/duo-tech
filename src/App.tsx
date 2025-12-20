@@ -30,6 +30,7 @@ import AndroidDevelopmentPage from './pages/android';
 import WhatsAppAPIPage from './pages/whatsapp-api';
 import SMSGatewayPage from './pages/sms-gateaway';
 import CRMPage from './pages/crm';
+import HostelCallCenter from './pages/HostelCallCenter';
 
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
@@ -57,7 +58,7 @@ import Realestate from './pages/realestate';
 import Refund from './pages/refund.tsx';
 
 
-const ProtectedRoute: React.FC<{ 
+const ProtectedRoute: React.FC<{
   children: React.ReactNode;
   requiredRole?: 'admin' | 'user';
 }> = ({ children, requiredRole }) => {
@@ -73,7 +74,7 @@ const ProtectedRoute: React.FC<{
 
 function App() {
   // Test backend API connection on mount
-  
+
   return (
     <Router>
       <ScrollToTop />
@@ -108,6 +109,7 @@ function App() {
         <Route path="/products/source-codes" element={<ProductsPage />} />
         <Route path="/products/crm" element={<CRMPage />} />
         <Route path="/products/hosted-call-center" element={<HostedCallCenter />} />
+        <Route path="/products/hostel-call-center" element={<HostelCallCenter />} />
 
 
         <Route path="/services/:id" element={<ServiceDetailPage />} />
@@ -119,7 +121,7 @@ function App() {
         <Route path="/client-side" element={<ClientSidePage />} />
         <Route path="/terms-and-conditions" element={<TermsandConditions />} />
         <Route path="/sms-pricing" element={<SmsPricing />} />
-        
+
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/realestate" element={<Realestate />} />
         <Route path="/refund" element={<Refund />} />

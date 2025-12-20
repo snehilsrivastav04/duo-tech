@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { FaWhatsapp } from "react-icons/fa"; // Official WhatsApp icon
+import Chatbot from "../chatbot/Chatbot";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -36,7 +37,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
       {/* WhatsApp Floating Button */}
       <motion.button
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-[#25D366] hover:bg-[#1ebe57] text-white rounded-full shadow-xl flex items-center justify-center group"
+        className="fixed bottom-6 left-6 z-50 w-16 h-16 bg-[#25D366] hover:bg-[#1ebe57] text-white rounded-full shadow-xl flex items-center justify-center group"
         onClick={handleWhatsAppClick}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
@@ -49,6 +50,8 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
           Chat on WhatsApp
         </span>
       </motion.button>
+
+      <Chatbot />
 
       <Footer />
     </div>

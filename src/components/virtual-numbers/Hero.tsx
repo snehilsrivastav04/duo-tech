@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle, Plus, Phone, BarChart3, Users, Clock, MapPin, Shield, Play, Pause, ArrowRight } from 'lucide-react';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
+import { Link } from 'react-router-dom';
 
 const Hero: React.FC = () => {
   const [activeNumber, setActiveNumber] = useState(0);
@@ -194,6 +195,7 @@ const Hero: React.FC = () => {
               transition={{ delay: 1.2 }}
               className="flex flex-wrap gap-6"
             >
+            <Link to="/contact">
               <Button
                 variant="primary"
                 size="xl"
@@ -202,6 +204,8 @@ const Hero: React.FC = () => {
               >
                 Get Your 1800 Number
               </Button>
+              </Link>
+              <Link to="/contact">
               <Button
                 variant="outline"
                 size="xl"
@@ -210,6 +214,7 @@ const Hero: React.FC = () => {
               >
                 View Features
               </Button>
+              </Link>
             </motion.div>
           </motion.div>
 

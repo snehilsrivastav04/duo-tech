@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { PlayCircle, PauseCircle, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface DemoFlow {
   id: string;
@@ -46,12 +47,14 @@ const Hero: React.FC<HeroProps> = ({ demoFlows, onShowContactForm }) => {
               >
                 View Pricing
               </button>
+              <Link to="/contact">
               <button 
                 onClick={onShowContactForm}
                 className="px-8 py-3 border border-gray-300 text-gray-700 text-sm font-light tracking-wide uppercase hover:border-blue-900 hover:text-blue-900 transition-all duration-300"
               >
                 Get Started
               </button>
+              </Link>
             </div>
           </div>
 
