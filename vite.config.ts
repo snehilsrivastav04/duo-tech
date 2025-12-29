@@ -20,11 +20,14 @@ export default defineConfig({
   server: {
     port: 3000,
     host: '0.0.0.0', // Allow external connections
-    historyApiFallback: true, // Enable SPA routing
   },
   preview: {
     port: 3000,
     host: '0.0.0.0',
-    historyApiFallback: true, // Enable SPA routing for preview
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
   },
 });

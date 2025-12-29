@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { motion } from 'framer-motion';
 import { Parallax } from 'react-scroll-parallax';
 import Container from '../../ui/Container';
-import Button from '../../ui/Button';
+import { Button } from '../../ui/Button';
 
 const HeroSection: FC = () => (
   <section id="hero" className="relative bg-gray-950 text-white min-h-screen flex items-center justify-center overflow-hidden">

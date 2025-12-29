@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { motion } from 'framer-motion';
 import Container from '../../ui/Container';
-import Button from '../../ui/Button';
+import { Button } from '../../ui/Button';
 import { Code, GitBranch, ArrowRight } from 'lucide-react';
 
 const DeveloperSection: FC = () => (
