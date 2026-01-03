@@ -1,71 +1,67 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { 
-  Menu, X, ChevronRight, Home, Users, Phone,
-  Rocket, Megaphone, Code, Box, Smartphone,
-  Briefcase, MessageSquare, Mail, Search, ArrowUpRight
+  Menu, X, User, ChevronDown, Home, Users, Phone,
+  Rocket, Megaphone, Code, Box, Award, Smartphone,
+  Briefcase, MessageSquare, Mail, Search
 } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const timeoutRef = useRef(null);
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const megaMenuRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 20);
+    };
+
+    const handleClickOutside = (e) => {
+      if (window.innerWidth >= 1024 && megaMenuRef.current && !megaMenuRef.current.contains(e.target)) {
+        setOpenDropdown(null);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    document.addEventListener('mousedown', handleClickOutside);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, []);
-
-  const handleMouseEnter = (menuName) => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    setActiveMenu(menuName);
-  };
-
-  const handleMouseLeave = () => {
-    timeoutRef.current = setTimeout(() => {
-      setActiveMenu(null);
-    }, 150);
-  };
 
   const servicesData = {
     'Services': [
       { 
-        category: 'Messaging',
+        category: 'Messaging Services',
         items: [
-          { name: 'Bulk SMS', href: '/services/bulk-sms', icon: <Smartphone className="w-4 h-4" /> },
+          { name: 'Bulk SMS Services', href: '/services/bulk-sms', icon: <Smartphone className="w-4 h-4" /> },
+          { name: 'Promotional SMS', href: '/services/bulk-sms', icon: <Megaphone className="w-4 h-4" /> },
           { name: 'Transactional SMS', href: '/services/transactional-sms', icon: <Briefcase className="w-4 h-4" /> },
-          { name: 'WhatsApp Bulk', href: '/services/whatsapp-bulk', icon: <MessageSquare className="w-4 h-4" /> },
-          { name: 'RCS', href: '/services/rcs', icon: <Rocket className="w-4 h-4" /> },
+          { name: 'WhatsApp Bulk Services', href: '/services/whatsapp-bulk', icon: <MessageSquare className="w-4 h-4" /> },
         ]
       },
       {
-        category: 'Voice',
+        category: 'Voice Solutions',
         items: [
           { name: 'IVR Solutions', href: '/services/ivr', icon: <Phone className="w-4 h-4" /> },
-          { name: 'Voice OBD', href: '/services/voice-obd', icon: <Phone className="w-4 h-4" /> },
+          { name: 'Voice OBD Services', href: '/services/VoiceOBDPage', icon: <Phone className="w-4 h-4" /> },
           { name: 'Virtual Numbers', href: '/services/virtual-number', icon: <Smartphone className="w-4 h-4" /> },
-          { name: 'Toll Free Number', href: '/services/toll-free-number', icon: <Phone className="w-4 h-4" /> },
-          { name: 'Hosted Call Center', href: '/products/hosted-call-center', icon: <Users className="w-4 h-4" /> },
+          { name: 'Toll Free Numbers', href: '/services/toll-free-number', icon: <Phone className="w-4 h-4" /> },
+          { name: 'Hosted Call Center', href: '/services/hosted-call-center', icon: <Phone className="w-4 h-4" /> },
         ]
       }
     ],
     'Digital Marketing': [
       {
-        category: 'Services',
+        category: 'Online Marketing',
         items: [
-            { name: 'Email Marketing', href: '/services/digital-marketing/email-marketing', icon: <Mail className="w-4 h-4" /> },
-            { name: 'Social Media', href: '/services/digital-marketing/social-media', icon: <Users className="w-4 h-4" /> },
-            { name: 'SEO', href: '/services/digital-marketing/seo', icon: <Search className="w-4 h-4" /> },
-            { name: 'Graphic Design', href: '/services/digital-marketing/graphic-design', icon: <Box className="w-4 h-4" /> },
-            { name: 'PPC', href: '/services/digital-marketing/ppc', icon: <Rocket className="w-4 h-4" /> },
+          { name: 'Email Marketing', href: '/digital/email-marketing', icon: <Mail className="w-4 h-4" /> },
+          { name: 'Social Media Marketing', href: '/digital/social-media', icon: <Megaphone className="w-4 h-4" /> },
+          { name: 'SEO Services', href: '/digital/seo', icon: <Search className="w-4 h-4" /> },
         ]
       }
     ],
@@ -73,18 +69,17 @@ const Navbar = () => {
       {
         category: 'Web & Mobile',
         items: [
-          { name: 'Web Development', href: '/services/development/web', icon: <Code className="w-4 h-4" /> },
-          { name: 'Android Apps', href: '/services/development/android', icon: <Smartphone className="w-4 h-4" /> },
-          { name: 'UI/UX Design', href: '/services/development/ui-ux', icon: <Box className="w-4 h-4" /> },
-          { name: 'API Development', href: '/services/development/api', icon: <Code className="w-4 h-4" /> },
+          { name: 'Web Development', href: '/development/web', icon: <Code className="w-4 h-4" /> },
+          { name: 'Android App Development', href: '/development/android', icon: <Smartphone className="w-4 h-4" /> },
+          { name: 'iOS App Development', href: '/development/android', icon: <Smartphone className="w-4 h-4" /> },
         ]
       }
     ],
     'Products': [
       {
-        category: 'Solutions',
+        category: 'Business Solutions',
         items: [
-          { name: 'WhatsApp API', href: '/products/whatsapp-api', icon: <MessageSquare className="w-4 h-4" /> },
+          { name: 'WhatsApp API Solutions', href: '/products/whatsapp-api', icon: <MessageSquare className="w-4 h-4" /> },
           { name: 'SMS Gateway', href: '/products/sms-gateway', icon: <Smartphone className="w-4 h-4" /> },
           { name: 'CRM Solutions', href: '/products/crm', icon: <Briefcase className="w-4 h-4" /> },
           { name: 'Source Codes', href: '/products/source-codes', icon: <Code className="w-4 h-4" /> },
@@ -94,233 +89,168 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { name: 'Home', href: '/', hasMenu: false },
-    { name: 'Services', hasMenu: true },
-    { name: 'Digital Marketing', href: '/services/digital-marketing', hasMenu: true },
-    { name: 'Development', hasMenu: true },
-    { name: 'Products', hasMenu: true },
-    { name: 'About', href: '/about', hasMenu: false },
-    { name: 'Contact', href: '/contact', hasMenu: false },
+    { name: 'Home', href: '/', icon: <Home className="w-4 h-4" />, megaMenu: false },
+    { name: 'Services', icon: <Rocket className="w-4 h-4" />, megaMenu: true },
+    { name: 'Digital Marketing', href: '/digital/digital-marketing', icon: <Megaphone className="w-4 h-4" />, megaMenu: false },
+    { name: 'Development', icon: <Code className="w-4 h-4" />, megaMenu: true },
+    { name: 'Products', icon: <Box className="w-4 h-4" />, megaMenu: true },
+    { name: 'About', href: '/about', icon: <Users className="w-4 h-4" />, megaMenu: false },
+    { name: 'Contact', href: '/contact', icon: <Phone className="w-4 h-4" />, megaMenu: false },
   ];
 
   return (
     <>
-      {/* Main Navbar */}
       <motion.header 
-        className={`fixed w-full top-0 z-50 transition-all duration-700 ${
+        className={`fixed w-full top-0 z-50 transition-all duration-500 ${
           scrolled 
-            ? 'bg-white/80 backdrop-blur-xl shadow-sm' 
+            ? 'bg-white/95 backdrop-blur-sm shadow-sm' 
             : 'bg-white'
         }`}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.6 }}
       >
-        <div className="border-b border-gray-100">
-          <div className="max-w-[1400px] mx-auto px-8 lg:px-12">
-            <nav className="flex items-center justify-between h-24">
-              {/* Logo */}
-              <a href="/" className="relative z-10">
-                <motion.div 
-                  className="flex items-center gap-3"
-                  whileHover={{ x: 2 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <div className="relative">
-                    <div className="w-11 h-11 bg-gradient-to-br from-blue-900 to-blue-700 rounded-xl flex items-center justify-center shadow-lg shadow-blue-900/20">
-                      <span className="text-white font-light text-2xl tracking-tight">D</span>
-                    </div>
-                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
-                  </div>
-                  <div>
-                    <span className="text-2xl font-extralight text-gray-900 tracking-tight block leading-none">
-                      DuoTechno
-                    </span>
-                    <span className="text-[10px] text-gray-400 tracking-widest uppercase">
-                      Innovation
-                    </span>
-                  </div>
-                </motion.div>
-              </a>
-
-              {/* Desktop Navigation */}
-              <div className="hidden lg:flex items-center gap-2">
-                {navLinks.map((link, index) => (
-                  <div 
-                    key={index} 
-                    className="relative"
-                    onMouseEnter={() => link.hasMenu && handleMouseEnter(link.name)}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    {link.hasMenu ? (
-                      <button
-                        onClick={() => window.location.href = link.href || '#'}
-                        className={`group relative px-5 py-2.5 text-[13px] font-light tracking-wide transition-colors duration-300 ${
-                          activeMenu === link.name ? 'text-blue-900' : 'text-gray-600 hover:text-gray-900'
-                        }`}
-                      >
-                        {link.name}
-                        <motion.div
-                          className="absolute bottom-0 left-1/2 w-0 h-px bg-blue-900"
-                          animate={{
-                            width: activeMenu === link.name ? '60%' : '0%',
-                            x: '-50%'
-                          }}
-                          transition={{ duration: 0.3 }}
-                        />
-                      </button>
-                    ) : (
-                      <a
-                        href={link.href}
-                        className="group relative px-5 py-2.5 text-[13px] font-light text-gray-600 hover:text-gray-900 tracking-wide transition-colors duration-300"
-                      >
-                        {link.name}
-                        <motion.div
-                          className="absolute bottom-0 left-1/2 w-0 h-px bg-blue-900 -translate-x-1/2 group-hover:w-[60%] transition-all duration-300"
-                        />
-                      </a>
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              {/* Right Actions */}
-              <div className="hidden lg:flex items-center gap-4">
-                <button 
-                  onClick={() => setIsSearchOpen(!isSearchOpen)}
-                  className="p-2.5 text-gray-500 hover:text-blue-900 transition-colors duration-300"
-                >
-                  <Search className="w-5 h-5" />
-                </button>
-                
-                <div className="w-px h-6 bg-gray-200" />
-                
-                <a 
-                  href="/login" 
-                  className="text-[13px] font-light text-gray-600 hover:text-blue-900 tracking-wide transition-colors duration-300"
-                >
-                  Sign In
-                </a>
-                
-                <a 
-                  href="/contact"
-                  className="group relative px-6 py-2.5 bg-blue-900 text-white text-[13px] font-light tracking-wide rounded-full overflow-hidden"
-                >
-                  <span className="relative z-10 flex items-center gap-2">
-                    Get Started
-                    <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
-                  </span>
-                  <motion.div
-                    className="absolute inset-0 bg-blue-800"
-                    initial={{ scale: 0, opacity: 0 }}
-                    whileHover={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.4 }}
-                  />
-                </a>
-              </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                className="lg:hidden p-2 text-gray-700"
-                onClick={() => setIsOpen(!isOpen)}
+        {/* Top border accent */}
+        <div className="h-0.5 bg-gradient-to-r from-transparent via-blue-600 to-transparent" />
+        
+        <div className="container mx-auto px-6">
+          <nav className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3">
+              <motion.div 
+                className="flex items-center"
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.3 }}
               >
-                {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </nav>
-          </div>
-        </div>
-
-        {/* Search Bar */}
-        <AnimatePresence>
-          {isSearchOpen && (
-            <motion.div
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="overflow-hidden border-b border-gray-100 bg-white"
-            >
-              <div className="max-w-[1400px] mx-auto px-8 lg:px-12 py-6">
-                <div className="relative max-w-2xl">
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <input
-                    type="text"
-                    placeholder="Search services, products..."
-                    className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-200 rounded-xl text-sm font-light focus:outline-none focus:border-blue-900 focus:bg-white transition-all duration-300"
-                    autoFocus
-                  />
+                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
+                  <span className="text-white font-light text-xl">D</span>
                 </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <span className="text-xl font-light text-gray-900 tracking-tight">
+                  DuoTechno
+                </span>
+              </motion.div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link, index) => (
+                <div key={index} className="relative">
+                  {link.megaMenu ? (
+                    <button
+                      className={`flex items-center gap-2 px-6 py-3 text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors duration-300 ${
+                        openDropdown === link.name ? 'text-blue-600' : ''
+                      }`}
+                      onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
+                      onMouseEnter={() => setOpenDropdown(link.name)}
+                    >
+                      {link.icon}
+                      <span className="tracking-wide">{link.name}</span>
+                      <ChevronDown className={`w-3 h-3 transition-transform duration-300 ${
+                        openDropdown === link.name ? 'rotate-180' : ''
+                      }`} />
+                    </button>
+                  ) : (
+                    <Link
+                      to={link.href}
+                      className="flex items-center gap-2 px-6 py-3 text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors duration-300"
+                    >
+                      {link.icon}
+                      <span className="tracking-wide">{link.name}</span>
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Right side actions */}
+            <div className="hidden lg:flex items-center gap-4">
+              <Link to="/login" className="px-6 py-2.5 text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors duration-300 tracking-wide">
+                Sign In
+              </Link>
+              <Link to="/contact" className="px-8 py-2.5 bg-blue-600 text-white text-sm font-normal rounded-lg hover:bg-blue-700 transition-all duration-300 tracking-wide shadow-sm hover:shadow-md">
+                Get Started
+              </Link>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              className="lg:hidden p-2 text-gray-700 hover:text-blue-600 transition-colors duration-300"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </nav>
+        </div>
 
         {/* Mega Menu */}
         <AnimatePresence>
-          {activeMenu && servicesData[activeMenu] && (
+          {openDropdown && servicesData[openDropdown] && (
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
+              ref={megaMenuRef}
+              initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute left-0 right-0 top-full bg-white border-b border-gray-100 shadow-xl"
-              onMouseEnter={() => handleMouseEnter(activeMenu)}
-              onMouseLeave={handleMouseLeave}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+              className="absolute left-0 right-0 top-full bg-white border-t border-gray-100 shadow-xl"
+              onMouseLeave={() => setOpenDropdown(null)}
             >
-              <div className="max-w-[1400px] mx-auto px-8 lg:px-12 py-12">
-                <div className="grid grid-cols-3 gap-12">
-                  {/* Services Grid */}
-                  {servicesData[activeMenu].map((category, idx) => (
+              <div className="container mx-auto px-6 py-12">
+                <div className="grid grid-cols-2 gap-16 max-w-6xl mx-auto">
+                  {servicesData[openDropdown].map((category, idx) => (
                     <div key={idx}>
-                      <div className="mb-6">
-                        <h3 className="text-[10px] tracking-[0.2em] text-blue-900 font-light uppercase mb-1">
-                          {category.category}
-                        </h3>
-                        <div className="w-12 h-px bg-blue-900/20" />
+                      {/* Category Header */}
+                      <div className="mb-8">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className="w-8 h-px bg-blue-600" />
+                          <h3 className="text-xs tracking-[0.15em] text-blue-600 font-normal uppercase">
+                            {category.category}
+                          </h3>
+                        </div>
                       </div>
 
-                      <div className="space-y-1">
+                      {/* Category Items */}
+                      <div className="space-y-2">
                         {category.items.map((item, itemIdx) => (
-                          <a
+                          <Link
                             key={itemIdx}
-                            href={item.href}
-                            className="group flex items-center gap-4 p-3 rounded-lg hover:bg-gray-50 transition-all duration-300"
+                            to={item.href}
+                            className="group w-full flex items-center gap-4 p-4 rounded-lg hover:bg-gray-50 transition-all duration-300"
                           >
-                            <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600 group-hover:bg-blue-900 group-hover:text-white transition-all duration-300">
-                              {item.icon}
-                            </div>
-                            <div className="flex-1">
-                              <div className="text-sm font-light text-gray-900 group-hover:text-blue-900 transition-colors duration-300 flex items-center gap-2">
-                                {item.name}
-                                <ChevronRight className="w-3 h-3 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                              </div>
-                            </div>
-                          </a>
+                            <motion.div
+                                whileHover={{ x: 4 }}
+                                transition={{ duration: 0.2 }}
+                                className="w-full flex items-center gap-4"
+                            >
+                                <div className="flex-shrink-0 w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                                    {item.icon}
+                                </div>
+                                <div className="flex-grow text-left">
+                                    <div className="text-base font-normal text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
+                                        {item.name}
+                                    </div>
+                                </div>
+                            </motion.div>
+                          </Link>
                         ))}
                       </div>
                     </div>
                   ))}
+                </div>
 
-                  {/* Featured CTA */}
-                  <div className="bg-gradient-to-br from-blue-50 to-gray-50 rounded-2xl p-8 flex flex-col justify-between">
+                {/* CTA Section */}
+                <div className="max-w-6xl mx-auto mt-12 pt-12 border-t border-gray-100">
+                  <div className="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-2xl p-8 flex items-center justify-between">
                     <div>
-                      <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-blue-900 mb-6 shadow-sm">
-                        <Phone className="w-6 h-6" />
-                      </div>
-                      <h3 className="text-lg font-light text-gray-900 mb-2">
-                        Need Guidance?
+                      <h3 className="text-xl font-normal text-gray-900 mb-2">
+                        Need help choosing?
                       </h3>
-                      <p className="text-sm text-gray-600 font-light leading-relaxed mb-6">
-                        Our specialists are here to help you choose the perfect solution for your business.
+                      <p className="text-gray-600 font-light">
+                        Our experts are ready to help you find the perfect solution.
                       </p>
                     </div>
-                    <a 
-                      href="/contact"
-                      className="inline-flex items-center gap-2 text-sm font-light text-blue-900 hover:gap-3 transition-all duration-300"
-                    >
-                      Talk to an Expert
-                      <ArrowUpRight className="w-4 h-4" />
-                    </a>
+                    <Link to="/contact" className="px-8 py-3 bg-blue-600 text-white text-sm font-normal rounded-lg hover:bg-blue-700 transition-all duration-300 shadow-lg shadow-blue-600/20">
+                      Contact Sales
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -333,135 +263,102 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 lg:hidden"
+            initial={{ opacity: 0, x: '100%' }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: '100%' }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 lg:hidden bg-white"
           >
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-black/20 backdrop-blur-sm"
-              onClick={() => setIsOpen(false)}
-            />
-            
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute right-0 top-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl"
-            >
-              <div className="h-full overflow-y-auto">
-                {/* Mobile Header */}
-                <div className="p-6 border-b border-gray-100 flex items-center justify-between">
-                  <span className="text-lg font-light text-gray-900">Menu</span>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-2 text-gray-500 hover:text-gray-900 transition-colors"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
-
-                {/* Mobile Nav */}
-                <div className="p-6 space-y-2">
-                  {navLinks.map((link, index) => (
-                    <div key={index}>
-                      {link.hasMenu ? (
-                        <div>
-                          <button
-                            onClick={() => {
-                              if (link.href) {
-                                window.location.href = link.href;
-                              } else {
-                                setActiveMenu(activeMenu === link.name ? null : link.name)
-                              }
-                            }}
-                            className={`w-full flex items-center justify-between p-4 rounded-xl text-left transition-all duration-300 ${
-                              activeMenu === link.name
-                                ? 'bg-blue-50 text-blue-900'
-                                : 'text-gray-700 hover:bg-gray-50'
-                            }`}
-                          >
-                            <span className="font-light">{link.name}</span>
-                            <ChevronRight className={`w-4 h-4 transition-transform duration-300 ${
-                              activeMenu === link.name ? 'rotate-90' : ''
-                            }`} />
-                          </button>
-
-                          <AnimatePresence>
-                            {activeMenu === link.name && servicesData[link.name] && (
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="overflow-hidden"
-                              >
-                                <div className="pl-4 pr-2 py-3 space-y-4">
-                                  {servicesData[link.name].map((category, catIdx) => (
-                                    <div key={catIdx}>
-                                      <div className="text-[10px] tracking-[0.2em] text-blue-900 font-light uppercase mb-2 pl-4">
-                                        {category.category}
-                                      </div>
-                                      <div className="space-y-1">
-                                        {category.items.map((item, itemIdx) => (
-                                          <a
-                                            key={itemIdx}
-                                            href={item.href}
-                                            onClick={() => setIsOpen(false)}
-                                            className="flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
-                                          >
-                                            <div className="w-8 h-8 bg-gray-100 rounded-lg flex items-center justify-center text-gray-600">
-                                              {item.icon}
-                                            </div>
-                                            <span className="text-sm font-light">{item.name}</span>
-                                          </a>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  ))}
-                                </div>
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
-                        </div>
-                      ) : (
-                        <a
-                          href={link.href}
-                          onClick={() => setIsOpen(false)}
-                          className="flex items-center p-4 rounded-xl text-gray-700 hover:bg-gray-50 transition-all duration-300"
+            <div className="h-full overflow-y-auto pt-24 pb-6 px-6">
+              <div className="space-y-2">
+                {navLinks.map((link, index) => (
+                  <div key={index}>
+                    {link.megaMenu ? (
+                      <div>
+                        <button
+                          onClick={() => setOpenDropdown(openDropdown === link.name ? null : link.name)}
+                          className={`w-full flex items-center justify-between p-4 rounded-lg text-left transition-all duration-300 ${
+                            openDropdown === link.name
+                              ? 'bg-blue-50 text-blue-600'
+                              : 'text-gray-700 hover:bg-gray-50'
+                          }`}
                         >
-                          <span className="font-light">{link.name}</span>
-                        </a>
-                      )}
-                    </div>
-                  ))}
-                </div>
+                          <div className="flex items-center gap-3">
+                            {link.icon}
+                            <span className="font-normal">{link.name}</span>
+                          </div>
+                          <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${
+                            openDropdown === link.name ? 'rotate-180' : ''
+                          }`} />
+                        </button>
 
-                {/* Mobile Actions */}
-                <div className="p-6 border-t border-gray-100 space-y-3">
-                  <a 
-                    href="/login" 
-                    onClick={() => setIsOpen(false)}
-                    className="block text-center px-6 py-3.5 text-sm font-light text-gray-700 border border-gray-200 rounded-xl hover:bg-gray-50 transition-all"
-                  >
-                    Sign In
-                  </a>
-                  <a 
-                    href="/contact" 
-                    onClick={() => setIsOpen(false)}
-                    className="block text-center px-6 py-3.5 bg-blue-900 text-white text-sm font-light rounded-xl hover:bg-blue-800 transition-all"
-                  >
-                    Get Started
-                  </a>
-                </div>
+                        <AnimatePresence>
+                          {openDropdown === link.name && servicesData[link.name] && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3 }}
+                              className="overflow-hidden"
+                            >
+                              <div className="pl-6 pr-4 py-4 space-y-6">
+                                {servicesData[link.name].map((category, catIdx) => (
+                                  <div key={catIdx}>
+                                    <div className="text-xs tracking-[0.15em] text-blue-600 font-normal uppercase mb-3">
+                                      {category.category}
+                                    </div>
+                                    <div className="space-y-2">
+                                      {category.items.map((item, itemIdx) => (
+                                        <Link
+                                          key={itemIdx}
+                                          to={item.href}
+                                          onClick={() => setIsOpen(false)} 
+                                          className="w-full flex items-center gap-3 p-3 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors duration-300"
+                                        >
+                                          <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center text-blue-600">
+                                            {item.icon}
+                                          </div>
+                                          <span className="text-sm font-normal">{item.name}</span>
+                                        </Link>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    ) : (
+                      <Link
+                        to={link.href}
+                        onClick={() => setIsOpen(false)}
+                        className="w-full flex items-center gap-3 p-4 rounded-lg text-gray-700 hover:bg-gray-50 transition-all duration-300"
+                      >
+                        {link.icon}
+                        <span className="font-normal">{link.name}</span>
+                      </Link>
+                    )}
+                  </div>
+                ))}
               </div>
-            </motion.div>
+
+              {/* Mobile Actions */}
+              <div className="mt-8 pt-8 border-t border-gray-100 space-y-3">
+                <Link to="/login" onClick={() => setIsOpen(false)} className="w-full text-center px-6 py-3 text-sm font-normal text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-300">
+                  Sign In
+                </Link>
+                <Link to="/contact" onClick={() => setIsOpen(false)} className="w-full text-center px-6 py-3 bg-blue-600 text-white text-sm font-normal rounded-lg hover:bg-blue-700 transition-all duration-300">
+                  Get Started
+                </Link>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Spacer for fixed header - REMOVED because MainLayout will handle spacing */}
+      {/* <div className="h-20" /> */}
     </>
   );
 };
