@@ -1143,52 +1143,7 @@ const AndroidDevelopmentPage: React.FC = () => {
           </Container>
         </section>
 
-        {/* Testimonials Section */}
-        <section className="py-32 bg-gradient-to-br from-blue-600 to-purple-600 relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute inset-0 bg-[url('/images/circuit-pattern.svg')] bg-[size:100px_100px]" />
-          </div>
-
-          <Container>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-4xl font-bold text-white mb-6">
-                Client <span className="text-cyan-300">Testimonials</span>
-              </h2>
-              <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-                Don't just take our word for it - hear from our satisfied clients
-              </p>
-            </motion.div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {pageData.testimonials.map((testimonial, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.2 }}
-                  className="bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 shadow-xl"
-                >
-                  <div className="flex mb-4">
-                    {[...Array(testimonial.rating)].map((_, j) => (
-                      <Star key={j} className="w-5 h-5 text-yellow-400" fill="currentColor" />
-                    ))}
-                  </div>
-                  <p className="text-xl text-white mb-6">"{testimonial.quote}"</p>
-                  <div className="text-blue-100">
-                    <p className="font-bold">{testimonial.author}</p>
-                    <p className="text-sm">{testimonial.role}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </Container>
-        </section>
+      
 
         {/* FAQ Section */}
         <section className="py-32 bg-white dark:bg-gray-900 relative overflow-hidden">

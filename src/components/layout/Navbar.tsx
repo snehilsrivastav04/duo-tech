@@ -49,9 +49,6 @@ const Navbar = () => {
         items: [
           { name: 'IVR Solutions', href: '/services/ivr', icon: <Phone className="w-4 h-4" /> },
           { name: 'Voice OBD Services', href: '/services/VoiceOBDPage', icon: <Phone className="w-4 h-4" /> },
-          { name: 'Virtual Numbers', href: '/services/virtual-number', icon: <Smartphone className="w-4 h-4" /> },
-          { name: 'Toll Free Numbers', href: '/services/toll-free-number', icon: <Phone className="w-4 h-4" /> },
-          { name: 'Hosted Call Center', href: '/services/hosted-call-center', icon: <Phone className="w-4 h-4" /> },
         ]
       }
     ],

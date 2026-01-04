@@ -1,114 +1,135 @@
-import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, MessageSquare } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, CheckCircle2, Globe, ShieldCheck, Zap } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import Container from '../ui/Container';
 import Button from '../ui/Button';
 
+const SERVICES = [
+  { id: '01', title: 'Global Carrier Network', desc: 'Direct routes to 200+ countries with 99.99% uptime.' },
+  { id: '02', title: 'Enterprise Security', desc: 'ISO 27001 certified with end-to-end data encryption.' },
+  { id: '03', title: 'Real-time Analytics', desc: 'Deep insights into delivery rates and user engagement.' },
+];
+
 const FinalCta = () => {
-  const { scrollYProgress } = useScroll();
-  const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.9]);
+  const [hoveredService, setHoveredService] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const handleContactClick = () => {
+    navigate('/contact');
+  };
 
   return (
-    <section className="py-32 bg-white dark:bg-gray-900">
+    <section className="py-32 bg-[#FFFFFF] dark:bg-[#0a0a0a] overflow-hidden">
       <Container>
-        <motion.div
-          style={{ scale, opacity }}
-          className="bg-white dark:bg-gray-800 rounded-2xl p-16 border border-gray-100 dark:border-gray-700 overflow-hidden relative text-center"
-        >
-          {/* Geometric Background Elements */}
-          <div className="absolute inset-0 overflow-hidden">
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-96 h-96 bg-blue-50 dark:bg-blue-900/10 rounded-full blur-3xl opacity-60" />
-            <div className="absolute bottom-0 right-1/4 w-64 h-64 bg-blue-50 dark:bg-blue-900/10 rounded-full blur-3xl opacity-40" />
-            
-            {/* Geometric Grid Pattern */}
-            <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(to_right,#000_1px,transparent_1px),linear-gradient(to_bottom,#000_1px,transparent_1px)] bg-[size:64px_64px]" />
-            
-            {/* Border Accents */}
-            <div className="absolute top-8 left-8 right-8 h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent" />
-            <div className="absolute bottom-8 left-8 right-8 h-px bg-gradient-to-r from-transparent via-gray-200 dark:via-gray-700 to-transparent" />
-          </div>
-
-          <div className="relative z-10 max-w-2xl mx-auto">
-            {/* Icon */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="w-20 h-20 mx-auto mb-8 rounded-2xl bg-blue-50 dark:bg-blue-900/30 border border-blue-100 dark:border-blue-800 flex items-center justify-center"
+        <div className="relative">
+          {/* Minimalist Header Section */}
+          <div className="max-w-4xl mx-auto text-center mb-24">
+            <motion.span 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="inline-block text-xs font-medium tracking-[0.2em] uppercase text-slate-400 mb-6"
             >
-              <MessageSquare className="w-8 h-8 text-blue-800 dark:text-blue-300" strokeWidth={1.5} />
-            </motion.div>
-
-            {/* Heading */}
-            <motion.h2
+              Ready to Begin
+            </motion.span>
+            
+            <motion.h2 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-4xl md:text-5xl font-light text-gray-900 dark:text-white mb-6 tracking-tight"
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-5xl md:text-7xl font-light tracking-tight text-slate-900 dark:text-white leading-[1.1]"
             >
-              Ready to Boost Your{' '}
-              <span className="text-blue-800 dark:text-blue-300 font-normal">Business</span>{' '}
-              with SMS?
+              Scale your reach with <br />
+              <span className="italic font-serif text-indigo-950 dark:text-indigo-300">precision.</span>
             </motion.h2>
-
-            {/* Description */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl text-gray-600 dark:text-gray-400 mb-12 max-w-lg mx-auto leading-relaxed font-light"
-            >
-              Start sending messages in minutes with our reliable SMS gateway platform.
-            </motion.p>
-            
-            {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-wrap justify-center gap-6"
-            >
-              <Button
-                variant="accent"
-                size="lg"
-                className="bg-blue-800 hover:bg-blue-900 text-white border-blue-800 hover:border-blue-900 px-12 transition-all duration-500"
-                icon={<ArrowRight className="w-5 h-5" />}
-              >
-                Start Free Trial
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-blue-800 dark:hover:border-blue-300 hover:text-blue-800 dark:hover:text-blue-300 px-12 transition-all duration-500"
-                icon={<MessageSquare className="w-5 h-5" />}
-              >
-                Contact Sales
-              </Button>
-            </motion.div>
-
-            {/* Supplemental Text */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-sm text-gray-500 dark:text-gray-500 mt-8 font-light tracking-wide"
-            >
-              No credit card required • 14-day free trial • Setup in minutes
-            </motion.p>
           </div>
 
-          {/* Corner Geometric Elements */}
-          <div className="absolute top-6 left-6 w-4 h-4 border-t border-l border-gray-300 dark:border-gray-600 rounded-tl-lg" />
-          <div className="absolute top-6 right-6 w-4 h-4 border-t border-r border-gray-300 dark:border-gray-600 rounded-tr-lg" />
-          <div className="absolute bottom-6 left-6 w-4 h-4 border-b border-l border-gray-300 dark:border-gray-600 rounded-bl-lg" />
-          <div className="absolute bottom-6 right-6 w-4 h-4 border-b border-r border-gray-300 dark:border-gray-600 rounded-br-lg" />
-        </motion.div>
+          <div className="grid lg:grid-cols-2 gap-20 items-start">
+            {/* Left: Linear Service List (Expand on Hover) */}
+            <div className="space-y-0 border-t border-slate-100 dark:border-slate-800">
+              {SERVICES.map((service) => (
+                <motion.div
+                  key={service.id}
+                  onMouseEnter={() => setHoveredService(service.id)}
+                  onMouseLeave={() => setHoveredService(null)}
+                  className="group relative py-8 border-b border-slate-100 dark:border-slate-800 cursor-pointer"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-8">
+                      <span className="text-xs font-mono text-slate-400">{service.id}</span>
+                      <h3 className="text-xl font-light text-slate-800 dark:text-slate-200 group-hover:translate-x-2 transition-transform duration-300">
+                        {service.title}
+                      </h3>
+                    </div>
+                    <ArrowUpRight className={`w-5 h-5 transition-all duration-300 ${hoveredService === service.id ? 'opacity-100' : 'opacity-0'}`} />
+                  </div>
+                  
+                  <AnimatePresence>
+                    {hoveredService === service.id && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="pt-4 pl-12 text-slate-500 dark:text-slate-400 max-w-sm leading-relaxed">
+                          {service.desc}
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Right: Sticky Showcase / Action Card */}
+            <div className="lg:sticky lg:top-32">
+              <div className="bg-slate-50 dark:bg-indigo-950/10 rounded-3xl p-12 relative overflow-hidden group">
+                {/* Subtle Geometric Background Pattern */}
+                <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" 
+                  style={{ backgroundImage: `radial-gradient(#1e1b4b 0.5px, transparent 0.5px)`, backgroundSize: '24px 24px' }} 
+                />
+                
+                <div className="relative z-10">
+                  <h4 className="text-2xl font-light text-slate-900 dark:text-white mb-8">
+                    Start your 14-day trial
+                  </h4>
+                  
+                  <div className="space-y-6 mb-12">
+                    {[
+                      { icon: <Zap className="w-4 h-4" />, text: "Instant API activation" },
+                      { icon: <Globe className="w-4 h-4" />, text: "Global compliance ready" },
+                      { icon: <ShieldCheck className="w-4 h-4" />, text: "No credit card required" }
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-center gap-4 text-slate-600 dark:text-slate-400">
+                        <div className="p-2 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
+                          {item.icon}
+                        </div>
+                        <span className="text-sm font-light">{item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col gap-4">
+                    <Button
+                      variant="primary"
+                      className="w-full bg-indigo-950 hover:bg-black text-white py-6 rounded-xl transition-all duration-300 shadow-xl shadow-indigo-900/10"
+                      onClick={handleContactClick}
+                    >
+                      Create Free Account
+                    </Button>
+                    <button 
+                      className="text-sm font-medium text-slate-500 hover:text-indigo-950 dark:hover:text-indigo-300 transition-colors py-2"
+                      onClick={handleContactClick}
+                    >
+                      Request a Custom Demo
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </Container>
     </section>
   );

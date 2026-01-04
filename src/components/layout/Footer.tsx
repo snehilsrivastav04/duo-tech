@@ -1,77 +1,200 @@
-import { FC } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Smartphone, Mail, MapPin, ArrowRight } from 'lucide-react';
+import { Facebook, Twitter, Linkedin, Instagram, Mail, ArrowRight, X } from 'lucide-react';
+import Container from '../ui/Container';
+import Button from '../ui/Button';
 
-const Footer: FC = () => {
+const Footer: React.FC = () => {
+  const currentYear = new Date().getFullYear();
+
+  const servicesDropdown = [
+    { name: 'Bulk SMS Services', path: '/services/bulk-sms' },
+    { name: 'Promotional SMS', path: '/services/promotional-sms' },
+    { name: 'Transactional SMS', path: '/services/transactional-sms' },
+    { name: 'WhatsApp Bulk Services', path: '/services/whatsapp-bulk' },
+    { name: 'IVR Solutions', path: '/services/ivr' },
+    { name: 'Voice OBD Services', path: '/services/VoiceOBDPage' },
+    { name: 'Virtual Numbers', path: '/services/virtual-number' },
+    { name: 'Toll Free Numbers', path: '/services/toll-free-number' },
+    { name: 'Hosted Call Center', path: '/services/hosted-call-center' },
+    { name: 'RCS Messaging', path: '/services/rcs' },
+  ];
+
+  const digitalServices = [
+    { name: 'Email Marketing', path: '/digital/email-marketing' },
+    { name: 'Social Media Marketing', path: '/digital/social-media' },
+    { name: 'SEO Services', path: '/digital/seo' },
+    { name: 'PPC Advertising', path: '/digital/ppc' },
+    { name: 'Graphic Design', path: '/digital/graphic-design' },
+  ];
+
+  const developmentServices = [
+    { name: 'Web Development', path: '/development/web' },
+    { name: 'Android App Development', path: '/development/android' },
+    { name: 'UI/UX Design', path: '/development/ui-ux' },
+    { name: 'API Integration', path: '/development/api' },
+  ];
+
+  const products = [
+    { name: 'WhatsApp API Solutions', path: '/products/whatsapp-api' },
+    { name: 'SMS Gateway', path: '/products/sms-gateway' },
+    { name: 'CRM Solutions', path: '/products/crm' },
+    { name: 'Source Codes', path: '/products/source-codes' },
+  ];
+
   return (
-    <footer className="bg-gray-900 text-white">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* About Duo Tech */}
-          <div className="md:col-span-2 lg:col-span-1">
-            <h3 className="text-2xl font-bold tracking-tight mb-4">Duo Tech</h3>
-            <p className="font-light text-gray-400 leading-relaxed">
-              Your all-in-one partner for communication, marketing, and development solutions designed to accelerate business growth.
+    <footer className="bg-gray-50 dark:bg-dark-800 pt-16 pb-8">
+      <Container>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          {/* Company Info */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold text-primary-600 dark:text-primary-400">DuoTech Solutions</h3>
+            <p className="text-gray-600 dark:text-gray-300">
+              Your all-in-one partner for digital communication & technology solutions.
             </p>
+            <div className="flex space-x-4">
+              <a href="www.facebook.com/theduotechsolutions" aria-label="Facebook" className="text-gray-500 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400">
+                <Facebook size={20} />
+              </a>
+              <a href="www.x.com/duotechsolution" aria-label="Twitter" className="text-gray-500 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400">
+                <X size={20} />
+              </a>
+              <a href="https://www.linkedin.com/company/duotech-solutions/" aria-label="LinkedIn" className="text-gray-500 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400">
+                <Linkedin size={20} />
+              </a>
+              <a href="www.instagram.com/theduotechsolutions" aria-label="Instagram" className="text-gray-500 hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400">
+                <Instagram size={20} />
+              </a>
+            </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Main Navigation */}
           <div>
-            <h4 className="text-lg font-normal mb-6 tracking-wide">Quick Links</h4>
-            <ul className="space-y-3 font-light">
-              <li><Link to="/about" className="text-gray-400 hover:text-white transition-colors">About Us</Link></li>
-              <li><Link to="/services" className="text-gray-400 hover:text-white transition-colors">Services</Link></li>
-              <li><Link to="/products" className="text-gray-400 hover:text-white transition-colors">Products</Link></li>
-              <li><Link to="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</Link></li>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Navigation</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  Contact
+                </Link>
+              </li>
+              <li>
+                <Link to="/login" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  Sign In
+                </Link>
+              </li>
+              <li>
+                <Link to="/client" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  Dashboard
+                </Link>
+              </li>
+              <li>
+                <Link to="/client-side" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  Client Side
+                </Link>
+              </li>
+              <li>
+                <Link to="/sms-pricing" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  SMS Pricing
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms-and-conditions" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  Terms & Conditions
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Contact Info */}
+          {/* Services Dropdown */}
           <div>
-            <h4 className="text-lg font-normal mb-6 tracking-wide">Contact Us</h4>
-            <ul className="space-y-4 font-light">
-              <li className="flex items-start gap-3">
-                <Smartphone size={18} className="text-gray-400 mt-1 flex-shrink-0" />
-                <span className="text-gray-400">+91 12345 67890 (WhatsApp Available)</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Mail size={18} className="text-gray-400 mt-1 flex-shrink-0" />
-                <a href="mailto:support@duotech.com" className="text-gray-400 hover:text-white transition-colors">support@duotech.com</a>
-              </li>
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="text-gray-400 mt-1 flex-shrink-0" />
-                <span className="text-gray-400">123 Tech Park, Innovation Hub, Bangalore, India</span>
-              </li>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Services</h3>
+            <ul className="space-y-2">
+              {servicesDropdown.map(item => (
+                <li key={item.path}>
+                  <Link to={item.path} className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Newsletter/Lead Capture */}
+          {/* Digital Marketing Dropdown */}
           <div>
-            <h4 className="text-lg font-normal mb-6 tracking-wide">Stay Updated</h4>
-            <p className="font-light text-gray-400 mb-4">Get the latest insights on business growth directly in your inbox.</p>
-            <form className="flex items-center">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="w-full py-3 px-4 bg-gray-800 border-gray-700 text-white rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
-              />
-              <button type="submit" className="bg-blue-800 hover:bg-blue-700 py-3 px-4 rounded-r-md transition-colors">
-                <ArrowRight size={20} />
-              </button>
-            </form>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Digital Marketing</h3>
+            <ul className="space-y-2">
+              {digitalServices.map(item => (
+                <li key={item.path}>
+                  <Link to={item.path} className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Development & Products Dropdown */}
+          <div>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Development</h3>
+            <ul className="space-y-2 mb-4">
+              {developmentServices.map(item => (
+                <li key={item.path}>
+                  <Link to={item.path} className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Products</h3>
+            <ul className="space-y-2">
+              {products.map(item => (
+                <li key={item.path}>
+                  <Link to={item.path} className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-16 pt-8 border-t border-gray-800 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm font-light text-gray-500">
-            &copy; {new Date().getFullYear()} Duo Tech. All Rights Reserved.
+        {/* Newsletter */}
+        <div>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Stay Updated</h3>
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
+            Subscribe to our newsletter for the latest updates.
           </p>
-          <div className="flex items-center space-x-6 mt-4 sm:mt-0">
-            <Link to="/privacy-policy" className="text-sm font-light text-gray-500 hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="/terms-of-service" className="text-sm font-light text-gray-500 hover:text-white transition-colors">Terms of Service</Link>
-          </div>
+          <form className="flex">
+            <input
+              type="email"
+              placeholder="Your email"
+              className="flex-1 px-4 py-2 rounded-l-lg border border-gray-300 dark:border-dark-600 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:bg-dark-700 dark:text-white"
+              required
+            />
+            <Button
+              type="submit"
+              variant="primary"
+              className="rounded-l-none"
+              aria-label="Subscribe"
+            >
+              <ArrowRight size={18} />
+            </Button>
+          </form>
         </div>
+      </Container>
+
+      <div className="border-t border-gray-200 dark:border-dark-600 mt-12 pt-8 text-center text-gray-500 dark:text-gray-400">
+        <p>&copy; {currentYear} DuoTech Solutions. All rights reserved.</p>
       </div>
     </footer>
   );

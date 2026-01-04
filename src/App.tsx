@@ -11,8 +11,6 @@ import AboutPage from './pages/AboutPage';
 
 import IvrServicesPage from './pages/ivr-services';
 import SmsServicesPage from './pages/sms-services';
-import VirtualNumberPage from './pages/virtual-number';
-import TollFreeNumberNumberPage from './pages/toll-free-number';
 import WhatsappbulkPage from './pages/whatsapp-bulk';
 import VoiceobdPage from './pages/VoiceOBDPage';
 import RcsPage from './pages/rcs';
@@ -28,7 +26,6 @@ import WebDevHomePage from './pages/web';
 import AndroidDevelopmentPage from './pages/android';
 
 import WhatsAppAPIPage from './pages/whatsapp-api';
-import SMSGatewayPage from './pages/sms-gateaway';
 import CRMPage from './pages/crm';
 
 import ContactPage from './pages/ContactPage';
@@ -45,12 +42,10 @@ import UsersTable from './components/admin/users/UsersTable';
 import ProductsTable from './components/admin/products/ProductsTable';
 import ServicesTable from './components/admin/services/ServicesTable';
 import SettingsForm from './components/admin/settings/SettingsForm';
-import ClientSidePage from './pages/ClientSidePage';
 import TermsandConditions from './pages/DuoTechTermsPage';
 
 import SmsPricing from './pages/pricing';
 
-import HostedCallCenter from './pages/hostedcallcentre';
 import PrivacyPolicyPage from './pages/privacy-policy';
 import NotFoundPage from './pages/NotFoundPage';
 import Realestate from './pages/realestate';
@@ -83,8 +78,6 @@ function App() {
         <Route path="/services/ivr" element={<IvrServicesPage />} />
         <Route path="/services/bulk-sms" element={<SmsServicesPage />} />
         <Route path="/services/transactional-sms" element={<SmsServicesPage />} />
-        <Route path="/services/virtual-number" element={<VirtualNumberPage />} />
-        <Route path="/services/toll-free-number" element={<TollFreeNumberNumberPage />} />
         <Route path="/services/whatsapp-bulk" element={<WhatsappbulkPage />} />
         <Route path="/services/VoiceOBDPage" element={<VoiceobdPage />} />
         <Route path="/services/rcs" element={<RcsPage />} />
@@ -104,7 +97,6 @@ function App() {
 
 
         <Route path="/products/whatsapp-api" element={<WhatsAppAPIPage />} />
-        <Route path="/products/sms-gateway" element={<SMSGatewayPage />} />
         <Route path="/products/source-codes" element={<ProductsPage />} />       {/* Replace with correct component */}
         <Route path="/products/crm" element={<CRMPage />} />
 
@@ -114,10 +106,8 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/client-side" element={<ClientSidePage />} />
         <Route path="/terms-and-conditions" element={<TermsandConditions />} />
         <Route path="/sms-pricing" element={<SmsPricing />} />
-        <Route path="/services/hosted-call-center" element={<HostedCallCenter />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/realestate" element={<Realestate />} />
 

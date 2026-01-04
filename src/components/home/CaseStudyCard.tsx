@@ -1,45 +1,41 @@
 
-import React from 'react';
 import { motion } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 interface CaseStudy {
-  title: string;
-  challenge: string;
-  solution: string;
-  results: string;
-  metrics: string[];
-  logo: string;
+    title: string;
+    challenge: string;
+    solution: string;
+    results: string;
+    metrics: string[];
+    logo: string;
 }
 
-interface CaseStudyCardProps {
-  caseStudy: CaseStudy;
-  index: number;
+const CaseStudyCard: React.FC<{ caseStudy: CaseStudy, index: number }> = ({ caseStudy, index }) => {
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }}
+            className="bg-white dark:bg-blue-900/50 rounded-xl p-8 border border-gray-200 dark:border-blue-800 shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-2"
+        >
+            <img src={caseStudy.logo} alt={caseStudy.title} className="h-10 mb-6" />
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{caseStudy.title}</h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">{caseStudy.challenge}</p>
+            <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-2">Solution</h4>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">{caseStudy.solution}</p>
+            <h4 className="text-md font-semibold text-gray-900 dark:text-white mb-2">Results</h4>
+            <ul className="space-y-2">
+                {caseStudy.metrics.map((metric, i) => (
+                <li key={i} className="flex items-start">
+                    <Check className="w-5 h-5 text-green-500 mt-0.5 mr-2 flex-shrink-0" />
+                    <span className="text-gray-700 dark:text-gray-300">{metric}</span>
+                </li>
+                ))}
+            </ul>
+        </motion.div>
+    )
 }
-
-const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ caseStudy, index }) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
-    >
-      <div className="p-6">
-        <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{caseStudy.title}</h3>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">{caseStudy.challenge}</p>
-        <p className="text-gray-600 dark:text-gray-300 mb-4">{caseStudy.solution}</p>
-        <p className="text-gray-600 dark:text-gray-300 font-semibold mb-4">{caseStudy.results}</p>
-        <div className="flex flex-wrap gap-2">
-          {caseStudy.metrics.map((metric, i) => (
-            <span key={i} className="bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800">
-              {metric}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
-};
 
 export default CaseStudyCard;

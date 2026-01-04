@@ -18,7 +18,7 @@ export const services: Service[] = [
   {
     id: '3',
     title: 'Voice Services',
-    description: 'Connect through IVR, OBD (Outbound Dialing), Inbound Services, and Virtual Numbers for seamless voice communication.',
+    description: 'Connect through IVR, OBD (Outbound Dialing), and Inbound Services for seamless voice communication.',
     icon: 'phone',
     category: 'communication'
   },
