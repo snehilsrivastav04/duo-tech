@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { MessageSquare, X } from 'lucide-react';
 
@@ -7,7 +6,7 @@ interface ChatbotButtonProps {
   isOpen: boolean;
 }
 
-const ChatbotButton: React.FC<ChatbotButtonProps> = ({ onClick, isOpen }) => {
+const ChatbotButton = ({ onClick, isOpen }: ChatbotButtonProps) => {
   return (
     <motion.button
       onClick={onClick}

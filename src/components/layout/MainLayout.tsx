@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
@@ -9,7 +8,7 @@ interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+const MainLayout = ({ children }: MainLayoutProps) => {
   // Function to handle WhatsApp click
   const handleWhatsAppClick = () => {
     const phoneNumber = "918800722190"; // Your WhatsApp number (no + or spaces)
