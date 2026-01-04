@@ -1,9 +1,10 @@
-
-export { default as ProgressBar } from './ProgressBar';
 export { default as Hero } from './Hero';
-export { default as PricingCalculator } from './PricingCalculator';
-export { default as FeatureExplorer } from './FeatureExplorer';
-export { default as UseCases } from './UseCases';
+export { default as Stats } from './Stats';
 export { default as WhyChooseUs } from './WhyChooseUs';
+export { default as Features } from './Features';
+export { default as AdvancedFeatures } from './AdvancedFeatures';
+export { default as UseCases } from './UseCases';
+export { default as CaseStudies } from './CaseStudies';
+export { default as Flowchart } from './Flowchart';
+export { default as Testimonials } from './Testimonials';
 export { default as CTA } from './CTA';
-export { default as ContactForm } from './ContactForm';

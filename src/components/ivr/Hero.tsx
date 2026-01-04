@@ -1,110 +1,144 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, PhoneCall, Headphones, Mic2, Sparkles, Send } from 'lucide-react';
 
-import React, { useState } from 'react';
-import { PlayCircle, PauseCircle, ChevronRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+/**
+ * Modern minimalist IVR Hero component
+ * Design Philosophy: 
+ * - Architectural Depth: Utilizing the established line grid system
+ * - Technical Narrative: Combining high-end telephony imagery with engineering-focused overlays
+ * - High Contrast: Deep slate backgrounds with electric cyan highlights
+ */
 
-interface DemoFlow {
-  id: string;
-  label: string;
-  text: string;
-}
+const ivrData = {
+  hero: {
+    title: 'Intelligent Voice Response Systems',
+    subtitle: 'Powerful, scalable, and customizable IVR architectures engineered to enhance customer experience and operational efficiency.',
+    cta: 'Get Started with IVR',
+    demo: 'Schedule Demo',
+    image: 'https://images.unsplash.com/photo-1516387933901-8266440cda54?q=80&w=2000&auto=format&fit=crop',
+  },
+};
 
-interface HeroProps {
-  demoFlows: DemoFlow[];
-  onShowContactForm: () => void;
-}
-
-const Hero: React.FC<HeroProps> = ({ demoFlows, onShowContactForm }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [activeDemo, setActiveDemo] = useState('greeting');
-
+const Hero = () => {
   return (
-    <section id="hero" className="relative overflow-hidden border-b border-gray-100 bg-gradient-to-br from-white to-blue-50">
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `repeating-linear-gradient(0deg, #1e3a8a 0px, #1e3a8a 1px, transparent 1px, transparent 40px),
-                           repeating-linear-gradient(90deg, #1e3a8a 0px, #1e3a8a 1px, transparent 1px, transparent 40px)`
-        }} />
-      </div>
+    <section className="relative min-h-screen flex items-center bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 overflow-hidden pt-20">
       
-      <div className="max-w-7xl mx-auto px-8 py-20 relative">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <div className="inline-block px-4 py-1.5 bg-blue-100 rounded-full">
-              <span className="text-xs font-light tracking-widest text-blue-900 uppercase">Complete IVR Solutions</span>
-            </div>
-            <h1 className="text-6xl font-light text-gray-900 leading-tight tracking-tight">
-              Everything You Need for
-              <span className="block text-blue-900 font-normal mt-2">Interactive Voice Response</span>
-            </h1>
-            <p className="text-lg font-light text-gray-600 leading-relaxed">
-              Comprehensive IVR solutions with unlimited menu levels, advanced features, and pay-only-for-agent-connections pricing starting at just ₹1 per minute.
-            </p>
-            <div className="flex gap-4 pt-4">
-              <button 
-                onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
-                className="px-8 py-3 bg-blue-900 text-white text-sm font-light tracking-wide uppercase hover:bg-blue-800 transition-all duration-300 shadow-lg"
-              >
-                View Pricing
-              </button>
-              <Link to="/contact">
-              <button 
-                onClick={onShowContactForm}
-                className="px-8 py-3 border border-gray-300 text-gray-700 text-sm font-light tracking-wide uppercase hover:border-blue-900 hover:text-blue-900 transition-all duration-300"
-              >
-                Get Started
-              </button>
-              </Link>
-            </div>
+      {/* Structural Background Lines */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.05]">
+        <div className="absolute left-1/4 top-0 bottom-0 w-[1px] bg-slate-900 dark:bg-white" />
+        <div className="absolute left-3/4 top-0 bottom-0 w-[1px] bg-slate-900 dark:bg-white" />
+        <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-slate-900 dark:bg-white" />
+      </div>
+
+      {/* Background Image with Gradient Overlay */}
+      <div className="absolute inset-0 z-0">
+        <img 
+          src={ivrData.hero.image} 
+          alt="IVR Technology"
+          className="w-full h-full object-cover opacity-30 dark:opacity-20 grayscale"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-transparent dark:from-[#020617] dark:via-[#020617]/90 dark:to-transparent" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          
+          {/* Left: Content */}
+          <div className="lg:col-span-8">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-8 h-[2px] bg-cyan-500" />
+                <span className="text-[11px] uppercase tracking-[0.3em] font-semibold text-cyan-600 dark:text-cyan-400">
+                  Enterprise-Grade Solutions
+                </span>
+              </div>
+              
+              <h1 className="text-5xl md:text-8xl font-light tracking-tighter text-slate-900 dark:text-white leading-[0.95] mb-8">
+                Architecting <br />
+                <span className="italic font-normal text-slate-400 dark:text-slate-700 text-4xl md:text-7xl">Conversational Flow.</span>
+              </h1>
+              
+              <p className="text-xl text-slate-500 dark:text-slate-400 font-light leading-relaxed max-w-2xl mb-12 border-l border-slate-200 dark:border-slate-800 pl-8">
+                {ivrData.hero.subtitle}
+              </p>
+
+              <div className="flex flex-wrap gap-4">
+                <a 
+                  href="/contact"
+                  className="group px-10 py-5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-full text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-cyan-900/20"
+                >
+                  {ivrData.hero.cta}
+                  <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+                <a 
+                  href="/contact"
+                  className="group px-10 py-5 border border-slate-200 dark:border-slate-800 hover:border-slate-400 dark:hover:border-slate-600 text-slate-600 dark:text-slate-300 rounded-full text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300"
+                >
+                  {ivrData.hero.demo}
+                  <Headphones size={18} />
+                </a>
+                {/* Secondary Direct Contact Button */}
+                <a 
+                  href="/contact"
+                  className="group px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300"
+                >
+                  Contact Us
+                  <Send size={16} className="group-hover:-rotate-12 transition-transform" />
+                </a>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Interactive IVR Demo Preview */}
-          <div className="bg-white rounded-lg shadow-xl p-8 border border-gray-100">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-xl font-light text-gray-900">Live IVR Flow Demo</h3>
-              <button 
-                onClick={() => setIsPlaying(!isPlaying)}
-                className="text-blue-900 hover:scale-110 transition-transform duration-300"
-              >
-                {isPlaying ? <PauseCircle size={32} /> : <PlayCircle size={32} />}
-              </button>
-            </div>
-            
-            <div className="space-y-4">
-              {demoFlows.map((flow, idx) => (
-                <button
-                  key={flow.id}
-                  onClick={() => setActiveDemo(flow.id)}
-                  className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-300 ${
-                    activeDemo === flow.id
-                      ? 'border-blue-900 bg-blue-50'
-                      : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                  }`}
+          {/* Right: Technical Features / Stats */}
+          <div className="lg:col-span-4 hidden lg:block">
+            <div className="space-y-6">
+              {[
+                { icon: <PhoneCall size={18} />, label: "99.99% Uptime SLA", sub: "Redundant node routing" },
+                { icon: <Mic2 size={18} />, label: "Natural Language Processing", sub: "Next-gen voice recognition" },
+                { icon: <Sparkles size={18} />, label: "AI Auto-Response", sub: "Automated intent detection" }
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.4 + (i * 0.1) }}
+                  className="p-6 bg-slate-50 dark:bg-white/[0.02] border border-slate-100 dark:border-slate-800/50 rounded-2xl backdrop-blur-sm group hover:border-cyan-500/30 transition-colors"
                 >
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-light ${
-                      activeDemo === flow.id ? 'bg-blue-900 text-white' : 'bg-gray-200 text-gray-600'
-                    }`}>
-                      {idx + 1}
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="text-cyan-600 dark:text-cyan-400 group-hover:scale-110 transition-transform">
+                      {stat.icon}
                     </div>
-                    <div className="flex-1">
-                      <div className="font-light text-gray-900">{flow.label}</div>
-                      {activeDemo === flow.id && (
-                        <div className="text-sm font-light text-gray-600 mt-2">
-                          {flow.text}
-                        </div>
-                      )}
-                    </div>
-                    {activeDemo === flow.id && (
-                      <ChevronRight className="text-blue-900" size={20} />
-                    )}
+                    <span className="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white">{stat.label}</span>
                   </div>
-                </button>
+                  <p className="text-xs text-slate-500 dark:text-slate-500 font-light">{stat.sub}</p>
+                </motion.div>
               ))}
             </div>
+
+            <div className="mt-12 pt-8 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span className="text-[10px] font-mono text-slate-400">(CORE_ENGINE_V2.0)</span>
+              <div className="flex gap-2">
+                 <div className="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse" />
+                 <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Live Infrastructure</span>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
+
+      {/* Vertical Title Decoration */}
+      <div className="absolute right-12 bottom-12 hidden xl:block">
+        <span className="text-[10px] font-bold uppercase tracking-[1em] text-slate-300 dark:text-slate-800 [writing-mode:vertical-lr]">
+          TELEPHONY • ARCHITECTURE
+        </span>
+      </div>
+
     </section>
   );
 };

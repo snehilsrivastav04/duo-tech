@@ -36,7 +36,6 @@ const Footer: React.FC = () => {
   ];
 
   const products = [
-    { name: 'WhatsApp API Solutions', path: '/products/whatsapp-api' },
     { name: 'SMS Gateway', path: '/products/sms-gateway' },
     { name: 'CRM Solutions', path: '/products/crm' },
     { name: 'Source Codes', path: '/products/source-codes' },

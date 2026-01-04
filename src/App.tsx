@@ -25,7 +25,6 @@ import DigitalMarketingPage from './pages/DigitalMarketingPage';
 import WebDevHomePage from './pages/web';
 import AndroidDevelopmentPage from './pages/android';
 
-import WhatsAppAPIPage from './pages/whatsapp-api';
 import CRMPage from './pages/crm';
 
 import ContactPage from './pages/ContactPage';
@@ -96,7 +95,6 @@ function App() {
         <Route path="/development/api" element={<AndroidDevelopmentPage />} />   {/* Replace with correct component */}
 
 
-        <Route path="/products/whatsapp-api" element={<WhatsAppAPIPage />} />
         <Route path="/products/source-codes" element={<ProductsPage />} />       {/* Replace with correct component */}
         <Route path="/products/crm" element={<CRMPage />} />
 

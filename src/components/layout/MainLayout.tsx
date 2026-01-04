@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { FaWhatsapp } from "react-icons/fa"; // Official WhatsApp icon
 import Chatbot from "../chatbot/Chatbot";
+import ConsentBanner from "./ConsentBanner";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -53,6 +54,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
       <Chatbot />
 
       <Footer />
+      <ConsentBanner />
     </div>
   );
 };

@@ -1,76 +1,139 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, MessageSquare } from 'lucide-react';
-import Container from '../ui/Container';
-import Button from '../ui/Button';
-import { WhatsAppMockup } from './WhatsAppMockup';
+import { ArrowRight, MessageSquare, ShieldCheck, Zap, MessageCircle } from 'lucide-react';
+
+/**
+ * Modern minimalist WhatsApp CTA component
+ * Design Philosophy: 
+ * - Brand Integration: Utilizing WhatsApp's #25D366 within a technical slate framework
+ * - Structural Depth: Asymmetric grid with a focus on conversational engineering
+ * - Conversational UI: Sophisticated messaging-themed visual elements
+ */
 
 export const CTA = () => {
   return (
-    <section className="py-24 bg-gradient-to-r from-green-600 to-green-700 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('/images/whatsapp-pattern.png')] opacity-10" />
-      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/20 to-transparent"></div>
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/20 to-transparent"></div>
+    <section className="relative py-32 bg-white dark:bg-[#020617] text-slate-900 dark:text-slate-100 overflow-hidden">
       
-      <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Ready to transform your customer communication?
-            </h2>
-            <p className="text-xl text-green-100 mb-8">
-              Join thousands of businesses using our WhatsApp solutions to boost engagement and drive growth.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <Button
-                variant="accent"
-                size="lg"
-                className="bg-green text-green-700 hover:bg-green-50"
-                icon={<ArrowRight className="w-5 h-5" />}
-              >
-                Get Started Free
-              </Button>
-              <Button
-                variant="ghost"
-                size="lg"
-                className="text-white border-white hover:bg-white/10"
-                icon={<MessageSquare className="w-5 h-5" />}
-              >
-                Schedule Demo
-              </Button>
-            </div>
-          </div>
+      {/* Structural Background Lines */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.05]">
+        <div className="absolute left-1/4 top-0 bottom-0 w-[1px] bg-slate-900 dark:bg-white" />
+        <div className="absolute left-3/4 top-0 bottom-0 w-[1px] bg-slate-900 dark:bg-white" />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        
+        <div className="relative bg-slate-900 dark:bg-[#071a14] rounded-[3rem] overflow-hidden border border-slate-800/50 shadow-2xl">
           
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            <div className="absolute -top-8 -left-8 w-32 h-32 bg-white/20 rounded-full blur-xl"></div>
-            <div className="absolute -bottom-8 -right-8 w-24 h-24 bg-white/10 rounded-full blur-xl"></div>
+          {/* WhatsApp Brand Glow */}
+          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#25D366]/10 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#25D366]/5 rounded-full blur-[120px] pointer-events-none" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12">
             
-            <WhatsAppMockup 
-              title="Get Started Today"
-              messages={[
-                {
-                  id: 1,
-                  text: "Welcome! Let's set up your WhatsApp Business account",
-                  sender: "bot",
-                  time: "Now",
-                  buttons: ["Create Account", "Schedule Demo"]
-                },
-                {
-                  id: 2,
-                  text: "You'll be able to send messages to customers in minutes!",
-                  sender: "bot",
-                  time: "Now"
-                }
-              ]}
-            />
-          </motion.div>
+            {/* Left Column: Content */}
+            <div className="lg:col-span-7 p-8 md:p-20 border-b lg:border-b-0 lg:border-r border-slate-800/50">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8 }}
+              >
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-8 h-[2px] bg-[#25D366]" />
+                  <span className="text-[11px] uppercase tracking-[0.3em] font-semibold text-[#25D366]">
+                    Conversational Commerce
+                  </span>
+                </div>
+
+                <h2 className="text-5xl md:text-7xl font-light tracking-tighter text-white leading-[0.95] mb-8">
+                  Engineer your <br />
+                  <span className="italic font-normal text-slate-500 text-4xl md:text-6xl">customer dialogue.</span>
+                </h2>
+
+                <p className="text-xl text-slate-400 font-light leading-relaxed max-w-lg mb-12">
+                  Transform how your business communicates using our high-performance WhatsApp Business solutions. 
+                </p>
+
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <a 
+                    href="/contact"
+                    className="group px-10 py-5 bg-[#25D366] hover:bg-[#20bd5a] text-slate-950 rounded-full text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300 shadow-lg shadow-green-900/20"
+                  >
+                    Get Started Free
+                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                  </a>
+                  <a 
+                    href="/contact"
+                    className="group px-10 py-5 border border-slate-700 hover:border-slate-500 text-slate-300 rounded-full text-sm font-bold uppercase tracking-widest flex items-center justify-center gap-3 transition-all duration-300"
+                  >
+                    Schedule Demo
+                    <MessageSquare size={18} />
+                  </a>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Right Column: Technical Stats & Mockup Space */}
+            <div className="lg:col-span-5 p-12 md:p-20 bg-slate-950/40 flex flex-col justify-center">
+              <div className="space-y-12">
+                <div className="group">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="p-2 bg-[#25D366]/10 rounded-lg text-[#25D366]">
+                      <Zap size={20} />
+                    </div>
+                    <span className="text-[10px] font-mono text-[#25D366]/50 uppercase tracking-widest">Performance Metrics</span>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-end">
+                      <span className="text-sm font-light text-slate-400">Delivery Rate</span>
+                      <span className="text-xl text-white font-mono">99.9%</span>
+                    </div>
+                    <div className="w-full h-[1px] bg-slate-800">
+                      <motion.div 
+                        initial={{ width: 0 }}
+                        whileInView={{ width: '99.9%' }}
+                        transition={{ duration: 1.5, delay: 0.5 }}
+                        className="h-full bg-[#25D366]"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-sm">
+                  <div className="flex gap-4 mb-4">
+                    <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center text-slate-950">
+                      <MessageCircle size={20} />
+                    </div>
+                    <div className="space-y-1">
+                      <div className="w-24 h-2 bg-slate-700 rounded" />
+                      <div className="w-16 h-2 bg-slate-800 rounded" />
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-500 font-light leading-relaxed">
+                    "Welcome! Let's set up your WhatsApp Business account. You'll be able to send messages in minutes."
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-4 pt-6">
+                  <ShieldCheck size={20} className="text-slate-600" />
+                  <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-slate-500">
+                    Official Meta Business Partner • End-to-End Encrypted
+                  </p>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
-      </Container>
+
+        {/* Localized Engineering Note */}
+        <div className="mt-12 text-center opacity-40">
+           <span className="text-[9px] font-bold tracking-[0.4em] uppercase">Built for Scale • UTC +5:30 Deployment • Global Reach</span>
+        </div>
+
+      </div>
     </section>
   );
 };
+
+export default CTA;

@@ -76,7 +76,6 @@ const Navbar = () => {
       {
         category: 'Business Solutions',
         items: [
-          { name: 'WhatsApp API Solutions', href: '/products/whatsapp-api', icon: <MessageSquare className="w-4 h-4" /> },
           { name: 'SMS Gateway', href: '/products/sms-gateway', icon: <Smartphone className="w-4 h-4" /> },
           { name: 'CRM Solutions', href: '/products/crm', icon: <Briefcase className="w-4 h-4" /> },
           { name: 'Source Codes', href: '/products/source-codes', icon: <Code className="w-4 h-4" /> },
@@ -119,12 +118,7 @@ const Navbar = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-light text-xl">D</span>
-                </div>
-                <span className="text-xl font-light text-gray-900 tracking-tight">
-                  DuoTechno
-                </span>
+                <img src="src/assets/DS logo ( Blue ) SVG.svg" alt="DuoTechno" className="h-10" />
               </motion.div>
             </Link>
 
