@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Check, Smartphone } from 'lucide-react';
 import Button from '../ui/Button';
 import Container from '../ui/Container';
+import { Link } from 'react-router-dom';
 
 const heroData = {
   title: "Build Powerful Android Apps for the Future",
@@ -56,18 +57,6 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="lg:pr-8"
           >
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="inline-flex items-center mb-8 px-4 py-2 bg-blue-50 dark:bg-blue-900/20 rounded-full border border-blue-100 dark:border-blue-800/30"
-            >
-              <div className="w-2 h-2 bg-blue-600 dark:bg-blue-400 rounded-full mr-3"></div>
-              <span className="text-sm font-medium text-blue-600 dark:text-blue-400 tracking-wide">
-                Android Development Experts
-              </span>
-            </motion.div>
-
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-gray-900 dark:text-white mb-8 leading-tight tracking-tight">
               {heroData.title.split(' ').map((word, i) => (
                 <span key={i} className={i === heroData.title.split(' ').length - 1 ? "font-normal text-blue-600 dark:text-blue-400" : ""}>
@@ -87,6 +76,7 @@ const Hero: React.FC = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
+                <Link to="/contact">
                   <Button
                     variant={cta.variant as any}
                     size="lg"
@@ -100,6 +90,7 @@ const Hero: React.FC = () => {
                   >
                     {cta.text}
                   </Button>
+                  </Link>
                 </motion.div>
               ))}
             </div>
@@ -176,8 +167,8 @@ const Hero: React.FC = () => {
                           } flex items-center justify-center mr-3`}>
                             <div className={`w-2 h-2 rounded-full ${
                               index === 0 ? 'bg-blue-500' : 
-                              index === 1 ? 'bg-green-500' :
-                              index === 2 ? 'bg-purple-500' :
+                              index === 1 ? 'bg-green-500' : 
+                              index === 2 ? 'bg-purple-500' : 
                               'bg-orange-500'
                             }`}></div>
                           </div>

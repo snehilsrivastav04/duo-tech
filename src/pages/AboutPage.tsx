@@ -1,6 +1,7 @@
 import React, { useState, useEffect, MouseEvent } from 'react';
 import { Target, Handshake, Brain, Rocket, Clock, Users, Shield, MessageCircle, ChevronRight, Sparkles, TrendingUp, Zap } from 'lucide-react';
 import MainLayout from '../components/layout/MainLayout';
+import { Link } from 'react-router-dom';
 
 const AboutPage = () => {
   const [activeValue, setActiveValue] = useState(0);
@@ -92,8 +93,8 @@ const AboutPage = () => {
     { 
       year: '2026', 
       title: 'Future Forward', 
-      summary: 'Scaling innovation',
-      detail: 'Our roadmap includes AI-powered insights, global expansion, and next-generation communication technologies that will redefine the industry.',
+      summary: 'Working continuously on improvements and innovation',
+      detail: 'We are continuously working to improve and innovate. Our roadmap for 2026 and beyond focuses on integrating AI-powered insights, expanding our global reach, and developing next-generation communication technologies to stay ahead of the curve and redefine industry standards.',
       impact: 'Industry-leading reliability',
       icon: <Zap className="w-5 h-5" />
     }
@@ -397,16 +398,7 @@ const AboutPage = () => {
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-16 items-start">
-              <div className="aspect-[4/5] bg-gray-100 overflow-hidden relative group">
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" 
-                  alt="Satyam Sharma" 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              </div>
-              
+            <div className="items-start">
               <div>
                 <h3 className="text-3xl font-light text-gray-900 mb-2 tracking-tight">
                   Satyam Sharma
@@ -492,12 +484,12 @@ const AboutPage = () => {
               </p>
               
               <div className="flex flex-wrap gap-3">
-                <button className="px-8 py-3 bg-white hover:bg-blue-50 text-blue-900 text-sm tracking-wide transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
+                <Link to="/contact" className="px-8 py-3 bg-white hover:bg-blue-50 text-blue-900 text-sm tracking-wide transition-all duration-300 transform hover:scale-105 hover:shadow-xl">
                   Schedule a Demo
-                </button>
-                <button className="px-8 py-3 border border-blue-700 hover:border-blue-600 hover:bg-blue-800/30 text-white text-sm tracking-wide transition-all duration-300 transform hover:scale-105">
+                </Link>
+                <Link to="/contact" className="px-8 py-3 border border-blue-700 hover:border-blue-600 hover:bg-blue-800/30 text-white text-sm tracking-wide transition-all duration-300 transform hover:scale-105">
                   View Case Studies
-                </button>
+                </Link>
               </div>
             </div>
           </div>

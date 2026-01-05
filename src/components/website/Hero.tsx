@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 /**
  * Modern minimalist Hero component
@@ -71,10 +72,10 @@ const Hero = () => {
               </p>
 
               <div className="flex flex-wrap items-center gap-10">
-                <button className="group relative flex items-center gap-4 px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full transition-all hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white">
+                <Link to="/contact" className="group relative flex items-center gap-4 px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-full transition-all hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white">
                   <span className="font-medium tracking-tight">{heroData.cta}</span>
                   <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-                </button>
+                </Link>
                 
                 <div className="flex gap-10">
                   <StatItem value="95+" label="Lighthouse" />

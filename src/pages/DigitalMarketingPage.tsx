@@ -6,6 +6,7 @@ import {
   Sparkles, LineChart, MousePointer, ShoppingCart, ChevronDown, ChevronUp
 } from 'lucide-react';
 import MainLayout from '../components/layout/MainLayout';
+import { Link } from 'react-router-dom';
 
 const digitalMarketingData = {
   services: [
@@ -180,13 +181,13 @@ const DigitalMarketingPage = () => {
             transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-wrap justify-center gap-6"
           >
-            <button className="group px-10 py-5 bg-blue-900 text-white text-sm tracking-widest uppercase transition-all duration-500 hover:bg-blue-800 flex items-center gap-3">
+            <Link to="/contact" className="group px-10 py-5 bg-blue-900 text-white text-sm tracking-widest uppercase transition-all duration-500 hover:bg-blue-800 flex items-center gap-3">
               Begin Your Journey
               <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
-            </button>
-            <button className="px-10 py-5 border border-blue-900 text-blue-900 text-sm tracking-widest uppercase transition-all duration-500 hover:bg-blue-50">
+            </Link>
+            <Link to="/contact" className="px-10 py-5 border border-blue-900 text-blue-900 text-sm tracking-widest uppercase transition-all duration-500 hover:bg-blue-50">
               Explore Approach
-            </button>
+            </Link>
           </motion.div>
 
           {/* Minimalist Stats */}
@@ -532,13 +533,13 @@ const DigitalMarketingPage = () => {
             </p>
 
             <div className="flex flex-wrap justify-center gap-6">
-              <button className="group px-12 py-5 bg-blue-900 text-white text-sm tracking-widest uppercase transition-all duration-500 hover:bg-blue-800 flex items-center gap-3">
+              <Link to="/contact" className="group px-12 py-5 bg-blue-900 text-white text-sm tracking-widest uppercase transition-all duration-500 hover:bg-blue-800 flex items-center gap-3">
                 Schedule Consultation
                 <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
-              </button>
-              <button className="px-12 py-5 border border-blue-900 text-blue-900 text-sm tracking-widest uppercase transition-all duration-500 hover:bg-blue-50">
+              </Link>
+              <Link to="/contact" className="px-12 py-5 border border-blue-900 text-blue-900 text-sm tracking-widest uppercase transition-all duration-500 hover:bg-blue-50">
                 View Case Studies
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>

@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { FaWhatsapp } from "react-icons/fa"; // Official WhatsApp icon
-import Chatbot from "../chatbot/Chatbot";
 import ConsentBanner from "./ConsentBanner";
 
 interface MainLayoutProps {
@@ -50,8 +49,6 @@ const MainLayout = ({ children }: MainLayoutProps) => {
           Chat on WhatsApp
         </span>
       </motion.button>
-
-      <Chatbot />
 
       <Footer />
       <ConsentBanner />

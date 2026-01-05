@@ -34,8 +34,12 @@ import TermsandConditions from './pages/DuoTechTermsPage';
 import SmsPricing from './pages/pricing';
 
 import PrivacyPolicyPage from './pages/privacy-policy';
+import RefundPolicyPage from './pages/RefundPolicyPage';
+import CookiePolicyPage from './pages/CookiePolicyPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Realestate from './pages/realestate';
+import BlogPage from './pages/BlogPage';
+import BlogPostPage from './pages/BlogPostPage';
 
 
 const ProtectedRoute: React.FC<{ 
@@ -95,7 +99,11 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermsandConditions />} />
         <Route path="/sms-pricing" element={<SmsPricing />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+        <Route path="/refund-policy" element={<RefundPolicyPage />} />
+        <Route path="/cookie-policy" element={<CookiePolicyPage />} />
         <Route path="/realestate" element={<Realestate />} />
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
 
         {/* Catch-all route for 404 errors */}
         <Route path="*" element={<NotFoundPage />} />
