@@ -29,18 +29,6 @@ import CRMPage from './pages/crm';
 
 import ContactPage from './pages/ContactPage';
 import LoginPage from './pages/LoginPage';
-import AdminLayout from './components/admin/AdminLayout';
-import ClientLayout from './components/client/ClientLayout';
-import AdminDashboard from './components/admin/Dashboard';
-import ClientDashboard from './components/client/Dashboard';
-import ClientServices from './components/client/Services';
-import ClientInvoices from './components/client/invoices';
-import ClientMessages from './components/client/Messages';
-import ClientBilling from './components/client/Billing';
-import UsersTable from './components/admin/users/UsersTable';
-import ProductsTable from './components/admin/products/ProductsTable';
-import ServicesTable from './components/admin/services/ServicesTable';
-import SettingsForm from './components/admin/settings/SettingsForm';
 import TermsandConditions from './pages/DuoTechTermsPage';
 
 import SmsPricing from './pages/pricing';
@@ -108,95 +96,6 @@ function App() {
         <Route path="/sms-pricing" element={<SmsPricing />} />
         <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="/realestate" element={<Realestate />} />
-
-
-        {/* Admin Routes */}
-        <Route path="/admin" element={
-          <ProtectedRoute requiredRole="admin">
-            <AdminLayout>
-              <AdminDashboard />
-            </AdminLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/users" element={
-          <ProtectedRoute requiredRole="admin">
-            <AdminLayout>
-              <UsersTable />
-            </AdminLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/services" element={
-          <ProtectedRoute requiredRole="admin">
-            <AdminLayout>
-              <ServicesTable />
-            </AdminLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/products" element={
-          <ProtectedRoute requiredRole="admin">
-            <AdminLayout>
-              <ProductsTable />
-            </AdminLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/admin/settings" element={
-          <ProtectedRoute requiredRole="admin">
-            <AdminLayout>
-              <SettingsForm />
-            </AdminLayout>
-          </ProtectedRoute>
-        } />
-
-        {/* Client Routes */}
-        <Route path="/client" element={
-          <ProtectedRoute requiredRole="user">
-            <ClientLayout>
-              <ClientDashboard />
-            </ClientLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/client/services" element={
-          <ProtectedRoute requiredRole="user">
-            <ClientLayout>
-              <ClientServices />
-            </ClientLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/client/tickets" element={
-          <ProtectedRoute requiredRole="user">
-            <ClientLayout>
-              <div>Support Tickets</div>
-            </ClientLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/client/invoices" element={
-          <ProtectedRoute requiredRole="user">
-            <ClientLayout>
-              <ClientInvoices />
-            </ClientLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/client/messages" element={
-          <ProtectedRoute requiredRole="user">
-            <ClientLayout>
-              <ClientMessages />
-            </ClientLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/client/billing" element={
-          <ProtectedRoute requiredRole="user">
-            <ClientLayout>
-              <ClientBilling />
-            </ClientLayout>
-          </ProtectedRoute>
-        } />
-        <Route path="/client/settings" element={
-          <ProtectedRoute requiredRole="user">
-            <ClientLayout>
-              <div>Settings</div>
-            </ClientLayout>
-          </ProtectedRoute>
-        } />
 
         {/* Catch-all route for 404 errors */}
         <Route path="*" element={<NotFoundPage />} />

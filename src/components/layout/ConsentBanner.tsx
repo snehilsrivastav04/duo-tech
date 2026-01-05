@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Cookie, Shield, BarChart, Bullhorn, X, Cog } from 'lucide-react';
+import { Cookie, Shield, BarChart, Megaphone, X, Cog } from 'lucide-react';
 
 const consentTypes = [
   {
@@ -21,7 +21,7 @@ const consentTypes = [
     id: 'marketing' as const,
     title: 'Marketing Cookies',
     description: 'These are used by advertising companies to serve ads that are relevant to your interests.',
-    icon: <Bullhorn className="w-5 h-5 text-gray-500" />,
+    icon: <Megaphone className="w-5 h-5 text-gray-500" />,
   },
 ];
 
