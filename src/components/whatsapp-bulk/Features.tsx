@@ -27,10 +27,10 @@ const featuresData = [
 ];
 
 const FeatureMockup = ({ messages, title }: { messages: { text: string, type: string, time: string }[], title: string }) => (
-  <div className="relative w-full max-w-[340px] mx-auto">
-    <div className="bg-white dark:bg-[#202c33] rounded-[2.5rem] shadow-2xl border border-slate-200 dark:border-slate-800 p-2 overflow-hidden">
+  <div className="relative w-full max-w-[320px] sm:max-w-[340px] mx-auto">
+    <div className="bg-white dark:bg-[#202c33] rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl border border-slate-200 dark:border-slate-800 p-2 overflow-hidden">
       {/* WhatsApp Header Mockup */}
-      <div className="bg-[#f0f2f5] dark:bg-[#111b21] p-4 flex items-center gap-3 border-b border-slate-100 dark:border-slate-800">
+      <div className="bg-[#f0f2f5] dark:bg-[#111b21] p-3 sm:p-4 flex items-center gap-3 border-b border-slate-100 dark:border-slate-800">
         <div className="w-8 h-8 rounded-full bg-slate-300 dark:bg-slate-700" />
         <div>
           <p className="text-[11px] font-bold text-slate-800 dark:text-slate-100 leading-none">{title}</p>
@@ -38,7 +38,7 @@ const FeatureMockup = ({ messages, title }: { messages: { text: string, type: st
         </div>
       </div>
       {/* Message Area */}
-      <div className="bg-[#efe7de] dark:bg-[#0b141a] p-6 space-y-4 min-h-[300px] flex flex-col justify-end relative">
+      <div className="bg-[#efe7de] dark:bg-[#0b141a] p-4 sm:p-6 space-y-4 min-h-[280px] sm:min-h-[300px] flex flex-col justify-end relative">
         <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05] pointer-events-none" style={{ backgroundImage: 'url("https://www.transparenttextures.com/patterns/cubes.png")' }} />
         {messages.map((msg: { text: string, type: string, time: string }, i: number) => (
           <motion.div
@@ -67,10 +67,10 @@ const FeatureMockup = ({ messages, title }: { messages: { text: string, type: st
 
 export const Features = () => {
   return (
-    <section className="py-32 bg-white dark:bg-[#0b141a] transition-colors duration-500">
-      <div className="container mx-auto px-8">
+    <section className="py-20 sm:py-24 md:py-32 bg-white dark:bg-[#0b141a] transition-colors duration-500 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-32">
+        <div className="text-center mb-20 md:mb-24 lg:mb-32">
           <motion.span 
             initial={{ opacity: 0 }} 
             whileInView={{ opacity: 1 }} 
@@ -78,16 +78,16 @@ export const Features = () => {
           >
             Enterprise Infrastructure
           </motion.span>
-          <h2 className="text-5xl md:text-6xl font-light tracking-tight text-slate-900 dark:text-white mb-8">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-slate-900 dark:text-white mb-8">
             Built for <span className="italic font-serif text-[#128C7E] dark:text-[#25D366]">modern</span> scale.
           </h2>
-          <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-light max-w-xl mx-auto">
+          <p className="text-slate-500 dark:text-slate-400 text-base leading-relaxed font-light max-w-xl mx-auto">
             Everything you need to build and manage your WhatsApp communication channels with institutional-grade reliability.
           </p>
         </div>
 
         {/* Features Alternating Grid */}
-        <div className="space-y-48">
+        <div className="space-y-24 md:space-y-32 lg:space-y-48">
           {featuresData.map((feature, index) => {
             const isEven = index % 2 === 0;
             return (
@@ -97,19 +97,19 @@ export const Features = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.8 }}
-                className={`grid grid-cols-1 lg:grid-cols-2 gap-24 items-center ${!isEven ? 'lg:flex-row-reverse' : ''}`}
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-y-16 gap-x-12 md:gap-24 items-center`}
               >
                 {/* Visual Content */}
-                <div className={`relative ${!isEven ? 'lg:order-2' : ''}`}>
+                <div className={`relative ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
                   {/* Modern Decorative Backdrop */}
-                  <div className="absolute inset-0 bg-slate-50 dark:bg-white/[0.02] rounded-[3rem] -m-12 rotate-2 pointer-events-none" />
+                  <div className="absolute inset-0 bg-slate-50 dark:bg-white/[0.02] rounded-[2rem] md:rounded-[3rem] -m-6 sm:-m-8 md:-m-12 rotate-2 pointer-events-none" />
                   <div className="relative z-10">
                     <FeatureMockup messages={feature.messages} title={feature.title} />
                   </div>
                 </div>
 
                 {/* Text Content */}
-                <div className={`${!isEven ? 'lg:order-1' : ''}`}>
+                <div className={`${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
                   <div className="flex items-center gap-4 mb-8">
                     <div className="w-10 h-10 bg-[#128C7E]/10 dark:bg-[#25D366]/10 flex items-center justify-center rounded-xl text-[#128C7E] dark:text-[#25D366]">
                       {feature.icon}
@@ -119,11 +119,11 @@ export const Features = () => {
                     </span>
                   </div>
                   
-                  <h3 className="text-4xl md:text-5xl font-light tracking-tight text-slate-900 dark:text-white mb-6">
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-slate-900 dark:text-white mb-6">
                     {feature.title}
                   </h3>
                   
-                  <p className="text-lg text-slate-500 dark:text-slate-400 font-light leading-relaxed mb-10 max-w-lg">
+                  <p className="text-base md:text-lg text-slate-500 dark:text-slate-400 font-light leading-relaxed mb-10 max-w-lg">
                     {feature.description}
                   </p>
                   
