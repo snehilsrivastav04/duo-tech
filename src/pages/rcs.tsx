@@ -6,7 +6,6 @@ import Features from '../components/rcs/Features';
 import Parallax from '../components/rcs/Parallax';
 import CustomerLogos from '../components/rcs/CustomerLogos';
 import UseCases from '../components/rcs/UseCases';
-import Testimonials from '../components/rcs/Testimonials';
 import FAQ from '../components/rcs/FAQ';
 import CTA from '../components/rcs/CTA';
 
@@ -19,7 +18,6 @@ const RcsPage: React.FC = () => {
         <Parallax />
         <CustomerLogos />
         <UseCases />
-        <Testimonials />
         <FAQ />
         <CTA />
       </MainLayout>

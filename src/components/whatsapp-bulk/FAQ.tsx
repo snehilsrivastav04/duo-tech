@@ -33,9 +33,9 @@ export const FAQ = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   return (
-    <section className="py-32 bg-white dark:bg-[#0b141a] transition-colors duration-500">
-      <div className="container mx-auto px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+    <section className="py-20 sm:py-24 md:py-32 bg-white dark:bg-[#0b141a] transition-colors duration-500">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 gap-x-16 md:gap-20">
           
           {/* Sidebar Header Section */}
           <div className="lg:col-span-4">
@@ -43,16 +43,16 @@ export const FAQ = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="lg:sticky lg:top-32"
+              className="lg:sticky lg:top-24"
             >
               <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#128C7E] dark:text-[#25D366] block mb-6">
                 Knowledge Base
               </span>
-              <h2 className="text-4xl lg:text-5xl font-light tracking-tight text-slate-900 dark:text-white mb-8 leading-[1.1]">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-slate-900 dark:text-white mb-6 sm:mb-8 leading-[1.1]">
                 Frequently <br />
                 <span className="italic font-serif text-[#128C7E] dark:text-[#25D366]">asked</span> questions.
               </h2>
-              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-light mb-10 max-w-xs">
+              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-light mb-8 sm:mb-10 max-w-xs">
                 A comprehensive guide to integrating and scaling your business communication with the official WhatsApp API.
               </p>
               
@@ -74,17 +74,17 @@ export const FAQ = () => {
                 >
                   <button
                     onClick={() => setOpenFaq(isOpen ? null : index)}
-                    className="w-full py-10 flex items-start gap-8 text-left transition-all outline-none"
+                    className="w-full py-6 sm:py-8 md:py-10 flex items-start gap-4 sm:gap-8 text-left transition-all outline-none"
                   >
                     <span className="text-[10px] font-mono text-slate-300 dark:text-slate-600 mt-2">
                       {faq.id}
                     </span>
-                    <div className="flex-1 flex justify-between items-start gap-6">
-                      <h3 className={`text-xl font-light tracking-tight transition-colors duration-300 ${isOpen ? 'text-[#128C7E] dark:text-[#25D366]' : 'text-slate-800 dark:text-slate-200 group-hover:text-[#128C7E] dark:group-hover:text-[#25D366]'}`}>
+                    <div className="flex-1 flex justify-between items-start gap-4 sm:gap-6">
+                      <h3 className={`text-base sm:text-lg md:text-xl font-light tracking-tight transition-colors duration-300 ${isOpen ? 'text-[#128C7E] dark:text-[#25D366]' : 'text-slate-800 dark:text-slate-200 group-hover:text-[#128C7E] dark:group-hover:text-[#25D366]'}`}>
                         {faq.question}
                       </h3>
                       <div className={`mt-1 p-1 rounded-full border transition-all duration-500 ${isOpen ? 'rotate-45 border-[#128C7E] bg-[#128C7E] text-white' : 'border-slate-200 dark:border-slate-700 text-slate-400'}`}>
-                        <Plus className="w-4 h-4" />
+                        <Plus className="w-3 h-3 sm:w-4 sm:h-4" />
                       </div>
                     </div>
                   </button>
@@ -98,7 +98,7 @@ export const FAQ = () => {
                         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="pl-16 pr-12 pb-10">
+                        <div className="pl-10 sm:pl-16 pr-6 sm:pr-12 pb-8 sm:pb-10">
                           <p className="text-slate-500 dark:text-slate-400 leading-relaxed font-light max-w-2xl">
                             {faq.answer}
                           </p>

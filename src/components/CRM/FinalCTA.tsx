@@ -3,21 +3,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 
-const Container: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = '' }) => (
-    <div className={`container mx-auto px-6 ${className}`}>{children}</div>
-);
-
-const Button: React.FC<any> = ({ children, variant, size, className, icon }) => (
-    <button className={`${className} ${variant} ${size}`}>
-        {children}
-        {icon && <span className="ml-2">{icon}</span>}
-    </button>
-);
-
 const FinalCTA = () => {
     return (
         <section className="py-32 bg-white relative overflow-hidden">
-            <Container>
+            <div className="container mx-auto px-6">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -34,24 +23,22 @@ const FinalCTA = () => {
                     </p>
                     
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button
-                            variant="primary"
-                            size="lg"
-                            className="bg-blue-600 hover:bg-blue-700 text-white border-blue-600 min-w-[160px]"
-                            icon={<ArrowRight size={20} />}
+                        <a
+                            href="/contact"
+                            className="group inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-semibold transition-all duration-300 bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/30 min-w-[180px]"
                         >
                             Get Started
-                        </Button>
-                        <Button
-                            variant="outline"
-                            size="lg"
-                            className="border-blue-600 text-blue-600 hover:bg-blue-50 min-w-[160px]"
+                            <ArrowRight size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                        </a>
+                        <a
+                            href="/contact"
+                            className="inline-flex items-center justify-center rounded-full px-6 py-3 text-base font-semibold transition-all duration-300 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 min-w-[180px]"
                         >
                             View Demo
-                        </Button>
+                        </a>
                     </div>
                 </motion.div>
-            </Container>
+            </div>
         </section>
     );
 };

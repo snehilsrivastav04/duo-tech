@@ -2,12 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { BarChart2, RefreshCw, Smartphone, Check, ArrowRight } from 'lucide-react';
 
-/**
- * Redesigned WhyChooseUs Section
- * Focus: High-end editorial aesthetic, generous whitespace, and architectural imagery.
- * Palette: Deep Blue (#0F172A), Pure White (#FFFFFF), Soft Gray (#F8FAFC).
- */
-
 const features = [
   {
     icon: <BarChart2 className="w-5 h-5" />,
@@ -132,12 +126,12 @@ const WhyChooseUs = () => {
                     Connect with our implementation team to start your digital transformation.
                   </p>
                 </div>
-                <button 
-                  onClick={() => window.location.href = '/contact'}
+                <a 
+                  href="/contact"
                   className="flex items-center gap-2 text-sm font-medium tracking-widest uppercase hover:gap-4 transition-all"
                 >
                   Get Started <ArrowRight className="w-4 h-4" />
-                </button>
+                </a>
               </motion.div>
             </div>
           </div>

@@ -14,9 +14,6 @@ const Footer: React.FC = () => {
     { name: 'WhatsApp Bulk Services', path: '/services/whatsapp-bulk' },
     { name: 'IVR Solutions', path: '/services/ivr' },
     { name: 'Voice OBD Services', path: '/services/VoiceOBDPage' },
-    { name: 'Virtual Numbers', path: '/services/virtual-number' },
-    { name: 'Toll Free Numbers', path: '/services/toll-free-number' },
-    { name: 'Hosted Call Center', path: '/services/hosted-call-center' },
     { name: 'RCS Messaging', path: '/services/rcs' },
   ];
 
@@ -31,14 +28,10 @@ const Footer: React.FC = () => {
   const developmentServices = [
     { name: 'Web Development', path: '/development/web' },
     { name: 'Android App Development', path: '/development/android' },
-    { name: 'UI/UX Design', path: '/development/ui-ux' },
-    { name: 'API Integration', path: '/development/api' },
   ];
 
   const products = [
-    { name: 'SMS Gateway', path: '/products/sms-gateway' },
     { name: 'CRM Solutions', path: '/products/crm' },
-    { name: 'Source Codes', path: '/products/source-codes' },
   ];
 
   return (

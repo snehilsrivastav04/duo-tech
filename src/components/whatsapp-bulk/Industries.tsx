@@ -46,9 +46,9 @@ const industriesData = [
 
 export const Industries = () => {
   return (
-    <section className="py-32 bg-white dark:bg-[#0b141a] transition-colors duration-500">
-      <div className="container mx-auto px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
+    <section className="py-20 sm:py-24 md:py-32 bg-white dark:bg-[#0b141a] transition-colors duration-500">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-12 gap-x-16 md:gap-20">
           
           {/* Side Header */}
           <div className="lg:col-span-4">
@@ -56,16 +56,16 @@ export const Industries = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="lg:sticky lg:top-32"
+              className="lg:sticky lg:top-24"
             >
               <span className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#128C7E] dark:text-[#25D366] block mb-6">
                 Market Solutions
               </span>
-              <h2 className="text-4xl lg:text-5xl font-light tracking-tight text-slate-900 dark:text-white mb-8 leading-[1.1]">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light tracking-tight text-slate-900 dark:text-white mb-6 sm:mb-8 leading-[1.1]">
                 Trusted by <br />
                 <span className="italic font-serif text-[#128C7E] dark:text-[#25D366]">industries</span> worldwide.
               </h2>
-              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-light mb-10 max-w-xs">
+              <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed font-light mb-8 sm:mb-10 max-w-xs">
                 From high-growth startups to global enterprises, our WhatsApp solutions are tailored to fit the unique technical needs of every sector.
               </p>
               
@@ -83,11 +83,11 @@ export const Industries = () => {
                 key={index}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="group py-12 border-b border-slate-100 dark:border-slate-800/50"
+                className="group py-8 sm:py-12 border-b border-slate-100 dark:border-slate-800/50"
               >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-y-8 gap-x-12 items-start">
                   
                   {/* Title and Stats */}
                   <div className="md:col-span-5">
@@ -99,7 +99,7 @@ export const Industries = () => {
                         {industry.tag}
                       </span>
                     </div>
-                    <h3 className="text-3xl font-light text-slate-900 dark:text-white mb-4">
+                    <h3 className="text-2xl sm:text-3xl font-light text-slate-900 dark:text-white mb-4">
                       {industry.name}
                     </h3>
                     <div className="inline-flex items-center gap-2 px-3 py-1 bg-slate-50 dark:bg-white/[0.03] rounded-full border border-slate-100 dark:border-slate-800">
@@ -112,16 +112,16 @@ export const Industries = () => {
 
                   {/* Description and Use Cases */}
                   <div className="md:col-span-7">
-                    <p className="text-sm text-slate-500 dark:text-slate-400 font-light leading-relaxed mb-8">
+                    <p className="text-sm text-slate-500 dark:text-slate-400 font-light leading-relaxed mb-6 sm:mb-8">
                       {industry.description}
                     </p>
                     <ul className="space-y-3">
-                      {industry.useCases.map((useCase, idx) => (
-                        <li key={idx} className="flex items-center gap-3 text-xs text-slate-700 dark:text-slate-300">
-                          <div className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+                      {industriesData[index].useCases.map((useCase, idx) => (
+                        <li key={idx} className="flex items-center gap-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300">
+                          <div className="w-4 h-4 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
                             <Check className="w-2.5 h-2.5 text-[#128C7E] dark:text-[#25D366]" />
                           </div>
-                          {useCase}
+                          <span>{useCase}</span>
                         </li>
                       ))}
                     </ul>

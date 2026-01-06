@@ -3,10 +3,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, Bell, TrendingUp, Calendar, Users } from 'lucide-react';
 
-const Button: React.FC<any> = ({ children, variant, size, className }) => (
-    <button className={`${className} ${variant} ${size}`}>{children}</button>
-);
-
 const Hero = () => {
     const pageData = {
         hero: {
@@ -53,17 +49,6 @@ const Hero = () => {
                         transition={{ duration: 0.8 }}
                         className="text-center lg:text-left"
                     >
-                        {/* Badge */}
-                        <motion.div
-                            initial={{ scale: 0.9, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.2, duration: 0.5 }}
-                            className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 rounded-full mb-8 border border-blue-100"
-                        >
-                            <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
-                            <span className="text-sm font-medium text-blue-700">Next-Generation CRM Platform</span>
-                        </motion.div>
-
                         {/* Main heading */}
                         <h1 className="text-5xl md:text-6xl lg:text-7xl font-light text-gray-900 mb-8 leading-[1.1] tracking-tight">
                             Customer
@@ -90,17 +75,15 @@ const Hero = () => {
                                     whileHover={{ scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                 >
-                                    <Button
-                                        variant={cta.variant}
-                                        size="lg"
-                                        className={`min-w-[180px] text-base ${
+                                    <button
+                                        className={`min-w-[180px] text-base rounded-full px-6 py-3 font-semibold transition-all duration-300 ${
                                             i === 0 
                                                 ? 'bg-blue-600 hover:bg-blue-700 text-white border-blue-600 shadow-lg shadow-blue-600/30' 
                                                 : 'border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
                                         }`}
                                     >
                                         {cta.text}
-                                    </Button>
+                                    </button>
                                 </motion.div>
                             ))}
                         </div>

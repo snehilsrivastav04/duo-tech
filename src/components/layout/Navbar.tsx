@@ -116,6 +116,7 @@ const Navbar = () => {
           { name: 'Promotional SMS', href: '/services/bulk-sms', icon: <Megaphone className="w-4 h-4" /> },
           { name: 'Transactional SMS', href: '/services/transactional-sms', icon: <Briefcase className="w-4 h-4" /> },
           { name: 'WhatsApp Bulk Services', href: '/services/whatsapp-bulk', icon: <MessageSquare className="w-4 h-4" /> },
+          { name: 'RCS Messaging', href: '/services/rcs', icon: <MessageSquare className="w-4 h-4" /> },
         ]
       },
       {
@@ -150,9 +151,7 @@ const Navbar = () => {
       {
         category: 'Business Solutions',
         items: [
-          { name: 'SMS Gateway', href: '/products/sms-gateway', icon: <Smartphone className="w-4 h-4" /> },
           { name: 'CRM Solutions', href: '/products/crm', icon: <Briefcase className="w-4 h-4" /> },
-          { name: 'Source Codes', href: '/products/source-codes', icon: <Code className="w-4 h-4" /> },
         ]
       }
     ]

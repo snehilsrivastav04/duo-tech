@@ -35,25 +35,27 @@ const businessBenefitsData = [
 
 export const BusinessBenefits = () => {
   return (
-    <section className="py-32 bg-white dark:bg-[#0b141a] transition-colors duration-500">
-      <div className="container mx-auto px-8">
+    <section className="py-20 sm:py-24 md:py-32 bg-white dark:bg-[#0b141a] transition-colors duration-500">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Minimalist Header Section */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-24 gap-12">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 sm:mb-24 gap-8 sm:gap-12">
           <div className="max-w-2xl">
             <motion.span 
               initial={{ opacity: 0, x: -10 }} 
               whileInView={{ opacity: 1, x: 0 }} 
+              viewport={{ once: true, margin: "-50px" }}
               className="text-[10px] font-mono tracking-[0.3em] uppercase text-[#128C7E] dark:text-[#25D366] block mb-6"
             >
               Performance Metrics
             </motion.span>
-            <h2 className="text-5xl md:text-6xl font-light tracking-tight text-slate-900 dark:text-white leading-[1.1]">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-slate-900 dark:text-white leading-[1.1]">
               The business <span className="italic font-serif text-[#128C7E] dark:text-[#25D366]">advantage</span> that scales with you.
             </h2>
           </div>
           <motion.p 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
             className="text-slate-500 dark:text-slate-400 max-w-xs text-sm leading-relaxed font-light"
           >
             Unlock measurable growth through the platform your customers already trust and use daily.
@@ -65,26 +67,26 @@ export const BusinessBenefits = () => {
           {businessBenefitsData.map((benefit, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              className="group p-10 border-b lg:border-b-0 lg:border-r last:border-r-0 border-slate-100 dark:border-slate-800/50 hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-all duration-500 relative overflow-hidden"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="group p-6 md:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r last:border-r-0 border-slate-100 dark:border-slate-800/50 hover:bg-slate-50/50 dark:hover:bg-white/[0.02] transition-all duration-500 relative overflow-hidden"
             >
               {/* Subtle architectural background number */}
-              <span className="absolute -bottom-6 -right-4 text-9xl font-black text-slate-900/[0.02] dark:text-white/[0.02] pointer-events-none group-hover:scale-110 group-hover:-translate-y-4 transition-transform duration-700 ease-out">
+              <span className="absolute -bottom-4 -right-2 sm:-bottom-6 sm:-right-4 text-8xl sm:text-9xl font-black text-slate-900/[0.02] dark:text-white/[0.02] pointer-events-none group-hover:scale-110 group-hover:-translate-y-4 transition-transform duration-700 ease-out">
                 {benefit.id}
               </span>
 
               {/* Icon Container */}
-              <div className="w-12 h-12 bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 rounded-2xl flex items-center justify-center text-[#128C7E] dark:text-[#25D366] mb-12 group-hover:shadow-md group-hover:-translate-y-1 transition-all duration-500">
+              <div className="w-12 h-12 bg-white dark:bg-slate-800 shadow-sm border border-slate-100 dark:border-slate-700 rounded-2xl flex items-center justify-center text-[#128C7E] dark:text-[#25D366] mb-8 md:mb-12 group-hover:shadow-md group-hover:-translate-y-1 transition-all duration-500">
                 {benefit.icon}
               </div>
 
               {/* Content */}
               <div className="mb-8 relative z-10">
                 <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-5xl font-light text-slate-900 dark:text-white tracking-tighter">
+                  <span className="text-4xl sm:text-5xl font-light text-slate-900 dark:text-white tracking-tighter">
                     {benefit.stat}
                   </span>
                   <ArrowUpRight className="w-4 h-4 text-[#25D366] opacity-0 group-hover:opacity-100 transition-opacity" />

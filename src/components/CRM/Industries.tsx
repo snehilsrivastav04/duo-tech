@@ -6,12 +6,6 @@ import {
   ArrowUpRight 
 } from 'lucide-react';
 
-/**
- * Redesigned Industries Section
- * Aesthetic: High-end editorial, grid-based, using architectural/lifestyle imagery.
- * Links: Every interactive element points to /contact.
- */
-
 const industries = [
   {
     name: "Retail & E-commerce",
@@ -64,11 +58,6 @@ const industries = [
 ];
 
 const Industries = () => {
-  // Navigation helper
-  const navigateToContact = () => {
-    window.location.href = '/contact';
-  };
-
   return (
     <section className="relative py-32 bg-white text-[#0F172A] overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
@@ -106,13 +95,13 @@ const Industries = () => {
         {/* Industries Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-slate-100 border border-slate-100">
           {industries.map((industry, i) => (
-            <motion.div
+            <motion.a
               key={i}
+              href="/contact"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               transition={{ delay: i * 0.05 }}
-              onClick={navigateToContact}
-              className="group relative bg-white overflow-hidden aspect-[4/5] cursor-pointer"
+              className="group relative bg-white overflow-hidden aspect-[4/5] cursor-pointer block"
             >
               {/* Image Layer */}
               <div className="absolute inset-0 grayscale group-hover:grayscale-0 transition-all duration-700 ease-out scale-105 group-hover:scale-100">
@@ -157,7 +146,7 @@ const Industries = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
 
@@ -173,12 +162,12 @@ const Industries = () => {
               If your industry requires a unique set of parameters, our engineers will construct a custom environment specifically for you.
             </p>
           </div>
-          <button 
-            onClick={navigateToContact}
-            className="px-10 py-4 bg-[#0F172A] text-white text-xs font-semibold tracking-widest uppercase rounded-full hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/10"
+          <a 
+            href="/contact"
+            className="inline-block px-10 py-4 bg-[#0F172A] text-white text-xs font-semibold tracking-widest uppercase rounded-full hover:bg-blue-800 transition-all shadow-xl shadow-blue-900/10"
           >
             Request Custom Solution
-          </button>
+          </a>
         </motion.div>
 
       </div>

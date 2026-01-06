@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, CheckCircle, ChevronDown } from 'lucide-react';
 
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbyFE4hmr8gNj_kO2wvYjMGeR6lFOS4RIz44ZAHN37qN5vIK6L08Bn5n_igfdzT_cyGaoQ/exec";
+
 interface ServiceType {
   [key: string]: string[];
 }
@@ -52,22 +55,36 @@ const ContactForm: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    setFormSubmitted(true);
 
-    setTimeout(() => {
-      setFormSubmitted(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        subService: '',
-        message: ''
+    try {
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8"
+        },
+        body: JSON.stringify(formData)
       });
-    }, 5000);
+
+      setFormSubmitted(true);
+
+      setTimeout(() => {
+        setFormSubmitted(false);
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          subService: "",
+          message: ""
+        });
+      }, 5000);
+
+    } catch (error) {
+      alert("Submission failed. Please try again.");
+      console.error(error);
+    }
   };
 
   return (

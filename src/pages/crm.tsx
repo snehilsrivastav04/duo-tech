@@ -7,7 +7,6 @@ import Services from '../components/CRM/Services';
 import WhyChooseUs from '../components/CRM/WhyChooseUs';
 import Metrics from '../components/CRM/Metrics';
 import Industries from '../components/CRM/Industries';
-import Testimonials from '../components/CRM/Testimonials';
 import FAQ from '../components/CRM/FAQ';
 import FinalCTA from '../components/CRM/FinalCTA';
 
@@ -20,7 +19,6 @@ const CRMPage: React.FC = () => {
         <WhyChooseUs />
         <Metrics />
         <Industries />
-        <Testimonials />
         <FAQ />
         <FinalCTA />
       </MainLayout>

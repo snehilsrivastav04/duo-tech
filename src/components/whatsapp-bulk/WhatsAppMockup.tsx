@@ -28,7 +28,7 @@ type WhatsAppMessage = {
 export const WhatsAppMockup = ({
   messages,
   autoAnimate = true,
-  title = "DuoTech "
+  title = "DuoTech"
 }: {
   messages?: WhatsAppMessage[];
   autoAnimate?: boolean;
@@ -64,12 +64,12 @@ export const WhatsAppMockup = ({
       whileInView={{ scale: 1, opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
-      className="relative w-full max-w-xs mx-auto lg:max-w-md"
+      className="relative w-full max-w-sm mx-auto"
     >
       <div className="relative bg-gray-900 dark:bg-gray-800 rounded-3xl p-2 shadow-2xl">
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-1/3 h-5 bg-gray-900 dark:bg-gray-800 rounded-b-xl z-10"></div>
         
-        <div className="relative bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden h-96">
+        <div className="relative bg-gray-100 dark:bg-gray-900 rounded-2xl overflow-hidden" style={{ height: 'auto' }}>
           <div 
             className="h-16 p-3 flex items-center justify-between text-white"
             style={{ backgroundColor: whatsappColors.dark }}
@@ -88,7 +88,7 @@ export const WhatsAppMockup = ({
             </div>
           </div>
           
-          <div className="h-64 overflow-y-auto p-3 space-y-2 bg-gray-50 dark:bg-gray-900">
+          <div className="overflow-y-auto p-3 space-y-2 bg-gray-50 dark:bg-gray-900" style={{ height: 'calc(100% - 128px)' }}>
             {chatMessages.map((message: WhatsAppMessage, i: number) => (
               <motion.div
                 key={message.id}
@@ -112,10 +112,7 @@ export const WhatsAppMockup = ({
                       {message.buttons.map((button, i) => (
                         <button 
                           key={i}
-                          className="block w-full text-left px-3 py-1 text-sm rounded border border-green-200 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-800"
-                          style={{ 
-                            color: whatsappColors.dark
-                          }}
+                          className="block w-full text-left px-3 py-1 text-sm rounded border border-green-200 dark:border-green-700 hover:bg-green-50 dark:hover:bg-green-800 text-green-800 dark:text-green-200"
                         >
                           {button}
                         </button>
@@ -154,7 +151,7 @@ export const WhatsAppMockup = ({
       <motion.div
         animate={{ y: [0, -10, 0] }}
         transition={{ duration: 3, repeat: Infinity }}
-        className="absolute -right-5 top-1/4 bg-white p-2 rounded-full shadow-lg"
+        className="absolute -right-3 -top-3 bg-white p-2 rounded-full shadow-lg"
       >
         <FaWhatsapp className="w-6 h-6" style={{ color: whatsappColors.primary }} />
       </motion.div>

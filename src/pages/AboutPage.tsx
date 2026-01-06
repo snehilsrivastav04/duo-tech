@@ -67,15 +67,15 @@ const AboutPage = () => {
 
   const milestones = [
     { 
-      year: 'June 2025', 
+      year: '2022', 
       title: 'The Beginning', 
       summary: 'Our journey starts',
-      detail: 'Founded with a vision to revolutionize digital communication. Started with a small dedicated team and an ambitious goal to make enterprise-grade tools accessible to everyone.',
+      detail: 'Founded in 2022 with a vision to revolutionize digital communication. DuoTech started with a small, dedicated team and an ambitious goal to make enterprise-grade tools accessible to everyone. We believe in the power of technology to connect people and businesses.',
       impact: 'Launched beta platform',
       icon: <Sparkles className="w-5 h-5" />
     },
     { 
-      year: 'Q3 2025', 
+      year: '2023', 
       title: 'First Clients', 
       summary: 'Building trust',
       detail: 'Secured our first wave of forward-thinking partners who believed in our vision. Their feedback shaped our platform into something truly special.',
@@ -83,7 +83,7 @@ const AboutPage = () => {
       icon: <Users className="w-5 h-5" />
     },
     { 
-      year: 'Q4 2025', 
+      year: '2024', 
       title: 'Platform Evolution', 
       summary: 'Expanding capabilities',
       detail: 'Launched multi-channel communication features, expanding beyond SMS to email, voice, and push notifications. Positioned ourselves as a comprehensive solution.',
@@ -91,18 +91,26 @@ const AboutPage = () => {
       icon: <TrendingUp className="w-5 h-5" />
     },
     { 
-      year: '2026', 
+      year: '2025', 
       title: 'Future Forward', 
       summary: 'Working continuously on improvements and innovation',
-      detail: 'We are continuously working to improve and innovate. Our roadmap for 2026 and beyond focuses on integrating AI-powered insights, expanding our global reach, and developing next-generation communication technologies to stay ahead of the curve and redefine industry standards.',
+      detail: 'We are continuously working to improve and innovate. Our roadmap for 2025 and beyond focuses on integrating AI-powered insights, expanding our global reach, and developing next-generation communication technologies to stay ahead of the curve and redefine industry standards.',
       impact: 'Industry-leading reliability',
       icon: <Zap className="w-5 h-5" />
+    },
+    {
+      year: '2026',
+      title: 'Looking Ahead',
+      summary: 'The next chapter',
+      detail: 'Our journey continues as we explore new frontiers in communication technology. We are committed to pushing the boundaries of what\'s possible and delivering even more value to our partners.',
+      impact: 'Pioneering new technologies',
+      icon: <Rocket className="w-5 h-5" />
     }
   ];
 
   const stats = [
     { 
-      value: '2025',
+      value: '2022',
       label: 'Founded', 
       icon: <Clock className="w-5 h-5" />,
       detail: 'Building the future',
@@ -132,7 +140,7 @@ const AboutPage = () => {
   ];
 
   const founderTabs = [
-    { id: 'vision', label: 'Vision', content: 'Satyam founded DuoTech in June 2025 with a singular mission: to make enterprise-grade communication tools accessible to everyone. His vision combines technical excellence with a deep understanding of human connection.' },
+    { id: 'vision', label: 'Vision', content: 'Satyam founded DuoTech in 2022 with a singular mission: to make enterprise-grade communication tools accessible to everyone. His vision combines technical excellence with a deep understanding of human connection.' },
     { id: 'background', label: 'Background', content: 'With a background in software engineering and product design, Satyam brings a unique perspective that bridges technology and human experience. His approach focuses on creating solutions that feel both powerful and intuitive.' },
     { id: 'philosophy', label: 'Philosophy', content: 'Believes in building technology that serves people, not the other way around. Every decision at DuoTech is guided by the principle that great technology should feel invisible, natural, and empowering.' }
   ];
@@ -185,7 +193,7 @@ const AboutPage = () => {
 
               <div className="flex items-center gap-3 text-sm text-gray-400">
                 <div className="w-12 h-px bg-gradient-to-r from-gray-200 to-transparent animate-pulse" />
-                <span className="tracking-wide">Est. June 2025</span>
+                <span className="tracking-wide">Est. 2022</span>
               </div>
             </div>
           </div>
