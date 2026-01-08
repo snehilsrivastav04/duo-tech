@@ -232,7 +232,7 @@ const Navbar = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <img src="src/assets/DS logo ( Blue ) SVG.svg" alt="DuoTechno" className="h-10" />
+                <img src="/src/assets/DS logo ( Blue ) SVG.svg" alt="DuoTechno" className="h-10" />
               </motion.div>
             </Link>
 
@@ -282,9 +282,6 @@ const Navbar = () => {
               >
                 <ArrowUp className="w-5 h-5" />
               </button>
-              <Link to="/login" className="px-6 py-2.5 text-sm font-normal text-gray-700 hover:text-blue-600 transition-colors duration-300 tracking-wide">
-                Sign In
-              </Link>
               <Link to="/contact" className="px-8 py-2.5 bg-blue-600 text-white text-sm font-normal rounded-lg hover:bg-blue-700 transition-all duration-300 tracking-wide shadow-sm hover:shadow-md">
                 Get Started
               </Link>
@@ -425,7 +422,7 @@ const Navbar = () => {
                 </button>
               ) : (
                 <div className="flex items-center gap-3">
-                  <img src="src/assets/DS logo ( Blue ) SVG.svg" alt="DuoTechno" className="h-8" />
+                  <img src="/src/assets/DS logo ( Blue ) SVG.svg" alt="DuoTechno" className="h-8" />
                   <span className="text-lg font-normal text-gray-900">Menu</span>
                 </div>
               )}
@@ -555,17 +552,6 @@ const Navbar = () => {
 
               {/* Mobile Actions */}
               <div className="mt-8 pt-8 border-t border-gray-100 space-y-3">
-                <Link 
-                  to="/login" 
-                  onClick={() => {
-                    setIsOpen(false);
-                    setOpenDropdown(null);
-                    setMobileNavHistory([]);
-                  }} 
-                  className="w-full text-center px-6 py-3 text-sm font-normal text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-all duration-300"
-                >
-                  Sign In
-                </Link>
                 <Link 
                   to="/contact" 
                   onClick={() => {

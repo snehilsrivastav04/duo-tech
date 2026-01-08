@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, CheckCircle, ChevronDown } from 'lucide-react';
+import { Send, CheckCircle, ChevronDown, Loader2 } from 'lucide-react';
 
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbyFE4hmr8gNj_kO2wvYjMGeR6lFOS4RIz44ZAHN37qN5vIK6L08Bn5n_igfdzT_cyGaoQ/exec";
@@ -43,6 +43,7 @@ const ContactForm: React.FC = () => {
   });
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -57,6 +58,8 @@ const ContactForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
       await fetch(SCRIPT_URL, {
@@ -84,6 +87,8 @@ const ContactForm: React.FC = () => {
     } catch (error) {
       alert("Submission failed. Please try again.");
       console.error(error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -340,10 +345,20 @@ const ContactForm: React.FC = () => {
               >
                 <button
                   type="submit"
-                  className="w-full px-8 py-4 bg-blue-700 text-white rounded-lg font-normal tracking-tight hover:bg-blue-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 flex items-center justify-center gap-3 group"
+                  disabled={isSubmitting}
+                  className="w-full px-8 py-4 bg-blue-700 text-white rounded-lg font-normal tracking-tight hover:bg-blue-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-600/20 focus:ring-offset-2 flex items-center justify-center gap-3 group disabled:bg-blue-400 disabled:cursor-not-allowed"
                 >
-                  <Send size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send size={18} className="group-hover:translate-x-1 transition-transform duration-300" />
+                      Send Message
+                    </>
+                  )}
                 </button>
               </motion.div>
             </motion.form>

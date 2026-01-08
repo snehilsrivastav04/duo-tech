@@ -15,11 +15,10 @@ import WhatsappbulkPage from './pages/whatsapp-bulk';
 import VoiceobdPage from './pages/VoiceOBDPage';
 import RcsPage from './pages/rcs';
 
-import EmailmarketingPage from './pages/email-marketing';
-import SocialMediaPage from './pages/social-media';
+
 import SeoPage from './pages/seo';
 import GraphicsDesignPage from './pages/graphic-design';
-import PPCPage from './pages/ppc';
+
 import DigitalMarketingPage from './pages/DigitalMarketingPage';
 
 import WebDevHomePage from './pages/web';
@@ -73,11 +72,9 @@ function App() {
         <Route path="/services/VoiceOBDPage" element={<VoiceobdPage />} />
         <Route path="/services/rcs" element={<RcsPage />} />
 
-        <Route path="/digital/email-marketing" element={<EmailmarketingPage />} />
-        <Route path="/digital/social-media" element={<SocialMediaPage />} />
         <Route path="/digital/seo" element={<SeoPage />} />
         <Route path="/digital/graphic-design" element={<GraphicsDesignPage />} />
-        <Route path="/digital/ppc" element={<PPCPage />} />
+  
         <Route path="/digital/digital-marketing" element={<DigitalMarketingPage />} />
 
 

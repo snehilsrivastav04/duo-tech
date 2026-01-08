@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Cookie, Shield, BarChart, Megaphone, X, Cog } from 'lucide-react';
+import { Cookie, Shield, BarChart, Megaphone, X } from 'lucide-react';
+
+declare global {
+  interface Window {
+    dataLayer: any[];
+    clarity: {
+      (action: string, ...args: any[]): void;
+      q?: any[];
+    };
+  }
+}
 
 const consentTypes = [
   {
@@ -14,16 +24,58 @@ const consentTypes = [
   {
     id: 'analytics' as const,
     title: 'Analytics Cookies',
-    description: 'These allow us to analyze site usage so we can measure and improve performance.',
+    description: 'Google Analytics and Microsoft Clarity for understanding how you use our site.',
     icon: <BarChart className="w-5 h-5 text-gray-500" />,
   },
   {
     id: 'marketing' as const,
     title: 'Marketing Cookies',
-    description: 'These are used by advertising companies to serve ads that are relevant to your interests.',
+    description: 'Google Tag Manager and advertising cookies to personalize your experience.',
     icon: <Megaphone className="w-5 h-5 text-gray-500" />,
   },
 ];
+
+// Initialize GTM
+const initializeGTM = () => {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    'gtm.start': new Date().getTime(),
+    event: 'gtm.js'
+  });
+};
+
+// Initialize Clarity
+const initializeClarity = () => {
+  window.clarity = window.clarity || function(){(window.clarity.q = window.clarity.q || []).push(arguments)};
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = 'https://www.clarity.ms/tag/uxsf84iq02';
+  document.head.appendChild(script);
+};
+
+// Remove GTM
+const removeGTM = () => {
+  // Remove GTM script
+  const gtmScripts = document.querySelectorAll('script[src*="googletagmanager.com/gtm.js"]');
+  gtmScripts.forEach(script => script.remove());
+  
+  // Remove GTM iframes
+  const gtmIframes = document.querySelectorAll('iframe[src*="googletagmanager.com/ns.html"]');
+  gtmIframes.forEach(iframe => iframe.remove());
+  
+  // Clear dataLayer
+  window.dataLayer = [];
+};
+
+// Remove Clarity
+const removeClarity = () => {
+  // Remove Clarity script
+  const clarityScripts = document.querySelectorAll('script[src*="clarity.ms/tag/"]');
+  clarityScripts.forEach(script => script.remove());
+  
+  // Clear Clarity object
+  delete window.clarity;
+};
 
 type Consent = Record<typeof consentTypes[number]['id'], boolean>;
 
@@ -42,10 +94,21 @@ const ConsentBanner: React.FC = () => {
       if (!consentData) {
         setIsVisible(true);
       } else {
-        // Optionally, you can load consents from localStorage to a state management tool
+        const { preferences } = JSON.parse(consentData);
+        setConsents(preferences);
+        
+        // Initialize services based on saved preferences
+        if (preferences.analytics) {
+          initializeClarity();
+        }
+        if (preferences.marketing) {
+          initializeGTM();
+        }
       }
     } catch (error) {
       console.error('Could not access localStorage:', error);
+      // Default to showing the banner if there's an error
+      setIsVisible(true);
     }
   }, []);
 
@@ -55,18 +118,34 @@ const ConsentBanner: React.FC = () => {
 
   const savePreferences = (preferences: Consent) => {
     try {
-      localStorage.setItem('cookie-consent', JSON.stringify({ timestamp: new Date().toISOString(), preferences }));
+      // Save preferences to localStorage
+      localStorage.setItem('cookie-consent', JSON.stringify({ 
+        timestamp: new Date().toISOString(), 
+        version: '1.0',
+        preferences 
+      }));
+
+      // Handle analytics preferences
+      if (preferences.analytics) {
+        initializeClarity();
+      } else {
+        removeClarity();
+      }
+
+      // Handle marketing preferences (GTM)
+      if (preferences.marketing) {
+        initializeGTM();
+      } else {
+        removeGTM();
+      }
+
+      // Update state and close modals
+      setConsents(preferences);
       setIsVisible(false);
       setIsModalOpen(false);
-      // Here you could initialize analytics, etc. based on preferences
-      if (preferences.analytics) {
-        console.log('Analytics enabled');
-      }
-      if (preferences.marketing) {
-        console.log('Marketing enabled');
-      }
+
     } catch (error) {
-      console.error('Could not save to localStorage:', error);
+      console.error('Could not save preferences:', error);
     }
   };
 

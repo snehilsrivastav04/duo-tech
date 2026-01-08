@@ -18,10 +18,7 @@ const Footer: React.FC = () => {
   ];
 
   const digitalServices = [
-    { name: 'Email Marketing', path: '/digital/email-marketing' },
-    { name: 'Social Media Marketing', path: '/digital/social-media' },
     { name: 'SEO Services', path: '/digital/seo' },
-    { name: 'PPC Advertising', path: '/digital/ppc' },
     { name: 'Graphic Design', path: '/digital/graphic-design' },
   ];
 
@@ -80,28 +77,18 @@ const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/login" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
-                  Sign In
-                </Link>
-              </li>
-              <li>
-                <Link to="/client" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
-                  Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link to="/client-side" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
-                  Client Side
-                </Link>
-              </li>
-              <li>
-                <Link to="/sms-pricing" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
-                  SMS Pricing
-                </Link>
-              </li>
-              <li>
                 <Link to="/terms-and-conditions" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
                   Terms & Conditions
+                </Link>
+              </li>
+              <li>
+                <Link to="/privacy-policy" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/refund-policy" className="text-gray-600 dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-400">
+                  Refund Policy
                 </Link>
               </li>
             </ul>
