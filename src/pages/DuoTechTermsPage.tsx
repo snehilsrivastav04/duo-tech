@@ -1,9 +1,38 @@
 // DuoTechTermsPage.tsx
 import React, { useState, useEffect, useRef } from "react";
+import { setAdvancedMetaTags, setJsonLD, createBreadcrumbJsonLD } from "../lib/meta";
 
 const DuoTechTermsPage = () => {
   const [activeSection, setActiveSection] = useState("acceptance");
   const sectionRefs = useRef({});
+
+  useEffect(() => {
+    setAdvancedMetaTags({
+      title: 'Terms and Conditions | Duotech Solutions',
+      description: 'Review the terms and conditions governing the use of Duotech Solutions services.',
+      keywords: 'terms and conditions, terms of service, legal terms',
+      image: 'https://www.duotechsolutions.in/images/duotech-og-image.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/terms',
+      author: 'Duotech Solutions',
+      type: 'website'
+    });
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'terms-breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' },
+      { name: 'Terms & Conditions', url: window.location.href }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#terms-breadcrumb-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

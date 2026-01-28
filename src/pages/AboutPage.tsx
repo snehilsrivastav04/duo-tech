@@ -2,6 +2,7 @@ import React, { useState, useEffect, MouseEvent } from 'react';
 import { Target, Handshake, Brain, Rocket, Clock, Users, Shield, MessageCircle, ChevronRight, Sparkles, TrendingUp, Zap } from 'lucide-react';
 import MainLayout from '../components/layout/MainLayout';
 import { Link } from 'react-router-dom';
+import { setMetaTags, setJsonLD, createOrganizationJsonLD, createBreadcrumbJsonLD } from '../lib/meta';
 
 const AboutPage = () => {
   const [activeValue, setActiveValue] = useState(0);
@@ -20,6 +21,41 @@ const AboutPage = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Set meta tags and structured data for About page
+  useEffect(() => {
+    setMetaTags({
+      title: 'About Duotech Solutions | Our Story, Values & Mission',
+      description: 'Discover Duotech Solutions\' journey since 2022. Learn about our mission to revolutionize communication, our core values, and our commitment to excellence.',
+      keywords: 'about duotech, communication solutions, digital innovation, enterprise tools, communication platform',
+      image: 'https://www.duotechsolutions.in/images/duotech-og-image.jpg',
+      url: window.location.href,
+      canonical: window.location.href,
+      author: 'Duotech Solutions',
+      type: 'website'
+    });
+
+    // Set Organization JSON-LD
+    setJsonLD(createOrganizationJsonLD());
+
+    // Set Breadcrumb JSON-LD
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: window.location.origin + '/' },
+      { name: 'About', url: window.location.href }
+    ]);
+    
+    // Create a script for breadcrumb in addition to organization
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'breadcrumb-json-ld';
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const script = document.getElementById('breadcrumb-json-ld');
+      if (script) script.remove();
+    };
   }, []);
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {

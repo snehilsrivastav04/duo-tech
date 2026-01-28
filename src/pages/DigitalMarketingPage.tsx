@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { 
   ArrowRight, Search, Target, BarChart2, TrendingUp, 
@@ -6,6 +6,7 @@ import {
   Sparkles, LineChart, MousePointer, ShoppingCart, ChevronDown, ChevronUp
 } from 'lucide-react';
 import MainLayout from '../components/layout/MainLayout';
+import { setAdvancedMetaTags, setJsonLD, createServiceJsonLD, createBreadcrumbJsonLD } from '../lib/meta';
 import { Link } from 'react-router-dom';
 
 const digitalMarketingData = {
@@ -92,6 +93,46 @@ const digitalMarketingData = {
 };
 
 const DigitalMarketingPage = () => {
+  useEffect(() => {
+    setAdvancedMetaTags({
+      title: 'Digital Marketing Services India | SEO, PPC, Social Media | Duotech Solutions',
+      description: 'Complete digital marketing solutions including SEO, PPC, social media marketing, email marketing, and content marketing. Grow your business online with proven strategies.',
+      keywords: 'digital marketing services, seo services, ppc advertising, social media marketing, email marketing, digital marketing agency noida, online marketing',
+      image: 'https://www.duotechsolutions.in/images/digital-marketing-og.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/digital-marketing',
+      author: 'Duotech Solutions',
+      type: 'website',
+      category: 'Digital Marketing'
+    });
+
+    const digitalMarketingSchema = createServiceJsonLD({
+      name: 'Digital Marketing Services',
+      description: 'Comprehensive digital marketing solutions including SEO, PPC, social media marketing, email campaigns, content marketing, and analytics.',
+      image: 'https://www.duotechsolutions.in/images/digital-marketing-og.jpg',
+      areaServed: 'IN',
+      priceRange: '₹₹',
+      url: window.location.href
+    });
+    setJsonLD(digitalMarketingSchema);
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'digital-marketing-breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' },
+      { name: 'Services', url: 'https://www.duotechsolutions.in/services' },
+      { name: 'Digital Marketing', url: window.location.href }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#digital-marketing-breadcrumb-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
+
   const { scrollYProgress } = useScroll();
   const [expandedService, setExpandedService] = useState(null);
   const [activeShowcase, setActiveShowcase] = useState(0);

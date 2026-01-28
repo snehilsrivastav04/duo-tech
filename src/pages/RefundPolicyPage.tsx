@@ -1,8 +1,37 @@
 import { useState, useEffect, useRef } from "react";
+import { setAdvancedMetaTags, setJsonLD, createBreadcrumbJsonLD } from "../lib/meta";
 
 const RefundPolicyPage = () => {
   const [activeSection, setActiveSection] = useState<string>("overview");
   const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
+
+  useEffect(() => {
+    setAdvancedMetaTags({
+      title: 'Refund Policy | Duotech Solutions',
+      description: 'Review Duotech Solutions\' refund and cancellation policy.',
+      keywords: 'refund policy, cancellation policy, return policy',
+      image: 'https://www.duotechsolutions.in/images/duotech-og-image.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/refund-policy',
+      author: 'Duotech Solutions',
+      type: 'website'
+    });
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'refund-breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' },
+      { name: 'Refund Policy', url: window.location.href }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#refund-breadcrumb-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

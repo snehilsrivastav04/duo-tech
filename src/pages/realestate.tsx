@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import MainLayout from '../components/layout/MainLayout';
+import { setAdvancedMetaTags, setJsonLD, createServiceJsonLD, createBreadcrumbJsonLD } from '../lib/meta';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 

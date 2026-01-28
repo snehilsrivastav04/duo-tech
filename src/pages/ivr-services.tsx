@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ParallaxProvider } from 'react-scroll-parallax';
 import MainLayout from '../components/layout/MainLayout';
-
+import { setAdvancedMetaTags, setJsonLD, createServiceJsonLD, createBreadcrumbJsonLD } from '../lib/meta';
 import ErrorBoundary from '../components/ui/ErrorBoundary';
 import {
   Hero,
@@ -15,6 +15,46 @@ import {
 } from '../components/ivr';
 
 const IVRPage: React.FC = () => {
+  useEffect(() => {
+    setAdvancedMetaTags({
+      title: 'IVR Solutions & Voice Automation System | Interactive Voice Response | Duotech Solutions',
+      description: 'Professional IVR solutions for automated customer service, call routing, and voice automation. Multilingual support, intelligent routing, and 24/7 availability. Contact +91-8800722190.',
+      keywords: 'ivr solution, interactive voice response, voice automation, call routing system, ivr system india, auto voice response, ivr services, voice automation software',
+      image: 'https://www.duotechsolutions.in/images/ivr-og.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/ivr-services',
+      author: 'Duotech Solutions',
+      type: 'website',
+      category: 'IVR Services'
+    });
+
+    const ivrServiceSchema = createServiceJsonLD({
+      name: 'IVR Solutions',
+      description: 'Automated interactive voice response systems for customer service, multilingual support, intelligent call routing, and 24/7 availability.',
+      image: 'https://www.duotechsolutions.in/images/ivr-og.jpg',
+      areaServed: 'IN',
+      priceRange: '₹₹',
+      url: window.location.href
+    });
+    setJsonLD(ivrServiceSchema);
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'ivr-breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' },
+      { name: 'Services', url: 'https://www.duotechsolutions.in/services' },
+      { name: 'IVR Services', url: window.location.href }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#ivr-breadcrumb-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
+
   return (
     <ErrorBoundary>
       <ParallaxProvider>

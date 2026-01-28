@@ -1,13 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect as useReactEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import MainLayout from '../components/layout/MainLayout';
+import { setAdvancedMetaTags, setJsonLD, createBreadcrumbJsonLD } from '../lib/meta';
 import Container from '../components/ui/Container';
 import Button from '../components/ui/Button';
 
 const ServicesPage: React.FC = () => {
   const [activeSection, setActiveSection] = useState(0);
   const { scrollYProgress } = useScroll();
+  
+  useReactEffect(() => {
+    setAdvancedMetaTags({
+      title: 'Products | Duotech Solutions | SMS Gateway, WhatsApp API, CRM, Ready-Made Code',
+      description: 'Discover Duotech Solutions\' product suite including SMS gateway, WhatsApp Business API, CRM software, and ready-made source codes. Production-ready solutions for your business.',
+      keywords: 'duotech products, sms gateway, whatsapp api, crm software, ready made source code, communication tools, business software',
+      image: 'https://www.duotechsolutions.in/images/duotech-og-image.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/products',
+      author: 'Duotech Solutions',
+      type: 'website'
+    });
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'products-breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' },
+      { name: 'Products', url: window.location.href }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#products-breadcrumb-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
   
   const services = [
     {

@@ -1,11 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import MainLayout from '../components/layout/MainLayout';
+import { setAdvancedMetaTags, setJsonLD, createBreadcrumbJsonLD } from '../lib/meta';
 import Container from '../components/ui/Container';
 import SectionTitle from '../components/ui/SectionTitle';
 import ServiceCategories from '../components/services/ServiceCategories';
 
 const ServicesPage: React.FC = () => {
+  useEffect(() => {
+    setAdvancedMetaTags({
+      title: 'Services | Duotech Solutions | Bulk SMS, WhatsApp API, Web Development & Digital Marketing',
+      description: 'Explore all services offered by Duotech Solutions including bulk SMS, WhatsApp API, digital marketing, web & app development, CRM, IVR solutions, and more.',
+      keywords: 'duotech services, communication solutions, digital marketing services, web development, app development, crm solutions, bulk sms, whatsapp api',
+      image: 'https://www.duotechsolutions.in/images/duotech-og-image.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/services',
+      author: 'Duotech Solutions',
+      type: 'website'
+    });
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'services-breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' },
+      { name: 'Services', url: window.location.href }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#services-breadcrumb-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
+
   return (
     <MainLayout>
       {/* Hero Section */}

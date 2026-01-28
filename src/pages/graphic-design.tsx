@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect as useReactEffect } from 'react';
 import { motion, useScroll } from 'framer-motion';
 import { 
   PenTool, LayoutTemplate, BookOpen, 
@@ -7,6 +7,7 @@ import {
   Plus, Minus
 } from 'lucide-react';
 import MainLayout from '../components/layout/MainLayout';
+import { setAdvancedMetaTags, setJsonLD, createServiceJsonLD, createBreadcrumbJsonLD } from '../lib/meta';
  // Adjust path as needed
 import { useNavigate } from 'react-router-dom';
 
@@ -61,8 +62,49 @@ const GraphicsDesignPage = () => {
     offset: ["start end", "end start"]
   });
 
+  // Set SEO meta tags
+  useReactEffect(() => {
+    setAdvancedMetaTags({
+      title: 'Graphic Design Services Noida | Logo, Branding & UI/UX Design | Duotech Solutions',
+      description: 'Professional graphic design services including logo design, branding, UI/UX design, print design, and motion graphics. Award-winning designers in Noida. Get free design consultation.',
+      keywords: 'graphic design services noida, logo design company, branding agency, ui ux design, print design, motion graphics, design studio, brand identity design',
+      image: 'https://www.duotechsolutions.in/images/graphic-design-og.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/graphic-design',
+      author: 'Duotech Solutions',
+      type: 'website',
+      category: 'Graphic Design'
+    });
+
+    const designServiceSchema = createServiceJsonLD({
+      name: 'Graphic Design Services',
+      description: 'Comprehensive graphic design services including logo design, branding, UI/UX design, print design, and motion graphics for modern businesses.',
+      image: 'https://www.duotechsolutions.in/images/graphic-design-og.jpg',
+      areaServed: 'IN',
+      priceRange: '₹₹',
+      url: window.location.href
+    });
+    setJsonLD(designServiceSchema);
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'design-breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' },
+      { name: 'Services', url: 'https://www.duotechsolutions.in/services' },
+      { name: 'Graphic Design', url: window.location.href }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#design-breadcrumb-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
+
   // Scroll progress effect
-  useEffect(() => {
+  useReactEffect(() => {
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (window.scrollY / totalHeight) * 100;

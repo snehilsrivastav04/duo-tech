@@ -232,7 +232,7 @@ const Navbar = () => {
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <img src="/src/assets/DS logo ( Blue ) SVG.svg" alt="DuoTechno" className="h-10" />
+                <img src="https://duotechsolutions.in/DS%20logo%20(%20Blue%20)%20SVG-D-GAioW7.svg" alt="DuoTechno" className="h-10" />
               </motion.div>
             </Link>
 
@@ -422,7 +422,7 @@ const Navbar = () => {
                 </button>
               ) : (
                 <div className="flex items-center gap-3">
-                  <img src="/src/assets/DS logo ( Blue ) SVG.svg" alt="DuoTechno" className="h-8" />
+                  <img src="https://duotechsolutions.in/DS%20logo%20(%20Blue%20)%20SVG-D-GAioW7.svg" alt="DuoTechno" className="h-8" />
                   <span className="text-lg font-normal text-gray-900">Menu</span>
                 </div>
               )}

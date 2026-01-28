@@ -1,8 +1,37 @@
 import React, { useState, useEffect, useRef } from "react";
+import { setAdvancedMetaTags, setJsonLD, createBreadcrumbJsonLD } from "../lib/meta";
 
 const PrivacyPolicyPage = () => {
   const [activeSection, setActiveSection] = useState("intro");
   const sectionRefs = useRef({});
+
+  useEffect(() => {
+    setAdvancedMetaTags({
+      title: 'Privacy Policy | Duotech Solutions',
+      description: 'Read Duotech Solutions\' privacy policy to understand how we collect, use, and protect your personal data.',
+      keywords: 'privacy policy, data protection, gdpr, privacy statement',
+      image: 'https://www.duotechsolutions.in/images/duotech-og-image.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/privacy-policy',
+      author: 'Duotech Solutions',
+      type: 'website'
+    });
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'privacy-breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' },
+      { name: 'Privacy Policy', url: window.location.href }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#privacy-breadcrumb-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

@@ -1,12 +1,44 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import MainLayout from '../components/layout/MainLayout';
+import { setAdvancedMetaTags, setJsonLD, createLocalBusinessJsonLD, createBreadcrumbJsonLD } from '../lib/meta';
 import Container from '../components/ui/Container';
 import ContactForm from '../components/contact/ContactForm';
 import ContactInfo from '../components/contact/ContactInfo';
 import GoogleMap from '../components/contact/GoogleMap';
 
 const ContactPage: React.FC = () => {
+  useEffect(() => {
+    setAdvancedMetaTags({
+      title: 'Contact Duotech Solutions | Get in Touch | SMS, WhatsApp & Web Services',
+      description: 'Contact Duotech Solutions for bulk SMS, WhatsApp API, digital marketing, and web development services. Call +91-8800722190 or email info@duotechsolutions.in. Available 24/7.',
+      keywords: 'contact duotech, contact us duotech solutions, customer service, duotech support, bulk sms provider contact, call center noida',
+      image: 'https://www.duotechsolutions.in/images/duotech-og-image.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/contact',
+      author: 'Duotech Solutions',
+      type: 'website'
+    });
+
+    const localBusinessSchema = createLocalBusinessJsonLD();
+    setJsonLD(localBusinessSchema);
+
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'contact-breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' },
+      { name: 'Contact', url: window.location.href }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#contact-breadcrumb-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
+
   return (
     <MainLayout>
       {/* Hero Section with Minimalist Header */}

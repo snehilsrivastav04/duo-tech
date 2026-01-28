@@ -1,7 +1,8 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { ChevronRight, CheckCircle, Smartphone, Megaphone, PhoneCall, Code, Mail, BarChart2, Briefcase, Zap, Shield, TrendingUp, Settings, Users, ArrowRight, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { setAdvancedMetaTags, setJsonLD, createOrganizationJsonLD, createLocalBusinessJsonLD, createBreadcrumbJsonLD } from '../lib/meta';
 
 const Hero: FC = () => (
   <section className="relative pt-40 pb-24 text-center bg-gradient-to-br from-white to-gray-50">
@@ -252,6 +253,62 @@ const LeadCapture: FC = () => (
 );
 
 const HomePage: FC = () => {
+  useEffect(() => {
+    // Set comprehensive meta tags for home page
+    setAdvancedMetaTags({
+      title: 'Duotech Solutions | Bulk SMS, WhatsApp API & Digital Marketing Services in Noida',
+      description: 'Duotech Solutions - All-in-One Communication Platform for Bulk SMS, WhatsApp Business API, IVR, Digital Marketing, Web & App Development. Trusted by 500+ businesses. Call +91-8800722190 for best communication solutions.',
+      keywords: 'bulk sms service provider noida, whatsapp api india, digital marketing agency noida, web development noida, ivr solutions, voice obd, virtual numbers, crm software, sms gateway api, whatsapp marketing',
+      image: 'https://www.duotechsolutions.in/images/duotech-og-image.jpg',
+      url: window.location.href,
+      canonical: 'https://www.duotechsolutions.in/',
+      author: 'Duotech Solutions',
+      type: 'website',
+      category: 'Business Services'
+    });
+
+    // Set multiple structured data schemas
+    // 1. Organization schema
+    setJsonLD(createOrganizationJsonLD());
+    
+    // 2. Local Business schema
+    const localBusinessScript = document.createElement('script');
+    localBusinessScript.type = 'application/ld+json';
+    localBusinessScript.id = 'local-business-json-ld';
+    localBusinessScript.textContent = JSON.stringify(createLocalBusinessJsonLD());
+    document.head.appendChild(localBusinessScript);
+
+    // 3. Breadcrumb schema
+    const breadcrumbScript = document.createElement('script');
+    breadcrumbScript.type = 'application/ld+json';
+    breadcrumbScript.id = 'breadcrumb-json-ld';
+    const breadcrumbData = createBreadcrumbJsonLD([
+      { name: 'Home', url: 'https://www.duotechsolutions.in/' }
+    ]);
+    breadcrumbScript.textContent = JSON.stringify(breadcrumbData);
+    document.head.appendChild(breadcrumbScript);
+
+    // 4. Organization Contact Point Schema
+    const contactPointScript = document.createElement('script');
+    contactPointScript.type = 'application/ld+json';
+    contactPointScript.id = 'contact-point-json-ld';
+    contactPointScript.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'ContactPoint',
+      'telephone': '+91-8800722190',
+      'contactType': 'Customer Service',
+      'email': 'info@duotechsolutions.in',
+      'areaServed': ['IN'],
+      'availableLanguage': ['en']
+    });
+    document.head.appendChild(contactPointScript);
+
+    return () => {
+      const scripts = document.querySelectorAll('#local-business-json-ld, #breadcrumb-json-ld, #contact-point-json-ld');
+      scripts.forEach(script => script.remove());
+    };
+  }, []);
+
   return (
     <div className="bg-white">
       <Hero />
